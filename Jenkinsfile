@@ -4,12 +4,12 @@ pipeline {
     agent any
     environment {
         ENV_TYPE = "production"
-        PORT = 3734
+        PORT = 3735
         NAMESPACE = "universea-ru"
         REGISTRY_HOSTNAME = "internship2025"
         REGISTRY = "registry.hub.docker.com"
-        PROJECT = "inctagram2025"
-        DEPLOYMENT_NAME = "inctagram2025-deployment"
+        PROJECT = "universea"
+        DEPLOYMENT_NAME = "universea-deployment"
         IMAGE_NAME = "${env.BUILD_ID}_${env.ENV_TYPE}_${env.GIT_COMMIT}"
         DOCKER_BUILD_NAME = "${env.REGISTRY_HOSTNAME}/${env.PROJECT}:${env.IMAGE_NAME}"
     }
