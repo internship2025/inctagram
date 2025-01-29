@@ -35,4 +35,4 @@ COPY --from=builder /app/ ./
 EXPOSE 3000
 
 # Запускаем сервер Next.js в production-режиме
-CMD ["pnpm", "start"]
+CMD ["node", ".next/standalone/server.js"]
