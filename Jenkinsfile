@@ -22,14 +22,15 @@ pipeline {
         }
         stage('Unit tests') {
              steps {
-                echo "Preparing started..."
+                echo "Running tests..."
                   script {
                       sh '''
                          export NVM_DIR="$HOME/.nvm"
                          [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
                          nvm use --lts
-                         yarn install
-                         yarn test
+                         corepack enable
+                         pnpm install
+                         pnpm test --if-present
                       '''
                   }
              }
