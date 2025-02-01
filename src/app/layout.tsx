@@ -1,18 +1,25 @@
-import "@radix-ui/themes/styles.css";
-import { Theme } from "@radix-ui/themes";
-import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import "./globals.css";
 
-export const metadata: Metadata = {
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-inter",
+});
+
+export const metadata = {
   title: "My Next.js App",
-  description: "Using Radix UI with Next.js App Router",
+  description: "A modern Next.js application",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-      <html lang="en">
-      <body>
-      <Theme>{children}</Theme>
-      </body>
-      </html>
+    <html lang="en" className={inter.variable}>
+      <body>{children}</body>
+    </html>
   );
 }
