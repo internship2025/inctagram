@@ -1,10 +1,18 @@
 .button {
-    padding: 12px 20px;
+    /*display: flex;*/
+    /*flex-direction: row;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+    /*gap: 10px;*/
+    /*padding: 6px 24px 6px 24px;*/
+    padding: 6px 24px;
     font-size: 16px;
     font-weight: 600;
-    border-radius: 8px;
+    line-height: 24px;
+    letter-spacing: 0;
+    border-radius: 2px;
     cursor: pointer;
-    transition: background-color 0.2s, transform 0.1s;
+    /*transition: background-color 0.2s, transform 0.1s;*/
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -13,54 +21,98 @@
     min-width: 120px;
 }
 
-/* Варианты кнопок */
 .primary {
     background-color: #397DF6;
     color: white;
 }
 
 .primary:hover {
-    background-color: #1e40af;
+    background-color: #73A5FF;
 }
 
 .primary:active {
-    background-color: #1e3a8a;
-    transform: scale(0.98);
+    background-color: #2F68CC;
+    /*transform: scale(0.98);*/
+}
+
+.primary:focus {
+    background-color: #397DF6;
+    border: 2px solid rgb(47, 104, 204);
+}
+
+.primary:disabled {
+    background-color: #234E99;
 }
 
 .secondary {
-    background-color: #6b7280;
-    color: #d1d5db;
-    cursor: not-allowed;
+    background-color: #333333;
+    color: white;
+}
+
+.secondary:active {
+    background-color: #212121;
+}
+
+.secondary:hover {
+    background-color: #4C4C4C;
+}
+
+.secondary:focus {
+    background-color: #4C8DFF;
+    border: 1px solid rgb(76, 141, 255);
+}
+
+.secondary:disabled {
+    background-color: #171717;
 }
 
 .outline {
-    border: 2px solid #2563eb;
-    color: #2563eb;
+    color: #397DF6;
     background-color: transparent;
-}
-
-.outline:hover {
-    background-color: #2563eb;
-    color: white;
+    border: 1px solid #397DF6;
+    border-radius: 2px;
 }
 
 .outline:active {
-    background-color: #1e40af;
-    color: white;
-    transform: scale(0.98);
+    color: #2F68CC;
+    border: 1px solid #2F68CC;
+    /*transform: scale(0.98);*/
+}
+
+.outline:hover {
+    color: #73A5FF;
+    border: 1px solid #73A5FF;
+}
+
+.outline:focus {
+    color: #2F68CC;
+    border: 2px solid #2F68CC;
+}
+
+.outline:disabled {
+    color: #234E99;
+    border: 1px solid #234E99;
 }
 
 .ghost {
-    color: #2563eb;
+    color: #397DF6;
     background-color: transparent;
 }
 
-.ghost:hover {
-    text-decoration: underline;
+.ghost:active {
+    color: #2F68CC;
 }
 
-.ghost:active {
-    opacity: 0.8;
+.ghost:hover {
+    color: #73A5FF;
 }
+
+.ghost:hover {
+    color: #2F68CC;
+}
+
+.ghost:disabled {
+    color: #234E99;
+}
+
 
