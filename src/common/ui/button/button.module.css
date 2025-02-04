@@ -1,0 +1,118 @@
+.button {
+    /*display: flex;*/
+    /*flex-direction: row;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+    /*gap: 10px;*/
+    /*padding: 6px 24px 6px 24px;*/
+    padding: 6px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0;
+    border-radius: 2px;
+    cursor: pointer;
+    /*transition: background-color 0.2s, transform 0.1s;*/
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    text-align: center;
+    min-width: 120px;
+}
+
+.primary {
+    background-color: #397DF6;
+    color: white;
+}
+
+.primary:hover {
+    background-color: #73A5FF;
+}
+
+.primary:active {
+    background-color: #2F68CC;
+    /*transform: scale(0.98);*/
+}
+
+.primary:focus {
+    background-color: #397DF6;
+    border: 2px solid rgb(47, 104, 204);
+}
+
+.primary:disabled {
+    background-color: #234E99;
+}
+
+.secondary {
+    background-color: #333333;
+    color: white;
+}
+
+.secondary:active {
+    background-color: #212121;
+}
+
+.secondary:hover {
+    background-color: #4C4C4C;
+}
+
+.secondary:focus {
+    background-color: #4C8DFF;
+    border: 1px solid rgb(76, 141, 255);
+}
+
+.secondary:disabled {
+    background-color: #171717;
+}
+
+.outline {
+    color: #397DF6;
+    background-color: transparent;
+    border: 1px solid #397DF6;
+    border-radius: 2px;
+}
+
+.outline:active {
+    color: #2F68CC;
+    border: 1px solid #2F68CC;
+    /*transform: scale(0.98);*/
+}
+
+.outline:hover {
+    color: #73A5FF;
+    border: 1px solid #73A5FF;
+}
+
+.outline:focus {
+    color: #2F68CC;
+    border: 2px solid #2F68CC;
+}
+
+.outline:disabled {
+    color: #234E99;
+    border: 1px solid #234E99;
+}
+
+.ghost {
+    color: #397DF6;
+    background-color: transparent;
+}
+
+.ghost:active {
+    color: #2F68CC;
+}
+
+.ghost:hover {
+    color: #73A5FF;
+}
+
+.ghost:hover {
+    color: #2F68CC;
+}
+
+.ghost:disabled {
+    color: #234E99;
+}
+
+
