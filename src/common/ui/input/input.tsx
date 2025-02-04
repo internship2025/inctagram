@@ -31,17 +31,26 @@ export const Input = ({
       : type;
 
   return (
-    <div>
-      {label && <label>{label}</label>}
-      <div>
+    <div className={styles.inputWrapper}>
+      {label && <label className={styles.label}>{label}</label>}
+      <div className={styles.inputContainer}>
         <input
-          type="text"
+          type={inputType}
           className={inputClass}
           placeholder={props.placeholder || ""}
           {...props}
         />
-        {showPassword && type === "password"}
+        {showPassword && type === "password" && (
+          <button
+            type="button"
+            onClick={togglePasswordVisibility}
+            className={styles.togglePassword}
+          >
+            👁️
+          </button>
+        )}
       </div>
+      {error && <p className={styles.errorText}>{error}</p>}
     </div>
   );
 };
