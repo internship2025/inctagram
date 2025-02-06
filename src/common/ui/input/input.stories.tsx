@@ -20,15 +20,7 @@ const meta: Meta<typeof Input> = {
     type: {
       control: {
         type: "select",
-        options: [
-          "text",
-          "password",
-          "email",
-          "tel",
-          "number",
-          "url",
-          "search",
-        ],
+        options: ["text", "password", "email", "search"],
       },
     },
   },
@@ -62,10 +54,27 @@ export const PasswordInput: Story = {
   },
 };
 
+export const PasswordWithErrorInput: Story = {
+  args: {
+    label: "Password",
+    type: "password",
+    error: "This field is required",
+    showPassword: true,
+    placeholder: "Enter password",
+  },
+};
+
 export const DisabledInput: Story = {
   args: {
     label: "Disabled Input",
     disabled: true,
     placeholder: "Can't type here",
+  },
+};
+
+export const EmailInput: Story = {
+  args: {
+    label: "Email",
+    placeholder: "Enter email",
   },
 };

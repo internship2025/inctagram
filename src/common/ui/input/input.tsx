@@ -4,20 +4,14 @@ import { ComponentProps, useState } from "react";
 import styles from "./input.module.css";
 import EyeIcon from "@/common/ui/input/eyeIcon/EyeIcon";
 
-type InputType =
-  | "text"
-  | "password"
-  | "email"
-  | "tel"
-  | "number"
-  | "url"
-  | "search";
+type InputType = "text" | "password" | "email" | "search";
 
 type Props = ComponentProps<"input"> & {
   label?: string;
   error?: string;
   showPassword?: boolean;
   type?: InputType;
+  disabled?: boolean;
 };
 
 export const Input = ({
@@ -26,11 +20,12 @@ export const Input = ({
   error,
   showPassword = false,
   type = "text",
+  disabled = false,
   ...props
 }: Props) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
-  const inputClass = `${styles.input} ${error ? styles.error : ""} ${className || ""}`;
+  const inputClass = `${styles.input} ${error ? styles.error : ""} ${type === "password" && error ? styles.errorPassword : ""} ${disabled ? styles.disabled : ""} ${type === "search" ? styles.search : ""} ${className || ""}`;
 
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
@@ -53,11 +48,12 @@ export const Input = ({
           placeholder={props.placeholder || ""}
           {...props}
         />
-        {showPassword && type === "password" && (
+        {showPassword && type === "password" && !disabled && (
           <button
             type="button"
             onClick={togglePasswordVisibility}
             className={styles.togglePassword}
+            disabled={disabled}
           >
             <EyeIcon />
           </button>
