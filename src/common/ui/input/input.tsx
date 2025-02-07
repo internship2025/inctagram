@@ -2,7 +2,9 @@
 
 import { ComponentProps, useState } from "react";
 import styles from "./input.module.css";
-import EyeIcon from "@/common/ui/input/eyeIcon/EyeIcon";
+import EyeIcon from "@/common/ui/input/components/EyeIcon";
+import Image from "next/image";
+import searchIco from "./assets/searchIco.svg";
 
 type InputType = "text" | "password" | "email" | "search";
 
@@ -42,6 +44,11 @@ export const Input = ({
     <div className={styles.inputWrapper}>
       {label && <label className={styles.label}>{label}</label>}
       <div className={styles.inputContainer}>
+        {type === "search" && !disabled && (
+          <div className={styles.searchInputContainer}>
+            <Image src={searchIco} alt="SearchIcon" width={20} height={20} />
+          </div>
+        )}
         <input
           type={inputType}
           className={inputClass}

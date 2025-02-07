@@ -78,3 +78,18 @@ export const EmailInput: Story = {
     placeholder: "Enter email",
   },
 };
+
+export const SearchInput: Story = {
+  args: {
+    type: "search",
+    placeholder: "Input search",
+  },
+};
+
+export const SearchInputWithError: Story = {
+  args: {
+    type: "search",
+    placeholder: "Input search",
+    error: "Error text",
+  },
+};
