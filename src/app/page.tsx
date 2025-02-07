@@ -13,6 +13,7 @@ export default function HomePage() {
       <Button variant={"outline"}>Click me1</Button>
       <Button variant={"text"}>Click me2</Button>
       <Input />
+      <Input />
     </Flex>
   );
 }
