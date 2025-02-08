@@ -1,3 +1,4 @@
+"use client"
 import * as Select from '@radix-ui/react-select';
 import styles from './header.module.css';
 import Image from 'next/image';
@@ -54,7 +55,7 @@ export const Header = ({
                             <Select.Value>
                                 <div className={styles.selectValue}>
                                     <Image 
-                                        src={currentLang === 'English' ? '/flags/UK.png' : '/flags/RU.png'} 
+                                        src={currentLang === 'English' ? '/flags/FlagRU.svg' : '/flags/FlagUK.svg'}
                                         alt={currentLang === 'English' ? 'UK flag' : 'Russian flag'}
                                         width={20} 
                                         height={20} 
@@ -75,7 +76,7 @@ export const Header = ({
                                 <Select.Item value="English" className={styles.selectItem}>
                                     <Select.ItemText>
                                         <div className={styles.selectValue}>
-                                            <Image src="/flags/UK.png" alt="UK flag" width={20} height={20} unoptimized />
+                                            <Image src="/flags/FlagUK.svg" alt="UK flag" width={20} height={20} unoptimized />
                                             <span>English</span>
                                         </div>
                                     </Select.ItemText>
@@ -83,7 +84,7 @@ export const Header = ({
                                 <Select.Item value="Русский" className={styles.selectItem}>
                                     <Select.ItemText>
                                         <div className={styles.selectValue}>
-                                            <Image src="/flags/RU.png" alt="Russian flag" width={20} height={20} unoptimized />
+                                            <Image src="/flags/FlagRU.svg" alt="Russian flag" width={20} height={20} unoptimized />
                                             <span>Русский</span>
                                         </div>
                                     </Select.ItemText>
