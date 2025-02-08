@@ -1,7 +1,8 @@
+"use client"
 import {FC, JSX} from 'react';
 import Link from 'next/link';
 import styles from './sidebar.module.css';
-import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
 
 interface NavItem {
     id: number;
@@ -14,9 +15,9 @@ interface SidebarProps {
     isAuthenticated?: boolean;
 }
 
-export const Sidebar: FC<SidebarProps> = ({ isAuthenticated = false }) => {
-    const router = useRouter();
-    const currentPath = router.pathname;
+export const Sidebar: FC<SidebarProps> = ({ isAuthenticated = true }) => {
+    const pathname = usePathname();
+    const currentPath = pathname;
 
     const navItems: NavItem[] = [
         {
