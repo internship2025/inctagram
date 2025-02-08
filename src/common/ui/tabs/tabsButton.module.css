@@ -1,0 +1,76 @@
+.root {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .list {
+    display: flex;
+    width: 100%;
+    border-bottom: 2px solid rgb(57, 125, 246);
+  }
+  
+  .trigger {
+    all: unset;
+    padding: 0 20px;
+    height: 36px;
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  
+  /* Primary Styles */
+  .primaryTrigger {
+    color: rgb(57, 125, 246);
+    background-color: transparent;
+  }
+  .primaryTrigger:hover {
+    background-color: rgb(35, 78, 153);
+  }
+  .primaryTrigger:focus {
+    outline: 2px solid rgb(57, 125, 246);
+    outline-offset: 0px; /* расстояние между контуром и границей элемента */
+  }
+  .primaryTrigger[data-state="active"] {
+    background-color: rgb(115, 165, 255);
+    border-bottom: 1px solid rgb(76, 76, 76);
+  }
+  .primaryList {
+    border-bottom: 2px solid rgb(57, 125, 246);
+  }
+  
+  /* Secondary Styles */
+  .secondaryTrigger {
+    color: rgb(76, 76, 76);
+    background-color: transparent;
+  }
+  .secondaryTrigger:hover {
+    background-color: rgb(35, 78, 153);
+  }
+  .secondaryTrigger:focus {
+    border: 2px solid rgb(57, 125, 246);
+
+  }
+  .secondaryTrigger[data-state="active"] {
+    background-color: rgb(170, 170, 170);
+    border-bottom: 1px solid rgb(150, 150, 150);
+  }
+  .secondaryList {
+    border-bottom: 2px solid rgb(150, 150, 150);
+  }
+
+.content {
+	flex-grow: 1;
+	padding: 20px;
+	background-color: white;
+	border-bottom-left-radius: 6px;
+	border-bottom-right-radius: 6px;
+	outline: none;
+	&:focus {
+		box-shadow: 0 0 0 2px black;
+	}
+}
