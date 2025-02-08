@@ -1,90 +1,103 @@
 import { Header } from "./header";
 import { Meta, StoryObj } from "@storybook/react";
 
-const meta: Meta<typeof Header> = {
+const meta = {
   title: "UI/Header",
   component: Header,
   tags: ["autodocs"],
-  parameters: {
-    layout: 'fullscreen',
-  },
   argTypes: {
-    currentLang: {
-      options: ['English', 'Русский'],
-      control: { type: 'radio' }
-    },
     onLangChange: {
-      action: 'language changed'
+      description: 'Callback функция, вызываемая при смене языка',
+      control: false
     },
     showAuth: {
+      description: 'Флаг для отображения кнопок авторизации',
       control: 'boolean',
-      description: 'Show authentication buttons'
+      defaultValue: true
     },
     onLoginClick: {
-      action: 'login clicked'
+      description: 'Callback функция, вызываемая при нажатии на кнопку Log in',
+      control: false
     },
     onSignUpClick: {
-      action: 'sign up clicked'
+      description: 'Callback функция, вызываемая при нажатии на кнопку Sign up',
+      control: false
     }
   },
-};
+} satisfies Meta<typeof Header>;
 
 export default meta;
 
 type Story = StoryObj<typeof Header>;
 
-export const English: Story = {
+export const Default: Story = {
   args: {
-    currentLang: 'English',
-  },
+    showAuth: true,
+    onLangChange: (lang: string) => console.log('Language changed to:', lang),
+    onLoginClick: () => console.log('Login clicked'),
+    onSignUpClick: () => console.log('Sign up clicked')
+  }
 };
 
-export const Russian: Story = {
+export const WithoutAuth: Story = {
   args: {
-    currentLang: 'Русский',
-  },
-};
+    showAuth: false,
+    onLangChange: (lang: string) => console.log('Language changed to:', lang)
+  }
+};  
 
 export const WithCallback: Story = {
   args: {
-    currentLang: 'English',
     onLangChange: (lang: string) => alert(`Language changed to: ${lang}`)
   },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Пример с обработкой смены языка через callback функцию'
+      }
+    }
+  }
 };
 
 export const Mobile: Story = {
-  args: {
-    currentLang: 'English',
-  },
+  args: {},
   parameters: {
     viewport: {
       defaultViewport: 'mobile1'
     },
+    docs: {
+      description: {
+        story: 'Мобильная версия компонента с адаптивным дизайном'
+      }
+    }
   },
 };
 
 export const WithAuth: Story = {
   args: {
-    currentLang: 'English',
     showAuth: true
   },
-};
-
-export const RussianWithAuth: Story = {
-  args: {
-    currentLang: 'Русский',
-    showAuth: true
-  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Вариант с отображением кнопок авторизации (Log in и Sign up)'
+      }
+    }
+  }
 };
 
 export const MobileWithAuth: Story = {
   args: {
-    currentLang: 'English',
     showAuth: true
   },
   parameters: {
     viewport: {
       defaultViewport: 'mobile1'
     },
+    docs: {
+      description: {
+        story: 'Мобильная версия с кнопками авторизации'
+      }
+    }
   },
 };

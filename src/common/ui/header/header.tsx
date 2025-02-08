@@ -3,6 +3,7 @@ import * as Select from '@radix-ui/react-select';
 import styles from './header.module.css';
 import Image from 'next/image';
 import {useState} from "react";
+import { Button } from '../button/button';
 
 
 const ChevronDownIcon = () => (
@@ -96,12 +97,8 @@ export const Header = ({
                     
                     {showAuth && (
                         <div className={styles.authButtons}>
-                            <button onClick={onLoginClick} className={styles.authButton}>
-                                Log in
-                            </button>
-                            <button onClick={onSignUpClick} className={`${styles.authButton} ${styles.signUpButton}`}>
-                                Sign up
-                            </button>
+                            <Button variant={"outline"}>Log in</Button>
+                            <Button variant={"primary"}>Sing up</Button>
                         </div>
                     )}
                 </div>
