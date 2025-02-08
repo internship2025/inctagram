@@ -1,0 +1,137 @@
+.inputWrapper {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    width: 100%;
+}
+
+.inputContainer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 8px 30px 8px 12px;
+    border: 1px solid #4C4C4C;
+    border-radius: 2px;
+    background-color: #fff;
+    color: #4C4C4C;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.input:focus {
+    border: 1px solid #397DF6;
+    outline: none;
+}
+
+.input:active {
+    border: 1px solid #FFFFFF;
+}
+
+.input:hover {
+    /*border: 1px solid #6c6c6c;*/
+}
+
+.label {
+    font-size: 14px;
+    color: #8D9094;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+.input::placeholder {
+    color: #8D9094;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+.input:focus::placeholder {
+    color: #FFFFFF;
+}
+
+.input:active::placeholder {
+    color: #FFFFFF;
+}
+
+.error {
+    border-color: #CC1439;
+}
+
+.error:focus, .error:active, .error:hover {
+    border-color: #CC1439;
+}
+
+.errorText {
+    color: #CC1439;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0;
+    margin-top: 4px;
+}
+
+
+
+.togglePassword {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1;
+}
+
+.disabled, .disabled:active, .disabled:hover, .disabled:focus {
+    border: 1px solid #4C4C4C;
+}
+
+.search {
+    border-bottom: 1px solid #4C4C4C;
+    border-top: 1px solid #4C4C4C;
+    border-left: none;
+    border-right: none;
+}
+
+.search.error,
+.search.error:focus,
+.search.error:active,
+.search.error:hover {
+    border-bottom: 1px solid #CC1439;
+    border-top: 1px solid #CC1439;
+    border-left: none;
+    border-right: none;
+}
+
+.search:focus {
+    border: 1px solid #397DF6;
+    outline: none;
+}
+
+.search:active {
+    border: 1px solid #FFFFFF;
+}
+
+.searchInputContainer {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.input.search {
+    padding: 8px 30px 8px 41px;
+}
+
+
+
+
+

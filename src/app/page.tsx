@@ -1,5 +1,6 @@
-import { RadioButton } from "@/common/ui/radiobutton/radioButton";
-import TabsComponent from "@/common/ui/tabs/tabs";
+import { Flex, Text } from "@radix-ui/themes";
+import { Button } from "@/common/ui/button/button";
+import { Input } from "@/common/ui/input/input";
 
 export default function HomePage() {
   return (
@@ -10,7 +11,10 @@ export default function HomePage() {
       <Button variant={"primary"}>Click me4</Button>
       <Button variant={"secondary"}>Click me3</Button>
       <Button variant={"outline"}>Click me1</Button>
-      <Button variant={"ghost"}>Click me2</Button>
+      <Button variant={"text"}>Click me2</Button>
+      <Input />
+      <Input />
+      <Input />
     </Flex>
   );
 }
