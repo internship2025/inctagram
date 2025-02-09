@@ -1,0 +1,124 @@
+.Trigger {
+  min-width: 210px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 2px;
+  padding: 6px 12px;
+  font-size: 16px;
+  line-height: 24px;
+
+  background-color: #0D0D0D;
+
+
+  border: 1px solid #4c4c4c;
+  outline: none;
+  &:focus {
+    border: 2px solid #397df6;
+  }
+}
+
+
+.open {
+  border: 1px solid white;
+  background-color: #171717;
+}
+
+.var1{
+	color: white;
+}
+
+.var2{
+	color: #8D9094;
+}
+
+.disabled{
+	color: #4C4C4C
+}
+
+
+.Icon {
+  color: Var(--violet-11);
+}
+
+.Content {
+  background-color: #171717;
+  min-width:210px ;
+  border: 1px solid white;
+}
+
+/* .ItemText{
+
+	&:not(:first-child){
+	padding-top: 12px;
+	}
+} */
+
+.Viewport {
+  /* padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 12px; */
+}
+
+.Item {
+  font-size: 16px;
+  line-height: 24px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  color: white;
+  padding-left: 12px;
+
+}
+
+.Item[data-highlighted] {
+	/* Стили для Select.Item при наведении */
+	background-color: #333333;
+    outline: none;
+	color: #397DF6;
+  }
+
+  .ItemText{
+
+	padding-left: 12px;
+  }
+
+
+.Label {
+  padding: 0 25px;
+  font-size: 12px;
+  line-height: 25px;
+  color: var(--mauve-11);
+}
+
+.Separator {
+  /* position: absolute;
+	left: 0;
+	right: 0;
+	height: 1px;
+	background-color:black;
+	top: 0; Позиционирование линии вверху */
+}
+
+.ItemIndicator {
+  position: absolute;
+  left: 0;
+  width: 25px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ScrollButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 25px;
+  background-color: white;
+  color: var(--violet-11);
+  cursor: default;
+}
+
+
+.marg{
+  margin-right: 20px;
+}

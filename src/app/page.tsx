@@ -1,10 +1,13 @@
+'use client'
 import { Flex, Text } from "@radix-ui/themes";
 import { Button } from "@/common/ui/button/button";
 import { Input } from "@/common/ui/input/input";
+import { SelectDemo } from "@/common/ui/selected/Select";
+
 
 export default function HomePage() {
   return (
-    <Flex direction="column" gap="3" p="4">
+    <Flex direction="column" gap="3" p="4" >
       <Text size="5" weight="bold">
         Welcome to Radix UI with Next.js
       </Text>
@@ -15,6 +18,7 @@ export default function HomePage() {
       <Input />
       <Input />
       <Input />
+      <SelectDemo className='marg' onValueChange = {(val)=> console.log(val)} disabled = {false}/>
     </Flex>
   );
 }
