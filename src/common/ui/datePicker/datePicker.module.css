@@ -1,0 +1,374 @@
+.datePicker {
+
+  font-family: Arial, sans-serif;
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+
+
+}
+
+
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 8px;
+}
+
+.header button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.daysRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.dayName {
+  width: 14%;
+  text-align: center;
+  font-weight: bold;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.datePicker {
+  position: absolute;
+  font-family: Arial, sans-serif;
+ z-index: 2000;
+  border: 1px solid #333333;
+  border-radius: 2px;
+
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #171717;
+  top: 100%;
+  width: 300px;
+  height: 348px;
+  padding: 16px 24px;
+}
+
+.body {
+  height: 100%;
+}
+
+.row {
+}
+
+.inp {
+  position: relative;
+}
+
+.errorText {
+  font-size: 12px;
+  color: #cc1439;
+}
+
+.days-row {
+  color: #8d9094;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.icon {
+  position: absolute;
+}
+
+.wrapperIcon {
+  position: relative;
+  right: 32px;
+  top: 7px;
+}
+
+.input {
+  position: relative;
+  z-index: 1;
+  font-size: 16px;
+  line-height: 24px;
+  color: white;
+  background: #0D0D0D;
+  padding: 6px 0px 6px 12px;
+  border: 1px solid #333333;
+  cursor: pointer;
+  outline: none;
+  border-radius: 1px;
+  width: 158px;
+}
+
+.circleButton {
+  width: 36px;
+  height: 36px;
+  background-color: #4c4c4c !important;
+  border-radius: 50%;
+  position: relative;
+}
+
+.circleButton:last-child::before {
+  content: url("./../../../../public/right.svg");
+  position: absolute;
+  top: 9px;
+  left: 15px;
+}
+
+.circleButton:first-child::before {
+  content: url("./../../../../public/left.svg");
+  position: absolute;
+  top: 9px;
+  left: 15px;
+}
+
+.month {
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.navigation {
+  display: flex;
+}
+
+.navigation button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding-top: 16px;
+  padding-right: 24px;
+}
+
+.navigation button:hover {
+  background-color: #ddd;
+}
+
+.input:focus {
+  border: 2px solid #2f68cc;
+}
+
+.day.weekend {
+  color: #f23d61; /* Красный цвет для выходных */
+}
+
+.day.weekend:focus{
+  background-color: transparent;
+  outline: 2px solid #4C8DFF;
+  color: #f23d61;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.daysRow {
+  display: flex;
+  justify-content: space-between;
+}
+
+.dayName {
+  width: 14%;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  color: #4C4C4C;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.day {
+  width: 14%;
+  text-align: center;
+  padding: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 24px;
+  color: #ffffff;
+}
+
+
+
+.day.disabled {
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+
+
+.error {
+  color: #cc1439;
+  border: 1px solid #cc1439;
+}
+.day.otherMonth {
+  color: #8d9094;
+}
+
+
+
+.day.selected {
+  border-radius: 50%;
+  background-color: #234e99;
+  /* color: white; */
+}
+
+.past-monthSelected {
+  color: red; /* или любой другой стиль, который вы хотите применить */
+}
+
+.disabled {
+  background-color: #171717;
+  color: #8d9094;
+}
+
+.isSel {
+  color: red;
+}
+
+.mix {
+  border-radius: 50%;
+  background-color: #234e99;
+  color: white;
+}
+
+
+.range{
+  width: 317px;
+}
+
+
+
+
+
+.selectedRange{
+  width: 36px;
+  height: 36px;
+  background-color: #234e99;
+  border-radius: 0%;
+}
+
+
+.one{
+  
+  border-top-left-radius: 18px;
+  border-bottom-left-radius: 18px;
+  background-color: #234e99;
+  color: white ;
+}
+
+.tods{
+  font-weight: 700;
+}
+
+.active{
+  background-color: #171717;
+}
+
+
+.day.today {
+  color: #397df6;
+
+}
+
+
+
+.oneSel{
+  color: white !important;
+}
+
+.oneSel:focus{
+ background-color: transparent;
+ outline: 2px solid #4C8DFF;
+ color: 
+ #4C8DFF
+}
+
+
+.day.inRange {
+  background-color: #234E99;
+}
+
+.day.hovered{
+  /* width: 34px;
+  height: 34px; */
+  /* background-color: #234e99;
+  border-radius: 0%; */
+}
+
+
+
+.day:hover {
+  border-radius: 50%;
+  background-color: #2f68cc;
+}
+
+.selectedRange:hover{
+  width: 36px;
+  height: 36px;
+  background-color: #234e99;
+  border-radius: 0%;
+}
+
+
+.one:hover{
+  border-top-left-radius: 18px;
+  border-bottom-left-radius: 18px;
+  background-color: #234e99;
+  color: white;
+}
+
+.two{
+  border-top-right-radius: 18px;
+  border-bottom-right-radius: 18px;
+  background-color: #234e99;
+  color: white;
+}
+
+.two:hover{
+  border-top-right-radius: 18px;
+  border-bottom-right-radius: 18px;
+  background-color: #234e99;
+  color: white;
+}
+
+.day.otherMonth:hover {
+  color: #8d9094;
+}
+
+
+.day.weekend:hover {
+  color: #f23d61; /* Красный цвет для выходных */
+}
+
+.act{
+  font-weight: 700;
+  color: white;
+}

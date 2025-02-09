@@ -1,13 +1,17 @@
-'use client'
+"use client";
 import { Flex, Text } from "@radix-ui/themes";
 import { Button } from "@/common/ui/button/button";
 import { Input } from "@/common/ui/input/input";
 import { SelectDemo } from "@/common/ui/selected/Select";
-
+import { DatePicker } from "@/common/ui/datePicker/datePicker.stories";
+import { useState } from "react";
+import { CustomDatePicker } from "@/common/ui/datePicker/DatePicker";
 
 export default function HomePage() {
+  const [singleDate, setSingleDate] = useState<Date | null>(new Date());
+  const [dateRange, setDateRange] = useState<[Date, Date] | null>(null);
   return (
-    <Flex direction="column" gap="3" p="4" >
+    <Flex direction="column" gap="3" p="4">
       <Text size="5" weight="bold">
         Welcome to Radix UI with Next.js
       </Text>
@@ -18,7 +22,22 @@ export default function HomePage() {
       <Input />
       <Input />
       <Input />
-      <SelectDemo className='marg' onValueChange = {(val)=> console.log(val)} disabled = {false}/>
+      <SelectDemo
+        className="marg"
+        onValueChange={(val) => console.log(val)}
+        disabled={false}
+      />
+      <CustomDatePicker
+        isRange={true}
+        selectedDate={dateRange}
+        onDateChange={(range) => setDateRange(range as [Date, Date])}
+      />
+
+      <CustomDatePicker
+        disabled={false}
+        selectedDate={singleDate}
+        onDateChange={(date) => setSingleDate(date as Date)}
+      />
     </Flex>
   );
 }

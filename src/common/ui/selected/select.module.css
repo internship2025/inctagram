@@ -42,6 +42,8 @@
 }
 
 .Content {
+  position: relative;
+  z-index: 3000;
   background-color: #171717;
   min-width:210px ;
   border: 1px solid white;
@@ -119,6 +121,3 @@
 }
 
 
-.marg{
-  margin-right: 20px;
-}
