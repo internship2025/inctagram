@@ -1,6 +1,7 @@
 import { Flex, Text } from "@radix-ui/themes";
 import { Button } from "@/common/ui/button/button";
 import { Input } from "@/common/ui/input/input";
+import {Header} from "@/common/ui/header/header";
 
 export default function HomePage() {
   return (

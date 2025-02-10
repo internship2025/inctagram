@@ -51,12 +51,12 @@ export const Header = ({
                 <h1 className={styles.title}>Instagram</h1>
                 
                 <div className={styles.rightSection}>
-                    <Select.Root value={currentLang} onValueChange={handleLangChange}>
+                    <Select.Root value={currentLang} onValueChange={handleLangChange} defaultOpen={false}>
                         <Select.Trigger className={styles.selectTrigger}>
                             <Select.Value>
                                 <div className={styles.selectValue}>
                                     <Image 
-                                        src={currentLang === 'English' ? '/flags/FlagRU.svg' : '/flags/FlagUK.svg'}
+                                        src={currentLang === 'English' ? '/flags/FlagUK.svg' : '/flags/FlagRU.svg'}
                                         alt={currentLang === 'English' ? 'UK flag' : 'Russian flag'}
                                         width={20} 
                                         height={20} 
@@ -72,7 +72,10 @@ export const Header = ({
                         </Select.Trigger>
                     
                     <Select.Portal>
-                        <Select.Content className={styles.selectContent}>
+                        <Select.Content position="popper" side="bottom" align="start" sideOffset={5}
+                                        className={styles.selectContent}
+                                        onCloseAutoFocus={(event) => event.preventDefault()}
+                                        onOpenAutoFocus={(event) => event.preventDefault()}>
                             <Select.Viewport>
                                 <Select.Item value="English" className={styles.selectItem}>
                                     <Select.ItemText>
