@@ -24,8 +24,8 @@ export default function HomePage() {
       <Input />
       <Input />
       <RadioButton options={[
-                             {value: '1', label: 'RadioButton' },
-                             { value: '2', label: 'RadioButton'}
+                             {value: '1', label: 'RadioButton'},
+                             {value: '2', label: 'RadioButton'}
                             ]} />
       <TabsComponent tabs={tabData} variant={'primary'} />
     </Flex>
