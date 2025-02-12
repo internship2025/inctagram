@@ -39,18 +39,18 @@ export default function HomePage() {
         selectedDate={singleDate}
         onDateChange={(date) => setSingleDate(date as Date)}
       />
-      <RadioButton options={[{value: '1', label: 'RadioButton' },
-                            { value: '2', label: 'RadioButton'}]
-                            }
+      <RadioButton options={[
+                            {value: '1', label: 'RadioButton' },
+                            { value: '2', label: 'RadioButton'}
+                          ]}
       />
       
       <TabsComponent tabs={[
-    { value: "tab1", trigger: "Вкладка 1", content: "Контент для вкладки 1" },
-    { value: "tab2", trigger: "Вкладка 2", content: "Контент для вкладки 2" },
-    { value: "tab3", trigger: "Вкладка 3", content: "Контент для вкладки 3" },
-  ]} 
+                        { value: "tab2", trigger: "Вкладка 2", content: "Контент для вкладки 2" },
+                        { value: "tab3", trigger: "Вкладка 3", content: "Контент для вкладки 3" },
+                    ]} 
+                    variant={'secondary'}
       />
-
     
     </Flex>
   );

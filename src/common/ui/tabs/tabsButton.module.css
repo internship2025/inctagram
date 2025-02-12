@@ -7,7 +7,7 @@
   .list {
     display: flex;
     width: 100%;
-    border-bottom: 2px solid rgb(57, 125, 246);
+    border-bottom: 2px solid var(--color-info-500);
   }
   
   .trigger {
@@ -19,60 +19,60 @@
     align-items: center;
     justify-content: center;
     user-select: none;
-    font-size: 16px;
+    font-size: var(--line-height-s);
     font-weight: 600;
   }
   
   /* Primary Styles */
   .primaryTrigger {
-    color: rgb(57, 125, 246);
+    color: var(--color-info-500);
     background-color: transparent;
   }
   .primaryTrigger:hover {
-    background-color: rgb(35, 78, 153);
+    background-color: var(--color-info-900);
   }
   .primaryTrigger:focus {
-    outline: 2px solid rgb(57, 125, 246);
-    outline-offset: 0px; /* расстояние между контуром и границей элемента */
+    background-color: var(--color-info-700);
+    outline: 2px solid var(--color-info-500);
+    /* outline-offset: 0px;  */
+    
   }
   .primaryTrigger[data-state="active"] {
-    background-color: rgb(115, 165, 255);
-    border-bottom: 0px solid rgb(76, 76, 76);
+    background-color:var(--color-info-100);
+    /* border-bottom: 0px solid rgb(76, 76, 76); */
   }
   .primaryList {
-    border-bottom: 2px solid rgb(57, 125, 246);
+    border-bottom: 2px solid var(--color-info-500);
   }
   
   /* Secondary Styles */
   .secondaryTrigger {
-    color: rgb(76, 76, 76);
+    color:var(--color-dark-100) ;
     background-color: transparent;
   }
   .secondaryTrigger:hover {
-    background-color: rgb(35, 78, 153);
+    background-color:  var(--color-info-900);
   }
   .secondaryTrigger:focus {
-    outline: 2px solid rgb(57, 125, 246);
+    outline: 2px solid var(--color-info-500);
     outline-offset: 0px; /* расстояние между контуром и границей элемента */
-
-
   }
   .secondaryTrigger[data-state="active"] {
-    background-color: rgb(170, 170, 170);
-    border-bottom: 0px solid rgb(150, 150, 150);
+    background-color: var(--color-info-100);
+    border-bottom: 0px solid var(--color-dark-100);
   }
   .secondaryList {
-    border-bottom: 2px solid rgb(150, 150, 150);
+    border-bottom: 2px solid var(--color-dark-100);
   }
 
 .content {
 	flex-grow: 1;
 	padding: 20px;
-	background-color: rgb(0, 0, 0);
+	background-color: --color-dark-900;
 	border-bottom-left-radius: 6px;
 	border-bottom-right-radius: 6px;
 	outline: none;
 	&:focus {
-		box-shadow: 0 0 0 2px black;
+		box-shadow: 0 0 0 2px --color-dark-900;
 	}
 }
