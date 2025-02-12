@@ -49,7 +49,6 @@ export default function HomePage() {
                         { value: "tab2", trigger: "Вкладка 2", content: "Контент для вкладки 2" },
                         { value: "tab3", trigger: "Вкладка 3", content: "Контент для вкладки 3" },
                     ]} 
-                    variant={'secondary'}
       />
     
     </Flex>
