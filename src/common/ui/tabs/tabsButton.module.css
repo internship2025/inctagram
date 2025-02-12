@@ -68,11 +68,11 @@
 .content {
 	flex-grow: 1;
 	padding: 20px;
-	background-color: --color-dark-900;
+	background-color:var(--color-dark-900) ;
 	border-bottom-left-radius: 6px;
 	border-bottom-right-radius: 6px;
 	outline: none;
 	&:focus {
-		box-shadow: 0 0 0 2px --color-dark-900;
+		box-shadow: 0 0 0 2px var(--color-dark-900);
 	}
 }
