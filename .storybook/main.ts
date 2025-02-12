@@ -6,6 +6,7 @@ const config: StorybookConfig = {
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@storybook/addon-onboarding",
+    "@chromatic-com/storybook"
     "@storybook/addon-interactions",
   ],
   framework: {
@@ -15,6 +16,6 @@ const config: StorybookConfig = {
   docs: {
     autodocs: "tag",
   },
-  staticDirs: ['../src/common/styles'],
+  staticDirs: ['../src/common/styles', '../public']
 };
 export default config;

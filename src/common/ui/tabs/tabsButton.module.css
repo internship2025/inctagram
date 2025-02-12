@@ -1,0 +1,78 @@
+.root {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .list {
+    display: flex;
+    width: 100%;
+    border-bottom: 2px solid var(--color-info-500);
+  }
+  
+  .trigger {
+    all: unset;
+    padding: 0 20px;
+    height: 36px;
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    font-size: var(--line-height-s);
+    font-weight: 600;
+  }
+  
+  /* Primary Styles */
+  .primaryTrigger {
+    color: var(--color-info-500);
+    background-color: transparent;
+  }
+  .primaryTrigger:hover {
+    background-color: var(--color-info-900);
+  }
+  .primaryTrigger:focus {
+    background-color: var(--color-info-700);
+    outline: 2px solid var(--color-info-500);
+    /* outline-offset: 0px;  */
+    
+  }
+  .primaryTrigger[data-state="active"] {
+    background-color:var(--color-info-100);
+    /* border-bottom: 0px solid rgb(76, 76, 76); */
+  }
+  .primaryList {
+    border-bottom: 2px solid var(--color-info-500);
+  }
+  
+  /* Secondary Styles */
+  .secondaryTrigger {
+    color:var(--color-dark-100) ;
+    background-color: transparent;
+  }
+  .secondaryTrigger:hover {
+    background-color:  var(--color-info-900);
+  }
+  .secondaryTrigger:focus {
+    outline: 2px solid var(--color-info-500);
+    outline-offset: 0px; /* расстояние между контуром и границей элемента */
+  }
+  .secondaryTrigger[data-state="active"] {
+    background-color: var(--color-info-100);
+    border-bottom: 0px solid var(--color-dark-100);
+  }
+  .secondaryList {
+    border-bottom: 2px solid var(--color-dark-100);
+  }
+
+.content {
+	flex-grow: 1;
+	padding: 20px;
+	background-color:var(--color-dark-900) ;
+	border-bottom-left-radius: 6px;
+	border-bottom-right-radius: 6px;
+	outline: none;
+	&:focus {
+		box-shadow: 0 0 0 2px var(--color-dark-900);
+	}
+}

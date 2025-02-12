@@ -1,7 +1,9 @@
 import type { Preview } from "@storybook/react";
 import { themes } from '@storybook/theming'
+import '../src/app/styles/colors.css'
+import '../src/app/styles/boilerplate.css'
+import '../src/app/styles/typography.css'
 import '../src/common/styles/index.scss'
-import '../src/common/styles/colors.css'
 
 const preview: Preview = {
   parameters: {
@@ -23,7 +25,6 @@ const preview: Preview = {
         { name: 'gray', value: '#333333' },
       ],
     },
-
   },
 };
 
