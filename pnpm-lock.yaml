@@ -8,12 +8,6 @@ importers:
 
   .:
     dependencies:
-<<<<<<< HEAD
-      '@next/font':
-        specifier: ^14.2.15
-        version: 14.2.15(next@15.1.6(@babel/core@7.26.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.84.0))
-=======
->>>>>>> development
       '@radix-ui/react-accordion':
         specifier: ^1.2.2
         version: 1.2.2(@types/react-dom@19.0.3(@types/react@19.0.8))(@types/react@19.0.8)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -7002,13 +6996,6 @@ snapshots:
     dependencies:
       fast-glob: 3.3.1
 
-<<<<<<< HEAD
-  '@next/font@14.2.15(next@15.1.6(@babel/core@7.26.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.84.0))':
-    dependencies:
-      next: 15.1.6(@babel/core@7.26.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.84.0)
-
-=======
->>>>>>> development
   '@next/swc-darwin-arm64@15.1.6':
     optional: true
 

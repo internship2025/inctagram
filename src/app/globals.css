@@ -1,7 +1,6 @@
 @import './styles/colors.css';
 @import './styles/boilerplate.css';
 @import './styles/typography.css';
-@import '../common/styles/colors.css';
 
 :root {
     --background: #ffffff;
