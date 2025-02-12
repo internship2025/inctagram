@@ -2,7 +2,6 @@
 .Root {
   display: flex;
   gap: 44px;
-  background-color: rgba(0, 0, 0, 0.278);
   margin: 10px;
 }
 
