@@ -6,6 +6,7 @@ import { SelectDemo } from "@/common/ui/selected/Select";
 import { DatePicker } from "@/common/ui/datePicker/datePicker.stories";
 import { useState } from "react";
 import { CustomDatePicker } from "@/common/ui/datePicker/DatePicker";
+import { SuperPagination } from "@/common/ui/pagination/SuperPagination";
 
 export default function HomePage() {
   const [singleDate, setSingleDate] = useState<Date | null>(new Date());
@@ -38,6 +39,7 @@ export default function HomePage() {
         selectedDate={singleDate}
         onDateChange={(date) => setSingleDate(date as Date)}
       />
+      <SuperPagination />
     </Flex>
   );
 }
