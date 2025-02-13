@@ -1,12 +1,41 @@
-import { ComponentProps } from "react";
+import { ComponentPropsWithoutRef, ElementType } from "react";
 import styles from "./button.module.css";
+import { clsx } from "clsx";
 
-type Props = ComponentProps<"button"> & {
-  variant?: "primary" | "outline" | "text" | "secondary";
-};
+export const buttonVariant = [
+  "icon",
+  "link",
+  "primary",
+  "secondary",
+  "outline",
+  "text",
+] as const;
 
-export const Button = ({ variant = "primary", ...props }: Props) => {
-  const buttonClass = `${styles.button} ${styles[variant]}`;
+export type ButtonVariant = (typeof buttonVariant)[number];
 
-  return <button className={buttonClass} disabled={false} {...props} />;
+export type ButtonProps<T extends ElementType = "button"> = {
+  as?: T;
+  fullWidth?: boolean;
+  variant?: ButtonVariant;
+} & ComponentPropsWithoutRef<T>;
+
+export const Button = <T extends ElementType = "button">(
+  props: ButtonProps<T>,
+) => {
+  const {
+    as: Component = "button",
+    className,
+    fullWidth,
+    variant = "primary",
+    ...rest
+  } = props;
+
+  const classNames = clsx(
+    styles.button,
+    styles[variant],
+    fullWidth && styles.fullWidth,
+    className,
+  );
+
+  return <Component className={classNames} {...rest} />;
 };
