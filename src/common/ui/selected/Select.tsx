@@ -26,7 +26,7 @@ export const SelectDemo = ({
       onValueChange={onValueChange}
     >
       <Select.Trigger
-      style={{marginLeft: '20px'}}
+        style={{ marginLeft: "20px" }}
         className={`${styles.Trigger} ${open ? styles.open : ""}  ${styles[variant]} ${disabled ? styles.disabled : ""} ${className}`}
         disabled={disabled}
       >
