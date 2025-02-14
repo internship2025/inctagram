@@ -73,7 +73,7 @@
 }
 
 .Item[data-highlighted] {
-	/* Стили для Select.Item при наведении */
+	/* Стили для SuperSelect.Item при наведении */
 	background-color: #333333;
     outline: none;
 	color: #397DF6;

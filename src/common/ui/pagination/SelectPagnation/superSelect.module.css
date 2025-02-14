@@ -1,0 +1,68 @@
+.selectContainer {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.select {
+    all: unset; /* Убираем все стандартные стили */
+    display: inline-flex; /* Используем flexbox для выравнивания */
+    align-items: center; /* Вертикальное выравнивание */
+    justify-content: center; /* Горизонтальное выравнивание */
+    border-radius: 4px; /* Скругление углов */
+    padding: 0 15px; /* Отступы */
+    font-size: 13px; /* Размер шрифта */
+    line-height: 1; /* Высота строки */
+    height: 35px; /* Высота селекта */
+    gap: 5px; /* Отступ между текстом и иконкой */
+    background-color: rgb(23, 23, 23); /* Цвет фона */
+    box-shadow: 0 2px 10px var(--black-a7); /* Тень */
+    cursor: pointer; /* Курсор при наведении */
+}
+
+.select:focus {
+    box-shadow: 0 0 0 2px black; /* Тень при фокусе */
+}
+
+.CustomIcon {
+    width: 20px; /* Ширина иконки */
+    height: 20px; /* Высота иконки */
+    margin-left: auto; /* Сдвигаем иконку вправо */
+}
+.Content {
+    background-color: #171717;
+    border: 1px solid white;
+}
+.Viewport {
+    padding: 5px; /* Отступы внутри выпадающего списка */
+}
+
+.Item {
+    font-size: 16px;
+    line-height: 24px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    color: white;
+    padding-left: 12px;
+}
+
+.Item[data-disabled] {
+    color: var(--mauve-8); /* Цвет для отключенных элементов */
+    pointer-events: none; /* Запрет на взаимодействие с отключенными элементами */
+}
+
+.Item[data-highlighted] {
+    outline: none; /* Убираем контур */
+    background-color: var(--violet-9); /* Цвет фона для выделенных элементов */
+    color: var(--violet-1); /* Цвет текста для выделенных элементов */
+}
+
+.ScrollButton {
+    display: flex; /* Используем flexbox для выравнивания */
+    align-items: center; /* Вертикальное выравнивание */
+    justify-content: center; /* Горизонтальное выравнивание */
+    height: 25px; /* Высота кнопок прокрутки */
+    background-color: white; /* Цвет фона */
+    color: var(--violet-11); /* Цвет текста */
+    cursor: default; /* Курсор по умолчанию */
+}

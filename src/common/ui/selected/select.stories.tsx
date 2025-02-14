@@ -20,15 +20,13 @@ export const Primary: Story = {
 };
 
 export const Secondary: Story = {
-    args: {
-      variant: "var2",
-    },
-  };
-  
+  args: {
+    variant: "var2",
+  },
+};
 
-  export const Disabled: Story = {
-    args: {
-      disabled: true
-    },
-  };
-  
+export const Disabled: Story = {
+  args: {
+    disabled: true,
+  },
+};
