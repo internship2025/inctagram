@@ -2,3 +2,8 @@
 @import './styles/boilerplate.css';
 @import './styles/typography.css';
 
+:root {
+    --background: #ffffff;
+    --foreground: #171717;
+}
+
