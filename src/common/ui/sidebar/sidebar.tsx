@@ -83,10 +83,7 @@ export const Sidebar: FC<SidebarProps> = ({ isAuthenticated = true }) => {
                         {authNavItems.map((item) => (
                             <li 
                                 key={item.id} 
-                                className={`${styles.navItem} ${
-                                    item.id === 6 ? styles.withGapMedium : 
-                                    item.id === 7 ? styles.withGapLarge : ''
-                                }`}
+                                className={styles.navItem}
                             >
                                 <Link
                                     href={item.path}

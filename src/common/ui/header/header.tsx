@@ -98,10 +98,10 @@ export const Header = ({
                     </Select.Portal>
                     </Select.Root>
                     
-                    {showAuth && (
+                    {!showAuth && (
                         <div className={styles.authButtons}>
-                            <Button variant={"outline"}>Log in</Button>
-                            <Button variant={"primary"}>Sing up</Button>
+                            <Button variant={"outline"} onClick={onLoginClick}>Log in</Button>
+                            <Button variant={"primary"} onClick={onSignUpClick}>Sign up</Button>
                         </div>
                     )}
                 </div>

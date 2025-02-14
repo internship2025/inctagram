@@ -2,13 +2,13 @@
 import { Flex, Text } from "@radix-ui/themes";
 import { Button } from "@/common/ui/button/button";
 import { Input } from "@/common/ui/input/input";
-
-import { Header } from "@/common/ui/header/header";
-
 import { SelectDemo } from "@/common/ui/selected/Select";
 import { useState } from "react";
 import { CustomDatePicker } from "@/common/ui/datePicker/DatePicker";
-
+import { RadioButton } from "@/common/ui/radiobutton/radioButton";
+import TabsComponent from "@/common/ui/tabs/tabs";
+import { Header } from "@/common/ui/header/header";
+import { Sidebar } from "@/common/ui/sidebar/sidebar";
 
 export default function HomePage() {
   const [singleDate, setSingleDate] = useState<Date | null>(new Date());
@@ -62,6 +62,9 @@ export default function HomePage() {
           },
         ]}
       />
+      <Header showAuth={false} />
+      <Header showAuth={true} />
+      <Sidebar isAuthenticated={true} />
     </Flex>
   );
 }

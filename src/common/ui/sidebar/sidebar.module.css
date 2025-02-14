@@ -9,7 +9,7 @@
     /*left: 0;*/
     /*top: 60px;*/
     transition: width 0.3s ease;
-    border: 1px solid var(--color-light-100);
+    border: 1px solid var(--color-dark-100);
 }
 
 .nav {
@@ -26,11 +26,12 @@
     margin-bottom: 8px;
 }
 
-.withGapMedium {
+/* Отступы для конкретных элементов */
+.navItem:nth-child(6) {
     margin-top: 60px;
 }
 
-.withGapLarge {
+.navItem:nth-child(8) {
     margin-top: 180px;
 }
 
