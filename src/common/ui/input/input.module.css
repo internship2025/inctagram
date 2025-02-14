@@ -128,3 +128,8 @@
 .input.search {
     padding: 8px 30px 8px 41px;
 }
+
+
+.fullWidth {
+    max-width: 100%;
+}

@@ -14,6 +14,7 @@ type Props = ComponentProps<"input"> & {
   showPassword?: boolean;
   type?: InputType;
   disabled?: boolean;
+  fullWidth?: boolean
 };
 
 export const Input = ({
@@ -23,6 +24,7 @@ export const Input = ({
   showPassword = false,
   type = "text",
   disabled = false,
+  fullWidth,
   ...props
 }: Props) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -41,7 +43,7 @@ export const Input = ({
       : type;
 
   return (
-    <div className={styles.inputWrapper}>
+    <div className={`${styles.inputWrapper} ${fullWidth ? styles.fullWidth : ''}`}>
       {label && <label className={styles.label}>{label}</label>}
       <div className={styles.inputContainer}>
         {type === "search" && !disabled && (

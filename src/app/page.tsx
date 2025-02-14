@@ -9,10 +9,27 @@ import { RadioButton } from "@/common/ui/radiobutton/radioButton";
 import TabsComponent from "@/common/ui/tabs/tabs";
 import { Header } from "@/common/ui/header/header";
 import { Sidebar } from "@/common/ui/sidebar/sidebar";
+import { Modal } from "@/common/ui/modal/modal";
+
+import googleImg from '@/common/ui/modal/assets/google.svg'
+import gitImg from '@/common/ui/modal/assets/git.svg'
+import { SignUp } from "@/common/ui/modal/components/SignUp";
 
 export default function HomePage() {
   const [singleDate, setSingleDate] = useState<Date | null>(new Date());
   const [dateRange, setDateRange] = useState<[Date, Date] | null>(null);
+
+  const [isOpen, onOpenChange] = useState(false)
+
+  function onOpenChangeHandler(){
+    onOpenChange(true)
+  }
+
+  const closeModalHandler = () => {
+    onOpenChange(false)
+  }
+
+
   return (
     <Flex direction="column" gap="3" p="4">
       <Text size="5" weight="bold">
@@ -65,6 +82,11 @@ export default function HomePage() {
       <Header showAuth={false} />
       <Header showAuth={true} />
       <Sidebar isAuthenticated={true} />
+      <button onClick={onOpenChangeHandler}>ПРОВЕРОЧНАЯ</button>
+      <Modal title = {'Sign Up'} icons = {[{src: googleImg, width: 36, height: 36 }, {src: gitImg, width: 36, height: 36 }]} open = {isOpen} onOpenChange={closeModalHandler}>
+  <SignUp/>
+ </Modal>
+
     </Flex>
   );
 }
