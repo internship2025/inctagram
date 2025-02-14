@@ -5,7 +5,10 @@ import { Input } from "@/common/ui/input/input";
 import { SelectDemo } from "@/common/ui/selected/Select";
 import { useState } from "react";
 import { CustomDatePicker } from "@/common/ui/datePicker/DatePicker";
-
+import { RadioButton } from "@/common/ui/radiobutton/radioButton";
+import TabsComponent from "@/common/ui/tabs/tabs";
+import { Header } from "@/common/ui/header/header";
+import { Sidebar } from "@/common/ui/sidebar/sidebar";
 
 export default function HomePage() {
   const [singleDate, setSingleDate] = useState<Date | null>(new Date());
@@ -38,6 +41,30 @@ export default function HomePage() {
         selectedDate={singleDate}
         onDateChange={(date) => setSingleDate(date as Date)}
       />
+      <RadioButton
+        options={[
+          { value: "1", label: "RadioButton" },
+          { value: "2", label: "RadioButton" },
+        ]}
+      />
+
+      <TabsComponent
+        tabs={[
+          {
+            value: "tab2",
+            trigger: "Вкладка 2",
+            content: "Контент для вкладки 2",
+          },
+          {
+            value: "tab3",
+            trigger: "Вкладка 3",
+            content: "Контент для вкладки 3",
+          },
+        ]}
+      />
+      <Header showAuth={false} />
+      <Header showAuth={true} />
+      <Sidebar isAuthenticated={true} />
     </Flex>
   );
 }
