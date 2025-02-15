@@ -21,6 +21,7 @@
     background-color: var(--color-light-100);
     color: var(--color-dark-300);
     transition: border-color 0.3s ease, background-color 0.3s ease;
+ 
 }
 
 .input:focus {
@@ -78,7 +79,7 @@
 .togglePassword {
     position: absolute;
     right: 8px;
-    top: 50%;
+    top: 73%;
     transform: translateY(-50%);
     background: none;
     border: none;
@@ -132,4 +133,6 @@
 
 .fullWidth {
     max-width: 100%;
+    text-align: left;
+   
 }

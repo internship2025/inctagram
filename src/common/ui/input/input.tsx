@@ -5,6 +5,7 @@ import styles from "./input.module.css";
 import EyeIcon from "@/common/ui/input/components/EyeIcon";
 import Image from "next/image";
 import searchIco from "./assets/searchIco.svg";
+import EyeOff from "./components/EyeOff";
 
 type InputType = "text" | "password" | "email" | "search";
 
@@ -64,7 +65,8 @@ export const Input = ({
             className={styles.togglePassword}
             disabled={disabled}
           >
-            <EyeIcon />
+            {isPasswordVisible ? <EyeIcon/> : <EyeOff />}
+            
           </button>
         )}
       </div>

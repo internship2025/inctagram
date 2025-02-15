@@ -38,8 +38,7 @@ export const Modal = ({
           ""
         )}
 
-		{children}
-     
+		{children} 
       </Dialog.Content>
     </Dialog.Portal>
   </Dialog.Root>

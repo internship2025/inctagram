@@ -16,7 +16,7 @@ export const CheckBox = ({
   ...props
 }: Props) => {
   const [checked, setChecked] = useState(false);
-  const checkedHandler = (checked) => {
+  const checkedHandler = (checked: boolean) => {
     if (!disabled) {
       setChecked(checked);
     }
