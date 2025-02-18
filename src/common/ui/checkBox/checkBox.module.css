@@ -6,6 +6,8 @@ body{
 }
 
 .container{
+display: flex;
+align-items: center;
 
 }
 
@@ -63,8 +65,9 @@ body{
     font-size: 14px;
     font-weight: 400;
     color:#EDF3FA;
-    position: absolute; /* Позволяет позиционировать по отношению к .Root */
-    margin-left: 29px;
+
+    margin-left: 13px;
+
 }
 
 .disabled {

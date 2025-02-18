@@ -70,7 +70,7 @@ export const Input = ({
           </button>
         )}
       </div>
-      {error && <p className={styles.errorText}>{error}</p>}
+      {/* {error && <p className={styles.errorText}>{error}</p>} */}
     </div>
   );
 };
