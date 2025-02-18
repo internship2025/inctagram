@@ -21,6 +21,7 @@
     background-color: var(--color-light-100);
     color: var(--color-dark-300);
     transition: border-color 0.3s ease, background-color 0.3s ease;
+ margin-bottom: 0px;
 }
 
 .input:focus {
@@ -37,7 +38,7 @@
 }
 
 .label {
-    font-size: var(--font-size-m);
+    font-size: 14px;
     color: var(--color-light-900);
     font-weight: var(--font-weight-regular);
     line-height: var(--line-height-m);
@@ -127,4 +128,11 @@
 
 .input.search {
     padding: 8px 30px 8px 41px;
+}
+
+
+.fullWidth {
+    max-width: 100%;
+    text-align: left;
+   
 }

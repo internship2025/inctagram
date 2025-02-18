@@ -6,19 +6,21 @@ body{
 }
 
 .container{
-    display: flex; /* Включаем Flexbox для контейнера */
-    align-items: center;
+display: flex;
+align-items: center;
+
 }
 
 .Root { /*Это основной компонент чекбокса. Он отвечает за отображение и состояние чекбокса*/
     all: unset; /* Сбрасывает все стандартные стили, чтобы использовать только собственные стили. */
+    display: flex;
     width: 16px; /* Устанавливает ширину чекбокса. */
     height: 16px; /* Устанавливает высоту чекбокса. */
     border: 2px solid #EDF3FA;
     border-radius: 3px;
     justify-content: center; /* Выравнивает содержимое по горизонтали по центру. */
     position: relative; /* Добавлено для позиционирования ::after правильно */
-
+    align-items: center;
     &::after { /* Псевдоэлемент для круга */
         content: '';
         position: absolute; /* Позволяет позиционировать по отношению к .Root */
@@ -63,8 +65,9 @@ body{
     font-size: 14px;
     font-weight: 400;
     color:#EDF3FA;
-    position: absolute; /* Позволяет позиционировать по отношению к .Root */
-    margin-left: 29px;
+
+    margin-left: 13px;
+
 }
 
 .disabled {

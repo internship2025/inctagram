@@ -8,7 +8,6 @@ import { CustomDatePicker } from "./DatePicker";
 const meta: Meta<typeof CustomDatePicker> = {
   title: "Example/Components/DatePicker",
   component: CustomDatePicker,
- 
 };
 
 export default meta;
