@@ -1,18 +1,17 @@
 "use client";
 import { Header } from "@/shared/ui/header/header";
-import { ModalRadix } from "@/features/auth/ui/sign-up/sign-up-page";
 import { useState } from "react";
+import { SignUpModal } from "@/features/auth/ui/signUpModal/SignUpModal";
 
 export default function HomePage() {
   const [isSignUp, setIsSignUp] = useState(false);
 
-  const onSignUpHandler = () => {
-    setIsSignUp(true);
-  };
   return (
     <>
-      <Header showAuth={false} onSignUpClick={onSignUpHandler} />;
-      {isSignUp && <ModalRadix />}
+      <Header showAuth={false} onSignUpClick={() => setIsSignUp(true)} />
+      {isSignUp && (
+        <SignUpModal open={true} onClose={() => setIsSignUp(false)} />
+      )}
     </>
   );
 }
