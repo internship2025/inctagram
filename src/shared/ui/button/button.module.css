@@ -105,3 +105,7 @@
 .text:disabled {
     color: var(--color-info-900);
 }
+
+.fullWidth{
+    width: 100%;
+}
