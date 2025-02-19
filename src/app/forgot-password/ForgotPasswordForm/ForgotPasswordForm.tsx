@@ -40,6 +40,18 @@ const onSubmit = async (data: ForgotPasswordSchema) => {
       try {
         // API запрос на сброс пароля
         console.log('Form data:', data)
+        // const response = await fetch('https://inctagram.work/api/v1/auth/password-recovery', {
+        //   method: 'POST',
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //   }, 
+        //   body: JSON.stringify({
+        //     email: data.email,
+        //     recaptcha: "true",
+        //     "base_url": "https://localhost:3000"
+        //   })        
+        // });
+        // console.log('Response:', response)
         // После успешной отправки показываем сообщение
       setSuccessMessage(`We have sent a link to confirm your email to ${data.email}`);
       } catch (error) {
@@ -109,9 +121,9 @@ const isSubmitDisabled = !isValid || !isRecaptchaVerified;
 
           <Button
             as="a"
-            variant="link"
+            variant="text"
             href="/sign-in"
-            fullWidth
+            className={styles.backButton}
           >
             Back to Sign In
           </Button>
