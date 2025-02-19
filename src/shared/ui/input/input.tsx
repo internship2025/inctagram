@@ -5,6 +5,7 @@ import styles from "./input.module.css";
 import EyeIcon from "@/shared/ui/input/components/EyeIcon";
 import Image from "next/image";
 import searchIco from "./assets/searchIco.svg";
+import EyeOff from "./components/EyeOff";
 
 type InputType = "text" | "password" | "email" | "search";
 
@@ -14,6 +15,7 @@ type Props = ComponentProps<"input"> & {
   showPassword?: boolean;
   type?: InputType;
   disabled?: boolean;
+  fullWidth?: boolean
 };
 
 export const Input = ({
@@ -23,6 +25,7 @@ export const Input = ({
   showPassword = false,
   type = "text",
   disabled = false,
+  fullWidth,
   ...props
 }: Props) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -41,7 +44,7 @@ export const Input = ({
       : type;
 
   return (
-    <div className={styles.inputWrapper}>
+    <div className={`${styles.inputWrapper} ${fullWidth ? styles.fullWidth : ''}`}>
       {label && <label className={styles.label}>{label}</label>}
       <div className={styles.inputContainer}>
         {type === "search" && !disabled && (
@@ -62,11 +65,12 @@ export const Input = ({
             className={styles.togglePassword}
             disabled={disabled}
           >
-            <EyeIcon />
+            {isPasswordVisible ? <EyeIcon/> : <EyeOff />}
+            
           </button>
         )}
       </div>
-      {error && <p className={styles.errorText}>{error}</p>}
+      {/* {error && <p className={styles.errorText}>{error}</p>} */}
     </div>
   );
 };

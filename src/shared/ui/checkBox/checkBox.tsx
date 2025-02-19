@@ -1,32 +1,30 @@
 import styles from "./checkBox.module.css";
 import { Checkbox } from "radix-ui";
-import { ComponentProps, useState } from "react";
+import { ComponentProps } from "react";
 import CheckmarkIcon from "@/shared/ui/checkBox/components/CheckmarkIcon";
 
-type Props = ComponentProps<"input"> & {
+type Props = Omit<ComponentProps<"input">, "value"> & {
   variant?: "default" | "disable";
   disabled?: boolean;
   txt?: string;
+  onChange: (checked: boolean) => void; // Кастомный onChange
+  checked: boolean; // checked обязателен
 };
 
 export const CheckBox = ({
   variant = "default",
   disabled = false,
   txt,
+  onChange,
+  checked,
   ...props
 }: Props) => {
-  const [checked, setChecked] = useState(false);
-  const checkedHandler = (checked) => {
-    if (!disabled) {
-      setChecked(checked);
-    }
-  };
-
   return (
     <div className={styles.container}>
       <Checkbox.Root
         className={`${styles.Root} ${disabled ? styles.disabled : ""}`}
-        onCheckedChange={checkedHandler}
+        onCheckedChange={onChange}
+        checked={checked}
         data-disabled={disabled}
         disabled={disabled}
         id="ch1"
