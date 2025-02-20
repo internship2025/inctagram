@@ -16,7 +16,7 @@ export const CheckBox = ({
   ...props
 }: Props) => {
   const [checked, setChecked] = useState(false);
-  const checkedHandler = (checked) => {
+  const checkedHandler = (checked: boolean) => {
     if (!disabled) {
       setChecked(checked);
     }
@@ -27,7 +27,6 @@ export const CheckBox = ({
       <Checkbox.Root
         className={`${styles.Root} ${disabled ? styles.disabled : ""}`}
         onCheckedChange={checkedHandler}
-        data-disabled={disabled}
         disabled={disabled}
         id="ch1"
       >

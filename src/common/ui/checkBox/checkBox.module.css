@@ -1,75 +1,72 @@
-/* !!!! Вынести в общие стили*/
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-
-body{
-    background-color: rgb(13, 13, 13);
-}
-
 .container{
-    display: flex; /* Включаем Flexbox для контейнера */
+    display: flex;
     align-items: center;
 }
 
-.Root { /*Это основной компонент чекбокса. Он отвечает за отображение и состояние чекбокса*/
-    all: unset; /* Сбрасывает все стандартные стили, чтобы использовать только собственные стили. */
-    width: 16px; /* Устанавливает ширину чекбокса. */
-    height: 16px; /* Устанавливает высоту чекбокса. */
-    border: 2px solid #EDF3FA;
+.Root {
+    all: unset;
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--color-light-100);
     border-radius: 3px;
-    justify-content: center; /* Выравнивает содержимое по горизонтали по центру. */
-    position: relative; /* Добавлено для позиционирования ::after правильно */
+    justify-content: center;
+    position: relative;
 
     &::after { /* Псевдоэлемент для круга */
         content: '';
-        position: absolute; /* Позволяет позиционировать по отношению к .Root */
-        top: 50%; /* Центрируем круг */
-        left: 50%; /* Центрируем круг */
-        width: 36px; /* Устанавливаем ширину круга */
-        height: 36px; /* Устанавливаем высоту круга */
-        border-radius: 50%; /* Делаем его круглым */
-        transform: translate(-50%, -50%); /* Центрируем круг */
-        opacity: 0; /* Начальная непрозрачность круга */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 0;
         z-index: -1;
-        transition: opacity 0.1s; /* Анимация изменения непрозрачности */
+        transition: opacity 0.1s;
     }
     &[data-state="checked"]{
-    background-color: #EDF3FA;
+    background-color: var(--color-light-100);
     }
 
     &:active::after {
-    background: #4C4C4C; /* Цвет круга при наведении (черный с прозрачностью) */
-    opacity: 1; /* Делаем круг видимым */
+    background: var(--color-dark-100);
+    opacity: 1;
     }
     &:hover::after {
-        background: #333333; /* Цвет круга при наведении (черный с прозрачностью) */
-        opacity: 1; /* Делаем круг видимым */
+        background: var(--color-dark-300);
+        opacity: 1;
     }
     &:focus::after {
-        background: #171717; /* Цвет круга при наведении (черный с прозрачностью) */
-        opacity: 1; /* Делаем круг видимым */
+        background: var(--color-dark-500);
+        opacity: 1;
     }
     &disabled{
-        border: 2px solid #8D9094;
-        cursor: not-allowed; /* Указывает, что элемент недоступен для взаимодействия */
+        border: 2px solid var(--color-light-900);
+        cursor: not-allowed;
     }
 }
 
 .Indicator {
-    color: rgb(13, 13, 13); /* Устанавливает цвет содержимого индикатора (в данном случае иконки)*/
+    color: var(--color-dark-900);
+    position: absolute;
+    top: calc(50% + 10px);
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .Label {
-    font-family: Inter;
-    font-size: 14px;
-    font-weight: 400;
-    color:#EDF3FA;
-    position: absolute; /* Позволяет позиционировать по отношению к .Root */
+    font-family: var(--font-family-primary);
+    font-size: var(--font-size-m);
+    font-weight: var(--font-weight-regular);
+    color:var(--color-light-100);
+    position: absolute;
     margin-left: 29px;
 }
 
 .disabled {
-    border-color: #8D9094;
+    border-color: var(--color-light-900);
     cursor: not-allowed;
-    color: #8D9094;
+    color: var(--color-light-900);
 }
 
