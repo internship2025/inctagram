@@ -9,9 +9,12 @@ const meta: Meta<typeof CheckBox> = {
       control: "select",
       options: ["default", "disable"],
     },
-    txt:{
-      control:"text"
-    }
+    txt: {
+      control: "text",
+    },
+    disabled: {
+      control: "boolean",
+    },
   },
 };
 
@@ -21,28 +24,28 @@ type Story = StoryObj<typeof CheckBox>;
 
 export const WithText: Story = {
   args: {
-    variant: 'default',
-    txt: 'Check me'
+    variant: "default",
+    txt: "Check me",
   },
 };
 
 export const WithoutText: Story = {
   args: {
-    variant: 'default',
+    variant: "default",
   },
 };
 
 export const DisableWithText: Story = {
   args: {
-    variant: 'disable',
-    txt: 'Check me',
+    variant: "disable",
+    txt: "Check me",
     disabled: true,
   },
 };
 
 export const DisableWithoutText: Story = {
   args: {
-    variant: 'disable',
+    variant: "disable",
     disabled: true,
   },
 };
