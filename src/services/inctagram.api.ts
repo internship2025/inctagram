@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-export const ictagramApi = createApi({
+export const inctagramApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "https://inctagram.work/api/",
     credentials: "include",

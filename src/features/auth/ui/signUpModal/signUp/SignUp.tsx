@@ -12,6 +12,8 @@ import Image from "next/image";
 import Link from "next/link";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useSignupMutation } from "@/features/auth/api/auth.api";
+import { useState } from "react";
 
 export type InputType = {
   username: string;
@@ -26,7 +28,7 @@ type SignUp = {
   onClose?: () => void;
 };
 
-export const SignUp = ({ onClose, icons }: SignUp) => {
+export const SignUp = ({ icons }: SignUp) => {
   const schema = yup.object().shape({
     email: yup
       .string()
@@ -56,13 +58,26 @@ export const SignUp = ({ onClose, icons }: SignUp) => {
     formState: { errors },
   } = useForm<InputType>({ resolver: yupResolver(schema), mode: "onBlur" });
 
+  const [signup, { isLoading }] = useSignupMutation();
+  const [modalOpen, setModalOpen] = useState(false);
+
   const {
     field: { value, onChange },
   } = useController({ name: "approval", control });
 
-  function handler(data: InputType) {
-    console.log(data);
-  }
+  const handler: SubmitHandler<InputType> = async (data) => {
+    try {
+      await signup({
+        userName: data.username,
+        email: data.email,
+        password: data.password,
+      })
+        .unwrap()
+        .then(() => {
+          setModalOpen(true);
+        });
+    } catch (error) {}
+  };
 
   let images = icons?.map((it, ind) => {
     return (
