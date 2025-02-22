@@ -84,7 +84,6 @@ export const Header = ({
                 sideOffset={5}
                 className={styles.selectContent}
                 onCloseAutoFocus={(event) => event.preventDefault()}
-                onOpenAutoFocus={(event) => event.preventDefault()}
               >
                 <Select.Viewport>
                   <Select.Item value="English" className={styles.selectItem}>
