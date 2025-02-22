@@ -25,7 +25,6 @@ export const authApi = inctagramApi.injectEndpoints({
     signup: builder.mutation<void, SignUpArgs>({
       query: (args) => ({
         body: { ...args, baseUrl },
-        credentials: "include",
         method: "POST",
         url: "/v1/auth/registration",
       }),
