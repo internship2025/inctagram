@@ -11,7 +11,7 @@ type Modal = {
   marginTop?: number;
   textAlign?: "left" | "right" | "center";
   open: boolean;
-  onClose: () => void;
+  onClose?: () => void;
   isClose?: boolean;
 };
 
