@@ -4,6 +4,7 @@ import * as yup from "yup";
 import styles from "./CreateNewPasswordForm.module.css";
 import { Input } from "@/shared/ui/input/input";
 import { Button } from "@/shared/ui/button/button";
+import { useCreateNewPasswordMutation } from "@/features/auth/api/auth.api";
 
 export type InputType = {
   password: string;
@@ -11,27 +12,58 @@ export type InputType = {
 };
 
 export const CreateNewPasswordForm = () => {
+  const [createNewPassword] = useCreateNewPasswordMutation();
+
+  const searchParams = new URLSearchParams(window.location.search);
+  const recoveryCode = searchParams.get("recoveryCode");
+
   const schema = yup.object().shape({
     password: yup
       .string()
-      .min(5, "Minimum number of characters 6")
-      .max(19, "Maximum number of characters 20")
-      .required("Password is required"),
-    passwordConfirmation: yup.string().required("Password is required"),
+      .required("Password is required")
+      .min(6, "Password must be at least 6 characters")
+      .max(20, "Password must not exceed 20 characters")
+      .matches(/[0-9]/, "Password must contain at least one number")
+      .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
+      .matches(/[a-z]/, "Password must contain at least one lowercase letter")
+      .matches(
+       /^[A-Za-z0-9!\"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]+$/,
+        "Password must contain at least one special character"
+      ),
+    passwordConfirmation: yup
+      .string()
+      .required("Password confirmation is required")
+      .oneOf([yup.ref("password")], "Passwords must match")
   });
+  
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<InputType>({ resolver: yupResolver(schema), mode: "onBlur" });
 
-  function handler(data: InputType) {
-    console.log(data);
+  async function onClick(data: InputType) {
+    
+    try {
+      console.log('Sending data:', data);
+      const res = await createNewPassword({
+        ...data,
+        recoveryCode: recoveryCode as string
+      })
+      console.log('Success:', res);
+    } catch (err) {
+      const error = err as any;
+      console.log('Error details:', {
+        status: error.status,
+        data: error.data,
+        error: error
+      });
+    }
   }
 
   return (
     <div className={styles.wrapper}>
-      <form onSubmit={handleSubmit(handler)}>
+      <form onSubmit={handleSubmit(onClick)}>
         <div className={styles.inputWrapper}>
           <Input
             error={errors?.password?.message}

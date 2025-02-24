@@ -1,7 +1,8 @@
 export const PATH = {
   CONFIRM_EMAIL: "/auth/registration-confirmation",
-  PASSWORD_RECOVERY: "/auth/recovery", // forgot password page
-  PASSWORD_RESET: "/auth/password-reset", // creating new password
+  PASSWORD_RECOVERY: "/auth/password-recovery", // forgot password page
+  CREATE_NEW_PASSWORD: "/auth/new-password", // creating new password
+  PASSWORD_RESET: "/auth/password-reset", 
   PRIVACY_POLICY: "/privacy-policy",
   PROFILE: "/profile/:id",
   PROFILE_SETTINGS: "/profile/:id/settings",

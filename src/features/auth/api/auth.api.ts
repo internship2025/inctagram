@@ -1,5 +1,5 @@
 import { inctagramApi } from "@/services/inctagram.api";
-import { baseUrl } from "@/shared/constants/app-paths";
+import { baseUrl, PATH } from "@/shared/constants/app-paths";
 
 export type MeResponse = {
   userId: number;
@@ -13,6 +13,17 @@ export type SignUpArgs = {
   email: string;
   password: string;
 };
+
+export type ForgotPassword = {
+  email: string
+  recaptcha: string
+}
+
+export type CreateNewPassword = {
+  password: string
+  passwordConfirmation: string
+  recoveryCode: string
+}
 
 export const authApi = inctagramApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -29,7 +40,21 @@ export const authApi = inctagramApi.injectEndpoints({
         url: "/v1/auth/registration",
       }),
     }),
+    forgotPassword: builder.mutation<void, ForgotPassword>({
+      query: (args) => ({
+        body: args,
+        method:"POST",
+        url: PATH.PASSWORD_RECOVERY
+      })
+    }),
+    createNewPassword: builder.mutation<void, CreateNewPassword>({
+      query: (args) => ({
+        body: args,
+        method: "POST",
+        url: PATH.CREATE_NEW_PASSWORD
+      })
+    })
   }),
 });
 
-export const { useMeQuery, useSignupMutation } = authApi;
+export const { useMeQuery, useSignupMutation, useForgotPasswordMutation, useCreateNewPasswordMutation } = authApi;

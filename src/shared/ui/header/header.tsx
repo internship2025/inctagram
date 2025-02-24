@@ -4,6 +4,9 @@ import styles from "./header.module.css";
 import Image from "next/image";
 import { useState } from "react";
 import { Button } from "@/shared/ui/button/button";
+import { ForgotPasswordModal } from "@/shared/ui/modal/components/forgotPasswordModal/forgotPasswordModal";
+import { ForgotPasswordConfirmationModal } from "../modal/components/ForgotPasswordConfirmationModal/ForgotPasswordConfirmationModal";
+import { CreateNewPasswordFormModule } from "../modal/components/CreateNewPasswordFormModule/CreateNewPasswordFormModule";
 
 const ChevronDownIcon = () => (
   <svg
@@ -37,16 +40,57 @@ export const Header = ({
   onSignUpClick,
 }: HeaderProps) => {
   const [currentLang, setCurrentLang] = useState("English");
+  const [showModal, setShowModal] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false); 
+  const [showCreateModal, setShowCreateModal] = useState(false); 
 
   const handleLangChange = (value: string) => {
     setCurrentLang(value);
     onLangChange?.(value);
   };
 
+  const passwordHandler = () => {
+    setShowModal(true);
+  };
+
+  const confirmHandler = () => {
+    setShowConfirmModal(true);
+  };
+
+  const newPasswordHandler = () => {
+    setShowCreateModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  const handleCloseConfirmModal = () => {
+    setShowConfirmModal(false);
+  };
+
+  const handleCloseCreateModal = () => {
+    setShowCreateModal(false);
+  };
+
   return (
     <header className={styles.header}>
       <div className={styles.container}>
         <h1 className={styles.title}>Instagram</h1>
+        <Button variant={"outline"} onClick={passwordHandler}>
+          ForgotPassword
+        </Button>
+        <Button variant={"outline"} onClick={confirmHandler}>
+          ForgotPasswordConfirm
+        </Button>
+
+        <Button variant={"outline"} onClick={newPasswordHandler}>
+          CreateNewPassword
+        </Button>
+
+        <ForgotPasswordModal open={showModal} onClose={handleCloseModal} />
+        <ForgotPasswordConfirmationModal open={showConfirmModal} onClose={handleCloseConfirmModal} />
+        <CreateNewPasswordFormModule open={showCreateModal} onClose={handleCloseCreateModal} />
 
         <div className={styles.rightSection}>
           <Select.Root
