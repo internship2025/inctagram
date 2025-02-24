@@ -31,6 +31,7 @@ export const PaginationLogic = ({
               disabled={currentPage === index + 1}
               callback={() => handlePageClick(index + 1)}
               pageNumber={index + 1}
+              key={index}
             />
           );
         })}

@@ -15,7 +15,6 @@ export default function HomePage() {
         {isSignUp && (
           <SignUpModal open={true} onClose={() => setIsSignUp(false)} />
         )}
-        <Pagination />
       </StoreProvider>
     </>
   );
