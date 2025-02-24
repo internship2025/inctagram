@@ -1,50 +1,78 @@
+.root {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+}
+
+.selectContainer {
+    display: flex;
+    gap: 6px;
+}
+
 .pagination {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    margin: 20px 0;
-    padding-left: 10px;
-}
-
-.arrow, .pageNumber {
-    background-color: rgb(0, 0, 0);
-    color: white;
-    border: none;
-    border-radius: 2px;
-    width: 24px;
     height: 24px;
-    cursor: pointer;
-    transition: background-color 0.3s;
 }
-
-.arrow:disabled {
-    color: rgb(76, 76, 76);;
-    cursor: not-allowed;
+.text {
+    font-size: 16px;
+    color: var(--color-light-100);
+    margin: 0 10px;
 }
 
 .list {
     display: flex;
-    gap: 12px;
+    margin: 0 0 0 4px;
+    padding: 0;
+    list-style: none;
 }
 
-.pageNumber:hover {
-    background-color: rgb(23, 23, 23);;
+.li a.selected {
+    color: var(--color-dark-900);
+    background-color: var(--color-light-100);
 }
 
-.pageNumber:disabled {
-    background-color: rgb(255, 255, 255);
-    color: rgb(0, 0, 0);
-    cursor: not-allowed;
-}
+.li a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-.pageNumber:focus {
-    outline: none;
-    border: 2px solid rgb(47, 104, 204);
-}
+    width: 24px;
+    height: 24px;
+    margin-right: 4px;
 
-.text {
     font-size: 14px;
-    font-weight: 400;
-    color: rgb(255, 255, 255);
-    margin: 8px 10px;
+    color: var(--color-light-100);
+    text-decoration: none;
+
+    border-radius: 1px;
+
+    &:hover {
+        cursor: pointer;
+        background-color: var(--color-dark-500);
+    }
+
+    &:focus {
+        outline: var(--color-info-900) solid 2px;
+    }
+}
+
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 16px;
+    height: 24px;
+
+    color: var(--color-light-100);
+    text-decoration: none;
+
+    background-color: var(--color-dark-900);
+    border: none;
+
+    &:disabled {
+        color: var(--color-dark-100);
+        opacity: 0.5;
+    }
 }

@@ -1,9 +1,9 @@
-import { SuperPagination } from "./SuperPagination";
+import { Pagination } from "./pagination";
 import { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
 
-const meta: Meta<typeof SuperPagination> = {
-  component: SuperPagination,
+const meta: Meta<typeof Pagination> = {
+  component: Pagination,
   parameters: {
     tags: ["autodocs"],
   },

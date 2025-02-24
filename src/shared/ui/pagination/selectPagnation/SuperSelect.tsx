@@ -5,12 +5,27 @@ import styles from "./superSelect.module.css";
 import image2 from "../../../../../public/cornerDown.svg";
 import image1 from "../../../../../public/cornerTop.svg";
 
-export const SuperSelect = ({ value, onChange, options }) => {
-  const [open, setOpen] = React.useState(false);
+type OptionType = {
+  value: string; // Значение опции
+  label: string; // Отображаемый текст опции
+};
+
+type SuperSelectProps = {
+  value: string; // Текущее значение
+  onChange: (value: string) => void; // Функция для обработки изменения
+  options: OptionType[]; // Массив опций
+};
+
+export const SuperSelect = ({ value, onChange, options }: SuperSelectProps) => {
+  const [open, isOpen] = React.useState(false);
 
   return (
-    <Select.Root value={value} onValueChange={onChange}>
-      <Select.Trigger className={styles.select} onOpenChange={setOpen}>
+    <Select.Root
+      value={value}
+      onValueChange={onChange}
+      onOpenChange={(open) => isOpen(open)}
+    >
+      <Select.Trigger className={styles.select} onOpenChange={isOpen}>
         <Select.Value placeholder="Выберите элемент" />
         <img
           src={open ? image2.src : image1.src}
@@ -25,7 +40,6 @@ export const SuperSelect = ({ value, onChange, options }) => {
           position="popper"
         >
           {" "}
-          {/* Устанавливаем side="bottom" */}
           <Select.ScrollUpButton className={styles.ScrollButton}>
             ↑
           </Select.ScrollUpButton>
