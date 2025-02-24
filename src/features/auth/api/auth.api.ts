@@ -26,10 +26,17 @@ export const authApi = inctagramApi.injectEndpoints({
       query: (args) => ({
         body: { ...args, baseUrl },
         method: "POST",
-        url: "/v1/auth/registration",
+        url: "v1/auth/registration", 
       }),
+    }),
+    logout: builder.mutation<void, void>({
+      query: () => ({
+        method: "POST",
+        url: "v1/auth/logout",
+      }),
+      invalidatesTags: ["Me"], // Чтобы обновить состояние после логаута
     }),
   }),
 });
 
-export const { useMeQuery, useSignupMutation } = authApi;
+export const { useMeQuery, useSignupMutation, useLogoutMutation } = authApi;
