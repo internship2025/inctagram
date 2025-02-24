@@ -1,0 +1,72 @@
+.container{
+    display: flex;
+    align-items: center;
+}
+
+.Root {
+    all: unset;
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--color-light-100);
+    border-radius: 3px;
+    justify-content: center;
+    position: relative;
+
+    &::after { /* Псевдоэлемент для круга */
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 0;
+        z-index: -1;
+        transition: opacity 0.1s;
+    }
+    &[data-state="checked"]{
+    background-color: var(--color-light-100);
+    }
+
+    &:active::after {
+    background: var(--color-dark-100);
+    opacity: 1;
+    }
+    &:hover::after {
+        background: var(--color-dark-300);
+        opacity: 1;
+    }
+    &:focus::after {
+        background: var(--color-dark-500);
+        opacity: 1;
+    }
+    &disabled{
+        border: 2px solid var(--color-light-900);
+        cursor: not-allowed;
+    }
+}
+
+.Indicator {
+    color: var(--color-dark-900);
+    position: absolute;
+    top: 50% ;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.Label {
+    font-family: var(--font-family-primary);
+    font-size: var(--font-size-m);
+    font-weight: var(--font-weight-regular);
+    color:var(--color-light-100);
+    position: absolute;
+    margin-left: 29px;
+}
+
+.disabled {
+    border-color: var(--color-light-900);
+    cursor: not-allowed;
+    color: var(--color-light-900);
+}
+
