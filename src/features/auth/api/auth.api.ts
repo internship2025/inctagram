@@ -14,6 +14,15 @@ export type SignUpArgs = {
   password: string;
 };
 
+export type LoginArgs = {
+  email: string;
+  password: string;
+};
+
+export type LoginResponse = {
+  accessToken: string;
+};
+
 export const authApi = inctagramApi.injectEndpoints({
   endpoints: (builder) => ({
     me: builder.query<MeResponse, void>({
@@ -29,7 +38,22 @@ export const authApi = inctagramApi.injectEndpoints({
         url: "/v1/auth/registration",
       }),
     }),
+    login: builder.mutation<LoginResponse, LoginArgs>({
+      query: (body) => ({
+        url: "v1/auth/login",
+        method: "POST",
+        body: {
+          email: body.email,
+          password: body.password,
+        },
+      }),
+    }),
   }),
 });
 
-export const { useMeQuery, useSignupMutation } = authApi;
+export const {
+  useMeQuery,
+  useLazyMeQuery,
+  useSignupMutation,
+  useLoginMutation,
+} = authApi;
