@@ -15,6 +15,9 @@ const meta: Meta<typeof CheckBox> = {
     disabled: {
       control: "boolean",
     },
+    onChange: {
+      action: "checked",
+    },
   },
 };
 
@@ -26,12 +29,14 @@ export const WithText: Story = {
   args: {
     variant: "default",
     txt: "Check me",
+    onChange: (checked) => console.log(checked), // Заглушка
   },
 };
 
 export const WithoutText: Story = {
   args: {
     variant: "default",
+    onChange: (checked) => console.log(checked),
   },
 };
 
@@ -40,6 +45,7 @@ export const DisableWithText: Story = {
     variant: "disable",
     txt: "Check me",
     disabled: true,
+    onChange: (checked) => console.log(checked),
   },
 };
 
@@ -47,5 +53,6 @@ export const DisableWithoutText: Story = {
   args: {
     variant: "disable",
     disabled: true,
+    onChange: (checked) => console.log(checked),
   },
 };
