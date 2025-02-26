@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Pagination } from "@/shared/ui/pagination/Pagination";
 import styles from "./pagination.module.css";
-import { SuperSelect } from "@/shared/ui/pagination/SelectPagnation/SuperSelect";
+import { SuperSelect } from "@/shared/ui/pagination/selectPagnation/SuperSelect";
+import { PaginationLogic } from "@/shared/ui/pagination/paginationLogic";
 
-export const SuperPagination = () => {
+export const Pagination = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState("10");
   const totalPages = Math.ceil(100 / Number(itemsPerPage));
@@ -31,9 +31,9 @@ export const SuperPagination = () => {
 
   return (
     <div className={styles.pagination}>
-      <Pagination
+      <PaginationLogic
         handleNextPage={handleNextPage}
-        handlePrevioustPage={handlePreviousPage}
+        handlePreviousPage={handlePreviousPage}
         handlePageClick={handlePageClick}
         currentPage={currentPage}
         totalPages={totalPages}
