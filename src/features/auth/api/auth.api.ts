@@ -44,14 +44,14 @@ export const authApi = inctagramApi.injectEndpoints({
       query: (args) => ({
         body: args,
         method:"POST",
-        url: PATH.PASSWORD_RECOVERY
+        url: "/v1/auth/password-recovery"
       })
     }),
     createNewPassword: builder.mutation<void, CreateNewPassword>({
       query: (args) => ({
         body: args,
         method: "POST",
-        url: PATH.CREATE_NEW_PASSWORD
+        url: "/v1/auth/new-password"
       })
     })
   }),
