@@ -5,12 +5,19 @@ import styles from "./ForgotPasswordConfirmation.module.css";
 import { Input } from "@/shared/ui/input/input";
 import { Button } from "@/shared/ui/button/button";
 import Link from "next/link";
+import { useForgotPasswordConfirmationMutation } from "@/features/auth/api/auth.api";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { useRouter } from "next/navigation";
+import { PATH } from "@/shared/constants/app-paths";
 
 export type InputType = {
   email: string;
 };
 
 export const ForgotPasswordConfirmation = () => {
+
+  const [forgotPasswordConfirmation, {isLoading}] = useForgotPasswordConfirmationMutation();
+  const router = useRouter()
   const schema = yup.object().shape({
     email: yup
       .string()
@@ -20,17 +27,28 @@ export const ForgotPasswordConfirmation = () => {
   const {
     register,
     handleSubmit,
+    setError,
     control,
     formState: { errors },
   } = useForm<InputType>({ resolver: yupResolver(schema), mode: "onBlur" });
 
-  function handler(data: InputType) {
-    console.log(data);
+  async function onSubmit(data: InputType) {
+    try {
+      await forgotPasswordConfirmation(data).unwrap(); 
+      router.push(PATH.SIGN_IN);
+    } catch (err) {
+      const fetchError = err as FetchBaseQueryError;
+      if ("status" in fetchError && fetchError.status === 400) {
+        setError("email", { 
+          message: "Failed to send confirmation email. Please try again." 
+        });
+      }
+    }
   }
 
   return (
     <div className={styles.wrapper}>
-      <form onSubmit={handleSubmit(handler)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.inputWrapper}>
           <Input
             error={errors?.email?.message}
@@ -53,9 +71,11 @@ export const ForgotPasswordConfirmation = () => {
             link again
           </p>
         </div>
-        <Button fullWidth>Send Link Again</Button>
+        <Button fullWidth disabled={isLoading}>
+          {isLoading ? "Sending..." : "Send Link Again"}
+        </Button>
         <div className={styles.linkWrapper}>
-          <Link href="">Back to Sign In</Link>
+          <Link href={PATH.SIGN_IN}>Back to Sign In</Link>
         </div>
       </form>
     </div>

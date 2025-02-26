@@ -5,6 +5,9 @@ import styles from "./CreateNewPasswordForm.module.css";
 import { Input } from "@/shared/ui/input/input";
 import { Button } from "@/shared/ui/button/button";
 import { useCreateNewPasswordMutation } from "@/features/auth/api/auth.api";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { PATH } from "@/shared/constants/app-paths";
+import { useRouter } from "next/navigation";
 
 export type InputType = {
   password: string;
@@ -12,8 +15,8 @@ export type InputType = {
 };
 
 export const CreateNewPasswordForm = () => {
-  const [createNewPassword] = useCreateNewPasswordMutation();
-
+  const [createNewPassword, {isLoading}] = useCreateNewPasswordMutation();
+  const router = useRouter()
   const searchParams = new URLSearchParams(window.location.search);
   const recoveryCode = searchParams.get("recoveryCode");
 
@@ -39,31 +42,32 @@ export const CreateNewPasswordForm = () => {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm<InputType>({ resolver: yupResolver(schema), mode: "onBlur" });
 
-  async function onClick(data: InputType) {
-    
-    try {
-      console.log('Sending data:', data);
-      const res = await createNewPassword({
+  async function onSubmit(data: InputType) {
+    try {      
+      await createNewPassword({
         ...data,
         recoveryCode: recoveryCode as string
-      })
-      console.log('Success:', res);
+      }).unwrap();
+      
+      // Очищаем локальное хранилище
+      localStorage.removeItem('accessToken');
+      // Редирект на страницу логина
+      router.push(PATH.SIGN_IN);
     } catch (err) {
-      const error = err as any;
-      console.log('Error details:', {
-        status: error.status,
-        data: error.data,
-        error: error
-      });
+      const fetchError = err as FetchBaseQueryError;
+    if ("status" in fetchError && fetchError.status === 400) {
+    setError("password", { message: "Something went wrong. Please try again." });
+      }
     }
   }
 
   return (
     <div className={styles.wrapper}>
-      <form onSubmit={handleSubmit(onClick)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.inputWrapper}>
           <Input
             error={errors?.password?.message}
@@ -96,7 +100,9 @@ export const CreateNewPasswordForm = () => {
             </p>
           )}
         </div>
-        <Button fullWidth>Create new password</Button>
+        <Button fullWidth disabled={isLoading}>
+          {isLoading ? "Creating..." : "Create new password"}
+        </Button>
       </form>
     </div>
   );

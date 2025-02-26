@@ -16,7 +16,7 @@ export type SignUpArgs = {
 
 export type ForgotPassword = {
   email: string
-  recaptcha: string
+  recaptcha?: string
 }
 
 export type CreateNewPassword = {
@@ -47,14 +47,22 @@ export const authApi = inctagramApi.injectEndpoints({
         url: "/v1/auth/password-recovery"
       })
     }),
+    forgotPasswordConfirmation: builder.mutation<void, ForgotPassword>({
+      query: (args) => ({
+        body: args,
+        method:"POST",
+        url: "/v1/auth/password-recovery-resending"
+      })
+    }),
     createNewPassword: builder.mutation<void, CreateNewPassword>({
       query: (args) => ({
         body: args,
         method: "POST",
         url: "/v1/auth/new-password"
-      })
+      }),      
+      invalidatesTags: ["Me"]      
     })
   }),
 });
 
-export const { useMeQuery, useSignupMutation, useForgotPasswordMutation, useCreateNewPasswordMutation } = authApi;
+export const { useMeQuery, useSignupMutation, useForgotPasswordMutation, useCreateNewPasswordMutation, useForgotPasswordConfirmationMutation} = authApi;
