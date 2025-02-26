@@ -15,6 +15,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useSignupMutation } from "@/features/auth/api/auth.api";
 import { useState } from "react";
+import { PATH } from "@/shared/constants/app-paths";
 
 export type InputType = {
   username: string;
@@ -66,7 +67,7 @@ export const SignUp = ({ icons }: SignUp) => {
     field: { value, onChange },
   } = useController({ name: "approval", control });
 
-  const handler: SubmitHandler<InputType> = async (data) => {
+  const signupHandler: SubmitHandler<InputType> = async (data) => {
     try {
       await signup({
         userName: data.username,
@@ -93,7 +94,7 @@ export const SignUp = ({ icons }: SignUp) => {
       <div className={styles.wrapperIcons}>{images}</div>
       <form
         className={styles.wrapper}
-        onSubmit={handleSubmit(handler)}
+        onSubmit={handleSubmit(signupHandler)}
         noValidate
       >
         <div className={styles.inputWrapper}>
@@ -162,14 +163,15 @@ export const SignUp = ({ icons }: SignUp) => {
           )} */}
 
           <span className={styles.text}>
-            I agree to the <Link href="">Terms of Service</Link> and{" "}
-            <Link href="">Privacy Policy</Link>
+            I agree to the{" "}
+            <Link href={PATH.TERMS_OF_SERVICE}>Terms of Service</Link> and{" "}
+            <Link href={PATH.PRIVACY_POLICY}>Privacy Policy</Link>
           </span>
         </div>
         <Button fullWidth>Sign Up</Button>
         <span className={styles.question}>Do you have an account?</span>
         <div>
-          <Link href="">Sign In</Link>
+          <Link href={PATH.SIGN_IN}>Sign In</Link>
         </div>
       </form>
     </>

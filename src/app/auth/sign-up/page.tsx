@@ -1,4 +1,4 @@
-import React from "react";
+"use client";
 
 import { SignUpModal } from "@/features/auth/ui/signUpModal/SignUpModal";
 
