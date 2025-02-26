@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { Input } from "../../../input/input";
 import styles from "./signIn.module.css";
 import Link from "next/link";
@@ -6,6 +6,11 @@ import { Button } from "../../../button/button";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Image from "next/image";
+import {
+  LoginArgs,
+  useLazyMeQuery,
+  useLoginMutation,
+} from "@/features/auth/api/auth.api";
 
 export type InputType = {
   email: string;
@@ -29,29 +34,48 @@ export const SignIn = ({ onClose, icons }: Type) => {
     formState: { errors },
   } = useForm<InputType>({ resolver: yupResolver(schema), mode: "onBlur" });
 
-  function handler(data: InputType) {
-    console.log(data);
-  }
+  const [login] = useLoginMutation();
+  const [getUser] = useLazyMeQuery();
 
-  let images = icons?.map((it, ind) => {
-    return (
-      <Image
-        className={styles.images}
-        key={ind}
-        src={it.src}
-        width={it.width}
-        height={it.height}
-        alt=""
-      />
-    );
-  });
+  const handleLogin: SubmitHandler<InputType> = async (data: LoginArgs) => {
+    try {
+      const response = await login(data).unwrap();
+      console.log("Вход выполнен успешно:", response);
+
+      if (response) {
+        const accessToken = response.accessToken;
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("email", data.email);
+        // Если вход успешен, получаем данные пользователя
+        const userResponse = await getUser().unwrap();
+        console.log("Данные пользователя:", userResponse);
+      }
+    } catch (error) {
+      console.error("Ошибка входа:", error);
+    }
+  };
+
+  let images = Array.isArray(icons)
+    ? icons.map((it, ind) => {
+        return (
+          <Image
+            className={styles.images}
+            key={ind}
+            src={it.src}
+            width={it.width}
+            height={it.height}
+            alt=""
+          />
+        );
+      })
+    : null;
 
   return (
     <>
       <div className={styles.wrapperIcons}>{images}</div>
       <form
         className={styles.wrapper}
-        onSubmit={handleSubmit(handler)}
+        onSubmit={handleSubmit(handleLogin)}
         noValidate
       >
         <div className={styles.inputWrapper}>
