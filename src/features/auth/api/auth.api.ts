@@ -14,6 +14,27 @@ export type SignUpArgs = {
   password: string;
 };
 
+export type PasswordRecoveryArgs = {
+  email: string;
+  recaptcha: string;
+  baseUrl: string;
+};
+
+export type SetNewPasswordArgs = {
+  newPassword: string;
+  recoveryCode: string;
+};
+
+export type loginWithGoogleArgs = {
+  redirectUrl: string;
+  code: string;
+};
+
+export type loginWithGoogleResponse = {
+  accessToken: string;
+  email: string;
+};
+
 export const authApi = inctagramApi.injectEndpoints({
   endpoints: (builder) => ({
     me: builder.query<MeResponse, void>({
@@ -29,7 +50,19 @@ export const authApi = inctagramApi.injectEndpoints({
         url: "/v1/auth/registration",
       }),
     }),
+    loginWithGoogle: builder.mutation<
+      loginWithGoogleResponse,
+      loginWithGoogleArgs
+    >({
+      query: (args) => {
+        return {
+          body: args,
+          method: "POST",
+          url: "v1/auth/google/login",
+        };
+      },
+    }),
   }),
 });
 
-export const { useMeQuery, useSignupMutation } = authApi;
+export const { useMeQuery, useSignupMutation, useLoginWithGoogleMutation } = authApi;

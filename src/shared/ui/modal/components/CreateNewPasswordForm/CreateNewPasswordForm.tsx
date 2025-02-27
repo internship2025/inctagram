@@ -4,6 +4,9 @@ import * as yup from "yup";
 import styles from "./CreateNewPasswordForm.module.css";
 import { Input } from "@/shared/ui/input/input";
 import { Button } from "@/shared/ui/button/button";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useSetNewPasswordMutation } from "@/features/auth/api/auth.api";
+import { useEffect } from "react";
 
 export type InputType = {
   password: string;
@@ -11,6 +14,16 @@ export type InputType = {
 };
 
 export const CreateNewPasswordForm = () => {
+  const searchParams = useSearchParams();
+  const [setNewPassword, {isSuccess}] = useSetNewPasswordMutation();
+  const router = useRouter();
+
+  useEffect(()=>{
+    if(isSuccess){
+      router.push('/')
+    }
+  },[isSuccess])
+
   const schema = yup.object().shape({
     password: yup
       .string()
@@ -26,6 +39,10 @@ export const CreateNewPasswordForm = () => {
   } = useForm<InputType>({ resolver: yupResolver(schema), mode: "onBlur" });
 
   function handler(data: InputType) {
+    setNewPassword({
+      newPassword: data.password,
+      recoveryCode: searchParams.get("code") || "",
+    })
     console.log(data);
   }
 

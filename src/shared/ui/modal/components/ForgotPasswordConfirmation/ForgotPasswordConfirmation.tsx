@@ -5,12 +5,17 @@ import styles from "./ForgotPasswordConfirmation.module.css";
 import { Input } from "@/shared/ui/input/input";
 import { Button } from "@/shared/ui/button/button";
 import Link from "next/link";
+import { usePasswordRecoveryMutation } from "@/features/auth/api/auth.api";
 
 export type InputType = {
-  email: string;
+  email: string
 };
 
 export const ForgotPasswordConfirmation = () => {
+
+
+  const [triggerPasswordRecovery] = usePasswordRecoveryMutation()
+
   const schema = yup.object().shape({
     email: yup
       .string()
@@ -25,6 +30,7 @@ export const ForgotPasswordConfirmation = () => {
   } = useForm<InputType>({ resolver: yupResolver(schema), mode: "onBlur" });
 
   function handler(data: InputType) {
+    triggerPasswordRecovery({email: data.email, recaptcha: '', baseUrl: "http://localhost:3000"})
     console.log(data);
   }
 

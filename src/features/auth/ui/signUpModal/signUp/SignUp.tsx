@@ -1,3 +1,5 @@
+'use client'
+
 import {
   useForm,
   SubmitHandler,
@@ -24,8 +26,9 @@ export type InputType = {
 };
 
 type SignUp = {
-  icons?: Array<{ src: string; width: number; height: number }> | [];
+  icons?: Array<{ src: string; width: number; height: number, onClick?: ()=> void }> | [];
   onClose?: () => void;
+
 };
 
 export const SignUp = ({ icons }: SignUp) => {
@@ -81,9 +84,9 @@ export const SignUp = ({ icons }: SignUp) => {
 
   let images = icons?.map((it, ind) => {
     return (
-      <Link className={styles.images} key={ind} href={""}>
+      <button className={styles.btn} key={ind} onClick={it.onClick}>
         <Image src={it.src} width={it.width} height={it.height} alt="" />
-      </Link>
+      </button>
     );
   });
 

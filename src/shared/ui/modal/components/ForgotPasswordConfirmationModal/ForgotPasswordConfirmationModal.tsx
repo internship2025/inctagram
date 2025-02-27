@@ -5,11 +5,12 @@ import { ForgotPasswordConfirmation } from "@/shared/ui/modal/components/ForgotP
 type Type = {
   open: boolean;
   onClose: () => void;
+  title?: string
 };
 
-export const ForgotPasswordConfirmationModal = ({ open, onClose }: Type) => {
+export const ForgotPasswordConfirmationModal = ({title = "Forgot Password", open, onClose }: Type) => {
   return (
-    <Modal title={"Forgot Password"} open={open} onClose={onClose}>
+    <Modal title={title} open={open} onClose={onClose}>
       <ForgotPasswordConfirmation />
     </Modal>
   );
