@@ -11,6 +11,7 @@ import {
   useLazyMeQuery,
   useLoginMutation,
 } from "@/features/auth/api/auth.api";
+import { useRouter } from "next/navigation";
 
 export type InputType = {
   email: string;
@@ -36,6 +37,7 @@ export const SignIn = ({ onClose, icons }: Type) => {
 
   const [login] = useLoginMutation();
   const [getUser] = useLazyMeQuery();
+  const router = useRouter();
 
   const handleLogin: SubmitHandler<InputType> = async (data: LoginArgs) => {
     try {
@@ -49,6 +51,7 @@ export const SignIn = ({ onClose, icons }: Type) => {
         // Если вход успешен, получаем данные пользователя
         const userResponse = await getUser().unwrap();
         console.log("Данные пользователя:", userResponse);
+        router.push(`/home`);
       }
     } catch (error) {
       console.error("Ошибка входа:", error);
