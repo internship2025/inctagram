@@ -17,6 +17,7 @@ export type SignUpArgs = {
 export type ForgotPassword = {
   email: string
   recaptcha?: string
+  baseUrl: string
 }
 
 export type CreateNewPassword = {

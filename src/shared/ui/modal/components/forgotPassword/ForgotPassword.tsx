@@ -4,50 +4,76 @@ import * as yup from "yup";
 import styles from "./forgotPassword.module.css";
 import { Button } from "@/shared/ui/button/button";
 import Link from "next/link";
-import { CheckBox } from "@/shared/ui/checkBox/checkBox";
-import { useState } from "react";
-import recatcha from "@/shared/ui/modal/assets/recaptcha.svg";
-import Image from "next/image";
+import { useState, useRef } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForgotPasswordMutation } from "@/features/auth/api/auth.api";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { EmailSentModal } from "../emailSentModal/EmailSentModal";
-import { PATH } from "@/shared/constants/app-paths";
+import { PATH, baseUrl } from "@/shared/constants/app-paths";
+import ReCAPTCHA from "react-google-recaptcha";
 
 export type InputType = {
   email: string;
-  recaptcha: string;
 };
 
 export const ForgotPassword = () => {
-  const [isChecked, setIsChecked] = useState(false);
-  const [forgotPassword, { isLoading, error }] = useForgotPasswordMutation();
+  const [forgotPassword, { isLoading }] = useForgotPasswordMutation();
   const [showEmailSentModal, setShowEmailSentModal] = useState(false);
   const [sentEmail, setSentEmail] = useState("");
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
+  const [recaptchaValue, setRecaptchaValue] = useState<string | null>(null);
 
   const schema = yup.object().shape({
     email: yup
       .string()
       .email("The email must match the format example@example.com")
-      .required("Email is required"),
-    recaptcha: yup.string().required("Recaptcha is required"),
+      .required("Email is required")
   });
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-    setError,
-    setValue,
+    setError,    
     watch,
   } = useForm<InputType>({ resolver: yupResolver(schema), mode: "onBlur" });
 
   const email = watch("email");
-  const isButtonDisabled = !email || !isChecked || isLoading;
+  const isButtonDisabled = !email || !recaptchaValue || isLoading;
+
+  const handleRecaptchaChange = (value: string | null) => {
+    setRecaptchaValue(value);
+    if (errors.email?.message === "Please complete the reCAPTCHA verification") {
+      setError("email", { message: undefined });
+    }
+  };
+
+  const handleRecaptchaExpired = () => {
+    setRecaptchaValue(null);
+    recaptchaRef.current?.reset();
+  };
+
+  const handleRecaptchaError = () => {
+    setRecaptchaValue(null);
+    setError("email", { 
+      message: "reCAPTCHA verification failed. Please try again." 
+    });
+  };
 
   async function onSubmit(data: InputType) {    
     try {
-      await forgotPassword(data).unwrap();
+      if (!recaptchaValue) {
+        setError("email", { 
+          message: "Please complete the reCAPTCHA verification" 
+        });
+        return;
+      }
+
+      await forgotPassword({
+        email: data.email,
+        recaptcha: recaptchaValue,
+        baseUrl: baseUrl
+      }).unwrap();
       setSentEmail(data.email);
       setShowEmailSentModal(true);
     } catch (err) {
@@ -55,6 +81,9 @@ export const ForgotPassword = () => {
       setError("email", { 
         message: "User with this email doesn't exist" 
       });
+      // Сбрасываем капчу при ошибке
+      recaptchaRef.current?.reset();
+      setRecaptchaValue(null);
     }
   }
 
@@ -90,27 +119,16 @@ export const ForgotPassword = () => {
           </div>
 
           <div className={styles.recaptchaWrapper}>
-            <input type="hidden" {...register("recaptcha")} />
-            <div className={styles.recaptcha}>
-              <CheckBox
-                checked={isChecked}
-                onChange={(checked) => {
-                  setIsChecked(checked as boolean);
-                  setValue("recaptcha", checked ? "checked" : "");
-                }}
-                txt="I’m not a robot"
-              />
-              <div className={styles.wrapperLink}>
-                <div className={styles.image}>
-                  <Image src={recatcha} alt="" />{" "}
-                </div>
-
-                <Link className={styles.link} href="">
-                  <div>reCAPTCHA</div>
-                  Privacy - Terms
-                </Link>
-              </div>
-            </div>
+            <ReCAPTCHA
+              ref={recaptchaRef}
+              sitekey="6LfpOuMqAAAAAE9xTZ1PP4CH-WUsTq5al9vEw0nJ"
+              onChange={handleRecaptchaChange}
+              onExpired={handleRecaptchaExpired}
+              className={styles.recaptcha}
+              theme="dark"
+              onError={handleRecaptchaError}
+              size="normal"
+            />
           </div>
         </form>
       </div>
