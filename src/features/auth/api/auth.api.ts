@@ -1,5 +1,5 @@
 import { inctagramApi } from "@/services/inctagram.api";
-import { baseUrl, PATH } from "@/shared/constants/app-paths";
+import { baseUrl } from "@/shared/constants/app-paths";
 
 export type MeResponse = {
   userId: number;
@@ -12,6 +12,15 @@ export type SignUpArgs = {
   userName: string;
   email: string;
   password: string;
+};
+
+export type LoginArgs = {
+  email: string;
+  password: string;
+};
+
+export type LoginResponse = {
+  accessToken: string;
 };
 
 export type ForgotPassword = {
@@ -41,6 +50,16 @@ export const authApi = inctagramApi.injectEndpoints({
         url: "/v1/auth/registration",
       }),
     }),
+    login: builder.mutation<LoginResponse, LoginArgs>({
+      query: (body) => ({
+        url: "v1/auth/login",
+        method: "POST",
+        body: {
+          email: body.email,
+          password: body.password,
+        },
+      }),
+    }),
     forgotPassword: builder.mutation<void, ForgotPassword>({
       query: (args) => ({
         body: args,
@@ -60,10 +79,16 @@ export const authApi = inctagramApi.injectEndpoints({
         body: args,
         method: "POST",
         url: "/v1/auth/new-password"
-      }),      
-      invalidatesTags: ["Me"]      
+      }),
+      invalidatesTags: ["Me"]
     })
   }),
 });
 
+export const {
+  useMeQuery,
+  useLazyMeQuery,
+  useSignupMutation,
+  useLoginMutation,
+} = authApi;
 export const { useMeQuery, useSignupMutation, useForgotPasswordMutation, useCreateNewPasswordMutation, useForgotPasswordConfirmationMutation} = authApi;
