@@ -63,6 +63,6 @@ export const {
   useLazyMeQuery,
   useSignupMutation,
   useLoginMutation,
+  useLogoutMutation
 } = authApi;
 
-export const { useMeQuery, useSignupMutation, useLogoutMutation } = authApi;

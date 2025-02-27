@@ -13,20 +13,19 @@ const Logout = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
 
-  const email = "user@example.com"; // Получить из состояния пользователя
-  const name = "John Doe"; // Получить из состояния пользователя
+  const email = localStorage.getItem("email");
+    const name = "John Doe"; // Получить из состояния пользователя
 
   const handleLogout = () => {
     logout()
       .unwrap()
       .then(() => {
-        // Успешный выход
         localStorage.removeItem("access_token");
+        localStorage.removeItem("email");
         dispatch(inctagramApi.util.resetApiState());
         router.push("/login");
       })
       .catch((error) => {
-        // Обработка ошибки
         console.error("Logout failed", error);
       });
   };

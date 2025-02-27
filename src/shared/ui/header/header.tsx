@@ -135,7 +135,7 @@ export const Header = ({
             )}
             
           </div>
-        </div> {/* ✅ Закрывающая скобка добавлена сюда */}
+        </div> 
       </div>
     </header>
   );
