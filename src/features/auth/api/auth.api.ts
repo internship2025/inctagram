@@ -24,16 +24,16 @@ export type LoginResponse = {
 };
 
 export type ForgotPassword = {
-  email: string
-  recaptcha?: string
-  baseUrl: string
-}
+  email: string;
+  recaptcha?: string;
+  baseUrl: string;
+};
 
 export type CreateNewPassword = {
-  password: string
-  passwordConfirmation: string
-  recoveryCode: string
-}
+  password: string;
+  passwordConfirmation: string;
+  recoveryCode: string;
+};
 
 export const authApi = inctagramApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -63,32 +63,34 @@ export const authApi = inctagramApi.injectEndpoints({
     forgotPassword: builder.mutation<void, ForgotPassword>({
       query: (args) => ({
         body: args,
-        method:"POST",
-        url: "/v1/auth/password-recovery"
-      })
+        method: "POST",
+        url: "/v1/auth/password-recovery",
+      }),
     }),
     forgotPasswordConfirmation: builder.mutation<void, ForgotPassword>({
       query: (args) => ({
         body: args,
-        method:"POST",
-        url: "/v1/auth/password-recovery-resending"
-      })
+        method: "POST",
+        url: "/v1/auth/password-recovery-resending",
+      }),
     }),
     createNewPassword: builder.mutation<void, CreateNewPassword>({
       query: (args) => ({
         body: args,
         method: "POST",
-        url: "/v1/auth/new-password"
+        url: "/v1/auth/new-password",
       }),
-      invalidatesTags: ["Me"]
-    })
+      invalidatesTags: ["Me"],
+    }),
   }),
 });
 
 export const {
   useMeQuery,
   useLazyMeQuery,
-  useSignupMutation,
   useLoginMutation,
+  useSignupMutation,
+  useForgotPasswordMutation,
+  useCreateNewPasswordMutation,
+  useForgotPasswordConfirmationMutation,
 } = authApi;
-export const { useMeQuery, useSignupMutation, useForgotPasswordMutation, useCreateNewPasswordMutation, useForgotPasswordConfirmationMutation} = authApi;

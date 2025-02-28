@@ -1,60 +1,70 @@
-import { yupResolver } from "@hookform/resolvers/yup";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import * as yup from "yup";
+import { z } from "zod";
 import styles from "./CreateNewPasswordForm.module.css";
 import { Input } from "@/shared/ui/input/input";
 import { Button } from "@/shared/ui/button/button";
 import { useCreateNewPasswordMutation } from "@/features/auth/api/auth.api";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { PATH } from "@/shared/constants/app-paths";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
-export type InputType = {
-  password: string;
-  passwordConfirmation: string;
-};
+const passwordSchema = z.object({
+  password: z.string()
+    .min(6, "Password must be at least 6 characters")
+    .max(20, "Password must not exceed 20 characters")
+    .regex(/[0-9]/, "Password must contain at least one number")
+    .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+    .regex(/[a-z]/, "Password must contain at least one lowercase letter")
+    .regex(
+      /[!\"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]/,
+      "Password must contain at least one special character (!@#$%^&* etc.)"
+    ),
+  passwordConfirmation: z.string()
+    .min(1, "Password confirmation is required")
+});
+
+type InputType = z.infer<typeof passwordSchema>;
 
 export const CreateNewPasswordForm = () => {
-  const [createNewPassword, {isLoading}] = useCreateNewPasswordMutation();
-  const router = useRouter()
-  const searchParams = new URLSearchParams(window.location.search);
-  const recoveryCode = searchParams.get("recoveryCode");
+  const [createNewPassword, {isLoading, isSuccess}] = useCreateNewPasswordMutation();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const code = searchParams.get("code");
 
-  const schema = yup.object().shape({
-    password: yup
-      .string()
-      .required("Password is required")
-      .min(6, "Password must be at least 6 characters")
-      .max(20, "Password must not exceed 20 characters")
-      .matches(/[0-9]/, "Password must contain at least one number")
-      .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
-      .matches(/[a-z]/, "Password must contain at least one lowercase letter")
-      .matches(
-       /^[A-Za-z0-9!\"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]+$/,
-        "Password must contain at least one special character"
-      ),
-    passwordConfirmation: yup
-      .string()
-      .required("Password confirmation is required")
-      .oneOf([yup.ref("password")], "Passwords must match")
-  });
+  useEffect(() => {
+    if (!code) {
+      router.push(PATH.PASSWORD_RECOVERY);
+    }
+    if (isSuccess) {
+      router.push(PATH.ROOT);
+    }
+  }, [code, router, isSuccess]);
+
+  const schema = passwordSchema.refine(
+    (data) => data.password === data.passwordConfirmation,
+    {
+      message: "Passwords must match",
+      path: ["passwordConfirmation"],
+    }
+  );
   
   const {
     register,
     handleSubmit,
     setError,
     formState: { errors },
-  } = useForm<InputType>({ resolver: yupResolver(schema), mode: "onBlur" });
+  } = useForm<InputType>({ resolver: zodResolver(schema), mode: "onBlur" });
 
-  async function onSubmit(data: InputType) {
+  async function onSubmit(data: InputType) {    
     try {      
       await createNewPassword({
         ...data,
-        recoveryCode: recoveryCode as string
-      }).unwrap();
-      
+        recoveryCode: code as string
+      }).unwrap();      
       // Очищаем локальное хранилище
-      localStorage.removeItem('accessToken');
+      localStorage.removeItem('access_token');
       // Редирект на страницу логина
       router.push(PATH.SIGN_IN);
     } catch (err) {

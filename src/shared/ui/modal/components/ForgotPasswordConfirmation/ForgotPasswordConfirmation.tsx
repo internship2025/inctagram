@@ -1,46 +1,60 @@
-import { yupResolver } from "@hookform/resolvers/yup";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import * as yup from "yup";
+import { z } from "zod";
 import styles from "./ForgotPasswordConfirmation.module.css";
 import { Input } from "@/shared/ui/input/input";
 import { Button } from "@/shared/ui/button/button";
 import Link from "next/link";
 import { useForgotPasswordConfirmationMutation } from "@/features/auth/api/auth.api";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
-import { useRouter } from "next/navigation";
-import { PATH } from "@/shared/constants/app-paths";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
+import { PATH, baseUrl } from "@/shared/constants/app-paths";
 
-export type InputType = {
-  email: string;
-};
+const confirmationSchema = z.object({
+  email: z
+    .string()
+    .email("The email must match the format example@example.com")
+    .min(1, "Email is required"),
+});
+
+type InputType = z.infer<typeof confirmationSchema>;
 
 export const ForgotPasswordConfirmation = () => {
+  const [forgotPasswordConfirmation, { isLoading }] =
+    useForgotPasswordConfirmationMutation();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const email = searchParams.get("email");
 
-  const [forgotPasswordConfirmation, {isLoading}] = useForgotPasswordConfirmationMutation();
-  const router = useRouter()
-  const schema = yup.object().shape({
-    email: yup
-      .string()
-      .email("The email must match the format example@example.com")
-      .required("Email is required"),
-  });
+  useEffect(() => {
+    if (!email) {
+      router.push(PATH.PASSWORD_RECOVERY);
+    }
+  }, [email, router]);
+
   const {
     register,
     handleSubmit,
     setError,
-    control,
     formState: { errors },
-  } = useForm<InputType>({ resolver: yupResolver(schema), mode: "onBlur" });
+  } = useForm<InputType>({
+    resolver: zodResolver(confirmationSchema),
+    mode: "onBlur",
+  });
 
   async function onSubmit(data: InputType) {
     try {
-      await forgotPasswordConfirmation(data).unwrap(); 
+      await forgotPasswordConfirmation({
+        email: data.email,
+        baseUrl: baseUrl,
+      }).unwrap();
       router.push(PATH.SIGN_IN);
     } catch (err) {
       const fetchError = err as FetchBaseQueryError;
       if ("status" in fetchError && fetchError.status === 400) {
-        setError("email", { 
-          message: "Failed to send confirmation email. Please try again." 
+        setError("email", {
+          message: "Failed to send confirmation email. Please try again.",
         });
       }
     }
@@ -56,6 +70,7 @@ export const ForgotPasswordConfirmation = () => {
             type="email"
             fullWidth
             {...register("email")}
+            defaultValue={email || ""}
           />
           {errors.email ? (
             <span className={styles.error}>{errors.email.message}</span>

@@ -1,70 +1,53 @@
-import { Input } from "@/shared/ui//input/input";
+import { Input } from "@/shared/ui/input/input";
 import { useForm } from "react-hook-form";
-import * as yup from "yup";
+import { z } from "zod";
 import styles from "./forgotPassword.module.css";
 import { Button } from "@/shared/ui/button/button";
 import Link from "next/link";
-import { useState, useRef } from "react";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useForgotPasswordMutation } from "@/features/auth/api/auth.api";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { EmailSentModal } from "../emailSentModal/EmailSentModal";
 import { PATH, baseUrl } from "@/shared/constants/app-paths";
-import ReCAPTCHA from "react-google-recaptcha";
+import { Recaptcha } from "@/features/auth/ui/reCaptcha/reCaptcha";
 
-export type InputType = {
-  email: string;
-};
+const forgotPasswordSchema = z.object({
+  email: z
+    .string()
+    .email("The email must match the format example@example.com")
+    .min(1, "Email is required"),
+});
+
+type InputType = z.infer<typeof forgotPasswordSchema>;
 
 export const ForgotPassword = () => {
+  const router = useRouter();
   const [forgotPassword, { isLoading }] = useForgotPasswordMutation();
   const [showEmailSentModal, setShowEmailSentModal] = useState(false);
   const [sentEmail, setSentEmail] = useState("");
-  const recaptchaRef = useRef<ReCAPTCHA>(null);
   const [recaptchaValue, setRecaptchaValue] = useState<string | null>(null);
-
-  const schema = yup.object().shape({
-    email: yup
-      .string()
-      .email("The email must match the format example@example.com")
-      .required("Email is required")
-  });
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-    setError,    
+    setError,
     watch,
-  } = useForm<InputType>({ resolver: yupResolver(schema), mode: "onBlur" });
+  } = useForm<InputType>({
+    resolver: zodResolver(forgotPasswordSchema),
+    mode: "onBlur",
+  });
 
   const email = watch("email");
   const isButtonDisabled = !email || !recaptchaValue || isLoading;
 
-  const handleRecaptchaChange = (value: string | null) => {
-    setRecaptchaValue(value);
-    if (errors.email?.message === "Please complete the reCAPTCHA verification") {
-      setError("email", { message: undefined });
-    }
-  };
-
-  const handleRecaptchaExpired = () => {
-    setRecaptchaValue(null);
-    recaptchaRef.current?.reset();
-  };
-
-  const handleRecaptchaError = () => {
-    setRecaptchaValue(null);
-    setError("email", { 
-      message: "reCAPTCHA verification failed. Please try again." 
-    });
-  };
-
-  async function onSubmit(data: InputType) {    
+  async function onSubmit(data: InputType) {
     try {
       if (!recaptchaValue) {
-        setError("email", { 
-          message: "Please complete the reCAPTCHA verification" 
+        setError("email", {
+          message: "Please complete the reCAPTCHA verification",
         });
         return;
       }
@@ -72,17 +55,15 @@ export const ForgotPassword = () => {
       await forgotPassword({
         email: data.email,
         recaptcha: recaptchaValue,
-        baseUrl: baseUrl
+        baseUrl: baseUrl,
       }).unwrap();
       setSentEmail(data.email);
       setShowEmailSentModal(true);
     } catch (err) {
       const fetchError = err as FetchBaseQueryError;
-      setError("email", { 
-        message: "User with this email doesn't exist" 
-      });
-      // Сбрасываем капчу при ошибке
-      recaptchaRef.current?.reset();
+      if ("status" in fetchError && fetchError.status === 400) {
+        setError("email", { message: "User with this email doesn't exist" });
+      }
       setRecaptchaValue(null);
     }
   }
@@ -100,9 +81,6 @@ export const ForgotPassword = () => {
               fullWidth
               {...register("email")}
             />
-            {errors.email && (
-              <span className={styles.error}>{errors.email.message}</span>
-            )}
           </div>
           <div className={styles.textWrapper}>
             <span>
@@ -119,23 +97,31 @@ export const ForgotPassword = () => {
           </div>
 
           <div className={styles.recaptchaWrapper}>
-            <ReCAPTCHA
-              ref={recaptchaRef}
-              sitekey="6LfpOuMqAAAAAE9xTZ1PP4CH-WUsTq5al9vEw0nJ"
-              onChange={handleRecaptchaChange}
-              onExpired={handleRecaptchaExpired}
-              className={styles.recaptcha}
-              theme="dark"
-              onError={handleRecaptchaError}
-              size="normal"
+            <Recaptcha
+              siteKey={
+                process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ||
+                "6LfpOuMqAAAAAE9xTZ1PP4CH-WUsTq5al9vEw0nJ"
+              }
+              onVerify={(token) => {
+                setRecaptchaValue(token);
+                if (
+                  errors.email?.message ===
+                  "Please complete the reCAPTCHA verification"
+                ) {
+                  setError("email", { message: undefined });
+                }
+              }}
             />
           </div>
         </form>
       </div>
       <EmailSentModal
         open={showEmailSentModal}
-        onClose={() => setShowEmailSentModal(false)}
         email={sentEmail}
+        onClose={() => {
+          setShowEmailSentModal(false);
+          router.push(`${PATH.PASSWORD_RESET}?email=${sentEmail}`);
+        }}
       />
     </>
   );
