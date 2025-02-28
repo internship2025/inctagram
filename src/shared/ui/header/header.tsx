@@ -4,6 +4,7 @@ import styles from "./header.module.css";
 import Image from "next/image";
 import { useState } from "react";
 import { Button } from "@/shared/ui/button/button";
+import Logout from "@/features/auth/ui/logout/Logout";
 
 const ChevronDownIcon = () => (
   <svg
@@ -37,6 +38,7 @@ export const Header = ({
   onSignUpClick,
 }: HeaderProps) => {
   const [currentLang, setCurrentLang] = useState("English");
+
 
   const handleLangChange = (value: string) => {
     setCurrentLang(value);
@@ -119,17 +121,21 @@ export const Header = ({
             </Select.Portal>
           </Select.Root>
 
-          {!showAuth && (
-            <div className={styles.authButtons}>
-              <Button variant={"outline"} onClick={onLoginClick}>
-                Log in
-              </Button>
-              <Button variant={"primary"} onClick={onSignUpClick}>
-                Sign up
-              </Button>
-            </div>
-          )}
-        </div>
+          <div className={styles.authButtons}>
+            {!showAuth && (
+              <>
+                <Button variant="outline" onClick={onLoginClick}>
+                  Log in
+                </Button>
+                <Button variant="primary" onClick={onSignUpClick}>
+                  Sign up
+                </Button>
+                <Logout />
+              </>
+            )}
+            
+          </div>
+        </div> 
       </div>
     </header>
   );
