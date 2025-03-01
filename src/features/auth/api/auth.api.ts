@@ -1,5 +1,6 @@
 import { inctagramApi } from "@/services/inctagram.api";
 import { baseUrl } from "@/shared/constants/app-paths";
+import { createSlice } from "@reduxjs/toolkit";
 
 export type MeResponse = {
   userId: number;
@@ -66,3 +67,4 @@ export const authApi = inctagramApi.injectEndpoints({
 });
 
 export const { useMeQuery, useSignupMutation, useLoginWithGoogleMutation } = authApi;
+
