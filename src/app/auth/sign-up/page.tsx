@@ -1,5 +1,3 @@
-"use client";
-
 import { SignUpModal } from "@/features/auth/ui/signUpModal/SignUpModal";
 
 const SignUpPage = () => {

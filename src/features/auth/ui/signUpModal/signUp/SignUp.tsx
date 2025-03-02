@@ -18,6 +18,7 @@ import { useSignupMutation } from "@/features/auth/api/auth.api";
 import { useState } from "react";
 import { PATH } from "@/shared/constants/app-paths";
 import { EmailSent } from "@/shared/ui/modal/components/emailSent/EmailSent";
+import { useRouter } from "next/navigation";
 
 export type InputType = {
   username: string;
@@ -82,6 +83,7 @@ export const SignUp = ({ icons }: SignUp) => {
   const [signup, { isLoading }] = useSignupMutation();
   const [isFormVisible, setIsFormVisible] = useState(true);
   const [userEmail, setUserEmail] = useState("");
+  const router = useRouter();
 
   const {
     field: { value, onChange },
