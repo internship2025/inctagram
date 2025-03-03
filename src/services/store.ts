@@ -1,13 +1,13 @@
+import { authApi } from "@/features/auth/api/auth.api";
 import { combineSlices, configureStore } from "@reduxjs/toolkit";
-import { inctagramApi } from "@/services/inctagram.api";
 import { useDispatch, useSelector, useStore } from "react-redux";
 
 
 export const makeStore = () => {
   return configureStore({
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(inctagramApi.middleware),
-    reducer: combineSlices(inctagramApi),
+      getDefaultMiddleware().concat(authApi.middleware),
+    reducer: combineSlices(authApi),
   });
 };
 

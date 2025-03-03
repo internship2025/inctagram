@@ -1,6 +1,6 @@
-import { inctagramApi } from "@/services/inctagram.api";
+import { baseQueryWithReauth} from "@/services/inctagram.api";
 import { baseUrl } from "@/shared/constants/app-paths";
-import { createSlice } from "@reduxjs/toolkit";
+import { createApi } from "@reduxjs/toolkit/query/react";
 
 export type MeResponse = {
   userId: number;
@@ -36,7 +36,10 @@ export type loginWithGoogleResponse = {
   email: string;
 };
 
-export const authApi = inctagramApi.injectEndpoints({
+export const authApi = createApi({
+  reducerPath: "inctagramApi",
+  tagTypes: ["Me"],
+  baseQuery: baseQueryWithReauth,
   endpoints: (builder) => ({
     me: builder.query<MeResponse, void>({
       providesTags: ["Me"],
