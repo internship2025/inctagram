@@ -2,6 +2,7 @@
 
 import { useEffect} from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { PATH } from "@/shared/constants/app-paths";
 
 const CallbackPage = () => {
 
@@ -17,7 +18,7 @@ const CallbackPage = () => {
       localStorage.setItem("email", email);
     } 
 
-    router.push("/");
+    router.push(PATH.ROOT);
   }, [searchParams,  router]);
   return <div></div>
 };

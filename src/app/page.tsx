@@ -10,12 +10,12 @@ export default function HomePage() {
 
   return (
     <GoogleOAuthProvider clientId="272583913867-t74i019ufdvmarh05jlv8bcu1ak0a6o6.apps.googleusercontent.com">
-      <StoreProvider>
+    
         <Header showAuth={false} onSignUpClick={() => setIsSignUp(true)} />
         {isSignUp && (
           <SignUpModal open={true} onClose={() => setIsSignUp(false)} />
         )}
-      </StoreProvider>
+   
     </GoogleOAuthProvider>
   );
 }

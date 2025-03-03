@@ -6,10 +6,13 @@ export const useGoogleAuth = () => {
   const [loginWithGoogle] = useLoginWithGoogleMutation();
 
   const handleSuccess = async (response: any) => {
+    const redirect = process.env.NODE_ENV === "development"
+    ? "http://localhost:3000"
+    : "universea.ru"
     try {
       const result = await loginWithGoogle({
         code:response.code,
-        redirectUrl:'http://localhost:3000',
+        redirectUrl: redirect
       }).unwrap();
       localStorage.setItem("access_token", result.accessToken);
       localStorage.setItem("email", result.email);
