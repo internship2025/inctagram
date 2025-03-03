@@ -1,10 +1,10 @@
 import { ComponentPropsWithoutRef, ElementType } from "react";
 import styles from "./button.module.css";
 import { clsx } from "clsx";
+import Link from "next/link";
 
 export const buttonVariant = [
   "icon",
-  "link",
   "primary",
   "secondary",
   "outline",
@@ -17,6 +17,7 @@ export type ButtonProps<T extends ElementType = "button"> = {
   as?: T;
   fullWidth?: boolean;
   variant?: ButtonVariant;
+  href?: string;
 } & ComponentPropsWithoutRef<T>;
 
 export const Button = <T extends ElementType = "button">(
@@ -27,6 +28,7 @@ export const Button = <T extends ElementType = "button">(
     className,
     fullWidth,
     variant = "primary",
+    href,
     ...rest
   } = props;
 
@@ -36,6 +38,10 @@ export const Button = <T extends ElementType = "button">(
     fullWidth && styles.fullWidth,
     className,
   );
+
+  if (href) {
+    return <Link href={href} className={classNames} {...rest} />;
+  }
 
   return <Component className={classNames} {...rest} />;
 };
