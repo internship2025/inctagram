@@ -1,0 +1,19 @@
+.confirmedContainer {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+}
+
+.congratulations {
+    margin-bottom: 19px;
+}
+
+.emailConfirmed {
+    margin-bottom: 54px;
+}
+
+.singInButton {
+    margin-bottom: 55px;
+}

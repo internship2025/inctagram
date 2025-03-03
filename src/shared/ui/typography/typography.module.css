@@ -1,0 +1,72 @@
+.typography {
+    font-family: "Inter", sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Заголовки */
+.h1 {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.h2 {
+    font-size: 1.75rem;
+    font-weight: 600;
+}
+
+.h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.h4 {
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
+/* Обычный текст */
+.p {
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+.small {
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: #6b7280;
+}
+
+/* Цвета */
+.primary {
+    color: #2563eb;
+}
+
+.secondary {
+    color: #374151;
+}
+
+.error {
+    color: #dc2626;
+}
+
+.warning {
+    color: #f59e0b;
+}
+
+.success {
+    color: #10b981;
+}
+
+/* Выравнивание */
+.left {
+    text-align: left;
+}
+
+.center {
+    text-align: center;
+}
+
+.right {
+    text-align: right;
+}
