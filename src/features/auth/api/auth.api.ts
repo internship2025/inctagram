@@ -1,5 +1,4 @@
 import { inctagramApi } from "@/services/inctagram.api";
-import { baseUrl } from "@/shared/constants/app-paths";
 
 export type MeResponse = {
   userId: number;
@@ -41,7 +40,7 @@ export const authApi = inctagramApi.injectEndpoints({
     }),
     signup: builder.mutation<void, SignUpArgs>({
       query: (args) => ({
-        body: { ...args, baseUrl },
+        body: args,
         method: "POST",
         url: "v1/auth/registration",
       }),
@@ -67,12 +66,12 @@ export const authApi = inctagramApi.injectEndpoints({
       query: (args) => ({
         body: args,
         method: "POST",
-        url: `v1/auth/registration-confirmation`,
+        url: "v1/auth/registration-confirmation",
       }),
     }),
     resendConfirmation: builder.mutation<void, ResendConfirmationArgs>({
       query: (args) => ({
-        body: { ...args, baseUrl },
+        body: args,
         method: "POST",
         url: "/v1/auth/registration-email-resending",
       }),

@@ -15,7 +15,7 @@ type Props = ComponentProps<"input"> & {
   showPassword?: boolean;
   type?: InputType;
   disabled?: boolean;
-  fullWidth?: boolean
+  fullWidth?: boolean;
 };
 
 export const Input = ({
@@ -44,8 +44,12 @@ export const Input = ({
       : type;
 
   return (
-    <div className={`${styles.inputWrapper} ${fullWidth ? styles.fullWidth : ''}`}>
-      {label && <label className={styles.label}>{label}</label>}
+    <div
+      className={`${styles.inputWrapper} ${fullWidth ? styles.fullWidth : ""}`}
+    >
+      <div className={styles.labelWrapper}>
+        {label && <label className={styles.label}>{label}</label>}
+      </div>
       <div className={styles.inputContainer}>
         {type === "search" && !disabled && (
           <div className={styles.searchInputContainer}>
@@ -65,12 +69,10 @@ export const Input = ({
             className={styles.togglePassword}
             disabled={disabled}
           >
-            {isPasswordVisible ? <EyeIcon/> : <EyeOff />}
-            
+            {isPasswordVisible ? <EyeIcon /> : <EyeOff />}
           </button>
         )}
       </div>
-      {/* {error && <p className={styles.errorText}>{error}</p>} */}
     </div>
   );
 };

@@ -35,27 +35,39 @@ export const LinkExpired = () => {
     } else {
       toast.error("link error");
     }
-
-    return (
-      <div className={styles.linkExpiredContainer}>
-        <Typography>Email verification link expired</Typography>
-        <Typography>
-          Looks like the verification link has expired. Not to worry, we can
-          send the link again
-        </Typography>
-        <Input fullWidth label={"email"} type={"text"} />
-        <Button
-          onClick={onResendHandler}
-          variant={"primary"}
-          className={styles.resendHandlerButton}
-        ></Button>
-        <Image
-          alt={"expired image"}
-          height={352}
-          src={"/images/expired.svg"}
-          width={474}
-        />
-      </div>
-    );
   };
+
+  return (
+    <div className={styles.linkExpiredContainer}>
+      {isLoading && <Typography>Loading...</Typography>}
+      <Typography className={styles.linkExpiredTitle}>
+        Email verification link expired
+      </Typography>
+      <Typography className={styles.linkExpiredDescription}>
+        Looks like the verification link has expired. Not to worry, we can send
+        the link again
+      </Typography>
+      <Input
+        fullWidth
+        label={"email"}
+        type={"text"}
+        className={styles.emailInput}
+        placeholder={"Epam@epam.com"}
+      />
+      <Button
+        onClick={onResendHandler}
+        variant={"primary"}
+        className={styles.resendHandlerButton}
+      >
+        Resend verification link
+      </Button>
+      <Image
+        alt={"expired image"}
+        height={352}
+        src={"/images/expired.svg"}
+        width={474}
+        className={styles.expiredImage}
+      />
+    </div>
+  );
 };
