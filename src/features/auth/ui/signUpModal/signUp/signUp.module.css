@@ -50,12 +50,12 @@ a:visited {
     justify-content: center;
     margin-bottom: 24px;
     margin-top: 13px;
-}
-
-.images {
+  }
+  
+  .btn {
+    all: unset;
     cursor: pointer;
-
     &:first-child {
-        margin-right: 60px;
+      margin-right: 60px;
     }
-}
+  }

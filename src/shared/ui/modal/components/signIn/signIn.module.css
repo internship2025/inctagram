@@ -57,8 +57,8 @@ a:visited {
   margin-top: 13px;
 }
 
-
-.images {
+.btn {
+  all: unset;
   cursor: pointer;
   &:first-child {
     margin-right: 60px;
