@@ -1,37 +1,83 @@
-import { yupResolver } from "@hookform/resolvers/yup";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import * as yup from "yup";
+import { z } from "zod";
 import styles from "./CreateNewPasswordForm.module.css";
 import { Input } from "@/shared/ui/input/input";
 import { Button } from "@/shared/ui/button/button";
+import { useCreateNewPasswordMutation } from "@/features/auth/api/auth.api";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { PATH } from "@/shared/constants/app-paths";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
-export type InputType = {
-  password: string;
-  passwordConfirmation: string;
-};
+const passwordSchema = z.object({
+  password: z.string()
+    .min(6, "Password must be at least 6 characters")
+    .max(20, "Password must not exceed 20 characters")
+    .regex(/[0-9]/, "Password must contain at least one number")
+    .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+    .regex(/[a-z]/, "Password must contain at least one lowercase letter")
+    .regex(
+      /[!\"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]/,
+      "Password must contain at least one special character (!@#$%^&* etc.)"
+    ),
+  passwordConfirmation: z.string()
+    .min(1, "Password confirmation is required")
+});
+
+type InputType = z.infer<typeof passwordSchema>;
 
 export const CreateNewPasswordForm = () => {
-  const schema = yup.object().shape({
-    password: yup
-      .string()
-      .min(5, "Minimum number of characters 6")
-      .max(19, "Maximum number of characters 20")
-      .required("Password is required"),
-    passwordConfirmation: yup.string().required("Password is required"),
-  });
+  const [createNewPassword, {isLoading, isSuccess}] = useCreateNewPasswordMutation();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const code = searchParams.get("code");
+
+  useEffect(() => {
+    if (!code) {
+      router.push(PATH.PASSWORD_RECOVERY);
+    }
+    if (isSuccess) {
+      router.push(PATH.ROOT);
+    }
+  }, [code, router, isSuccess]);
+
+  const schema = passwordSchema.refine(
+    (data) => data.password === data.passwordConfirmation,
+    {
+      message: "Passwords must match",
+      path: ["passwordConfirmation"],
+    }
+  );
+  
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
-  } = useForm<InputType>({ resolver: yupResolver(schema), mode: "onBlur" });
+  } = useForm<InputType>({ resolver: zodResolver(schema), mode: "onBlur" });
 
-  function handler(data: InputType) {
-    console.log(data);
+  async function onSubmit(data: InputType) {    
+    try {      
+      await createNewPassword({
+        ...data,
+        recoveryCode: code as string
+      }).unwrap();      
+      // Очищаем локальное хранилище
+      localStorage.removeItem('access_token');
+      // Редирект на страницу логина
+      router.push(PATH.SIGN_IN);
+    } catch (err) {
+      const fetchError = err as FetchBaseQueryError;
+    if ("status" in fetchError && fetchError.status === 400) {
+    setError("password", { message: "Something went wrong. Please try again." });
+      }
+    }
   }
 
   return (
     <div className={styles.wrapper}>
-      <form onSubmit={handleSubmit(handler)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.inputWrapper}>
           <Input
             error={errors?.password?.message}
@@ -64,7 +110,9 @@ export const CreateNewPasswordForm = () => {
             </p>
           )}
         </div>
-        <Button fullWidth>Create new password</Button>
+        <Button fullWidth disabled={isLoading}>
+          {isLoading ? "Creating..." : "Create new password"}
+        </Button>
       </form>
     </div>
   );

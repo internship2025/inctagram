@@ -1,36 +1,68 @@
-import { yupResolver } from "@hookform/resolvers/yup";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import * as yup from "yup";
+import { z } from "zod";
 import styles from "./ForgotPasswordConfirmation.module.css";
 import { Input } from "@/shared/ui/input/input";
 import { Button } from "@/shared/ui/button/button";
 import Link from "next/link";
+import { useForgotPasswordConfirmationMutation } from "@/features/auth/api/auth.api";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
+import { PATH, baseUrl } from "@/shared/constants/app-paths";
 
-export type InputType = {
-  email: string;
-};
+const confirmationSchema = z.object({
+  email: z
+    .string()
+    .email("The email must match the format example@example.com")
+    .min(1, "Email is required"),
+});
+
+type InputType = z.infer<typeof confirmationSchema>;
 
 export const ForgotPasswordConfirmation = () => {
-  const schema = yup.object().shape({
-    email: yup
-      .string()
-      .email("The email must match the format example@example.com")
-      .required("Email is required"),
-  });
+  const [forgotPasswordConfirmation, { isLoading }] =
+    useForgotPasswordConfirmationMutation();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const email = searchParams.get("email");
+
+  useEffect(() => {
+    if (!email) {
+      router.push(PATH.PASSWORD_RECOVERY);
+    }
+  }, [email, router]);
+
   const {
     register,
     handleSubmit,
-    control,
+    setError,
     formState: { errors },
-  } = useForm<InputType>({ resolver: yupResolver(schema), mode: "onBlur" });
+  } = useForm<InputType>({
+    resolver: zodResolver(confirmationSchema),
+    mode: "onBlur",
+  });
 
-  function handler(data: InputType) {
-    console.log(data);
+  async function onSubmit(data: InputType) {
+    try {
+      await forgotPasswordConfirmation({
+        email: data.email,
+        baseUrl: baseUrl,
+      }).unwrap();
+      router.push(PATH.SIGN_IN);
+    } catch (err) {
+      const fetchError = err as FetchBaseQueryError;
+      if ("status" in fetchError && fetchError.status === 400) {
+        setError("email", {
+          message: "Failed to send confirmation email. Please try again.",
+        });
+      }
+    }
   }
 
   return (
     <div className={styles.wrapper}>
-      <form onSubmit={handleSubmit(handler)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.inputWrapper}>
           <Input
             error={errors?.email?.message}
@@ -38,6 +70,7 @@ export const ForgotPasswordConfirmation = () => {
             type="email"
             fullWidth
             {...register("email")}
+            defaultValue={email || ""}
           />
           {errors.email ? (
             <span className={styles.error}>{errors.email.message}</span>
@@ -53,9 +86,11 @@ export const ForgotPasswordConfirmation = () => {
             link again
           </p>
         </div>
-        <Button fullWidth>Send Link Again</Button>
+        <Button fullWidth disabled={isLoading}>
+          {isLoading ? "Sending..." : "Send Link Again"}
+        </Button>
         <div className={styles.linkWrapper}>
-          <Link href="">Back to Sign In</Link>
+          <Link href={PATH.SIGN_IN}>Back to Sign In</Link>
         </div>
       </form>
     </div>
