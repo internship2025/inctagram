@@ -23,6 +23,18 @@ export type LoginResponse = {
   accessToken: string;
 };
 
+export type ForgotPassword = {
+  email: string;
+  recaptcha?: string;
+  baseUrl: string;
+};
+
+export type CreateNewPassword = {
+  password: string;
+  passwordConfirmation: string;
+  recoveryCode: string;
+};
+
 export type ResendConfirmationArgs = {
   email: string;
 };
@@ -56,6 +68,28 @@ export const authApi = inctagramApi.injectEndpoints({
         },
       }),
     }),
+    forgotPassword: builder.mutation<void, ForgotPassword>({
+      query: (args) => ({
+        body: args,
+        method: "POST",
+        url: "/v1/auth/password-recovery",
+      }),
+    }),
+    forgotPasswordConfirmation: builder.mutation<void, ForgotPassword>({
+      query: (args) => ({
+        body: args,
+        method: "POST",
+        url: "/v1/auth/password-recovery-resending",
+      }),
+    }),
+    createNewPassword: builder.mutation<void, CreateNewPassword>({
+      query: (args) => ({
+        body: args,
+        method: "POST",
+        url: "/v1/auth/new-password",
+      }),
+      invalidatesTags: ["Me"],
+    }),
     logout: builder.mutation<void, void>({
       query: () => ({
         method: "POST",
@@ -84,6 +118,9 @@ export const {
   useMeQuery,
   useLazyMeQuery,
   useSignupMutation,
+  useForgotPasswordMutation,
+  useCreateNewPasswordMutation,
+  useForgotPasswordConfirmationMutation,
   useLoginMutation,
   useLogoutMutation,
   useConfirmEmailMutation,
