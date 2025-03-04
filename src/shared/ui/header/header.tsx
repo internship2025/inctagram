@@ -4,6 +4,7 @@ import styles from "./header.module.css";
 import Image from "next/image";
 import { useState } from "react";
 import { Button } from "@/shared/ui/button/button";
+import Logout from "@/features/auth/ui/logout/Logout";
 import { ForgotPasswordModal } from "@/shared/ui/modal/components/forgotPasswordModal/forgotPasswordModal";
 import { ForgotPasswordConfirmationModal } from "../modal/components/ForgotPasswordConfirmationModal/ForgotPasswordConfirmationModal";
 import { CreateNewPasswordFormModule } from "../modal/components/CreateNewPasswordFormModule/CreateNewPasswordFormModule";
@@ -41,8 +42,9 @@ export const Header = ({
 }: HeaderProps) => {
   const [currentLang, setCurrentLang] = useState("English");
   const [showModal, setShowModal] = useState(false);
-  const [showConfirmModal, setShowConfirmModal] = useState(false); 
-  const [showCreateModal, setShowCreateModal] = useState(false); 
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [showCreateModal, setShowCreateModal] = useState(false);
+
 
   const handleLangChange = (value: string) => {
     setCurrentLang(value);
@@ -78,17 +80,17 @@ export const Header = ({
           CreateNewPassword
         </Button>
 
-        <ForgotPasswordModal 
-          open={showModal} 
-          onClose={() => handleModal('password', false)} 
+        <ForgotPasswordModal
+          open={showModal}
+          onClose={() => handleModal('password', false)}
         />
-        <ForgotPasswordConfirmationModal 
-          open={showConfirmModal} 
-          onClose={() => handleModal('confirm', false)} 
+        <ForgotPasswordConfirmationModal
+          open={showConfirmModal}
+          onClose={() => handleModal('confirm', false)}
         />
-        <CreateNewPasswordFormModule 
-          open={showCreateModal} 
-          onClose={() => handleModal('create', false)} 
+        <CreateNewPasswordFormModule
+          open={showCreateModal}
+          onClose={() => handleModal('create', false)}
         />
 
         <div className={styles.rightSection}>
@@ -162,16 +164,20 @@ export const Header = ({
             </Select.Portal>
           </Select.Root>
 
-          {!showAuth && (
-            <div className={styles.authButtons}>
-              <Button variant={"outline"} onClick={onLoginClick}>
-                Log in
-              </Button>
-              <Button variant={"primary"} onClick={onSignUpClick}>
-                Sign up
-              </Button>
-            </div>
-          )}
+          <div className={styles.authButtons}>
+            {!showAuth && (
+              <>
+                <Button variant="outline" onClick={onLoginClick}>
+                  Log in
+                </Button>
+                <Button variant="primary" onClick={onSignUpClick}>
+                  Sign up
+                </Button>
+                <Logout />
+              </>
+            )}
+
+          </div>
         </div>
       </div>
     </header>

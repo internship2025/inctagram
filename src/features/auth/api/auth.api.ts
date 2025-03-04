@@ -35,6 +35,14 @@ export type CreateNewPassword = {
   recoveryCode: string;
 };
 
+export type ResendConfirmationArgs = {
+  email: string;
+};
+
+export type ConfirmEmailArgs = {
+  confirmationCode: string;
+};
+
 export const authApi = inctagramApi.injectEndpoints({
   endpoints: (builder) => ({
     me: builder.query<MeResponse, void>({
@@ -47,7 +55,7 @@ export const authApi = inctagramApi.injectEndpoints({
       query: (args) => ({
         body: { ...args, baseUrl },
         method: "POST",
-        url: "/v1/auth/registration",
+        url: "v1/auth/registration",
       }),
     }),
     login: builder.mutation<LoginResponse, LoginArgs>({
@@ -82,15 +90,39 @@ export const authApi = inctagramApi.injectEndpoints({
       }),
       invalidatesTags: ["Me"],
     }),
+    logout: builder.mutation<void, void>({
+      query: () => ({
+        method: "POST",
+        url: "v1/auth/logout",
+      }),
+      invalidatesTags: ["Me"], // Чтобы обновить состояние после логаута
+    }),
+    confirmEmail: builder.mutation<void, ConfirmEmailArgs>({
+      query: (args) => ({
+        body: args,
+        method: "POST",
+        url: `v1/auth/registration-confirmation`,
+      }),
+    }),
+    resendConfirmation: builder.mutation<void, ResendConfirmationArgs>({
+      query: (args) => ({
+        body: { ...args, baseUrl },
+        method: "POST",
+        url: "/v1/auth/registration-email-resending",
+      }),
+    }),
   }),
 });
 
 export const {
   useMeQuery,
   useLazyMeQuery,
-  useLoginMutation,
   useSignupMutation,
   useForgotPasswordMutation,
   useCreateNewPasswordMutation,
   useForgotPasswordConfirmationMutation,
+  useLoginMutation,
+  useLogoutMutation,
+  useConfirmEmailMutation,
+  useResendConfirmationMutation,
 } = authApi;
