@@ -19,13 +19,12 @@
     border: 1px solid var(--color-dark-300);
     border-radius: 2px;
     background-color: var(--color-dark-700);
-    color: var(--color-dark-300);
+    color: var(--color-light-900);
     transition: border-color 0.3s ease, background-color 0.3s ease;
     margin-bottom: 0;
 }
 
 .input:focus {
-    background-color: var(--color-light-900);
     border: 1px solid var(--color-info-500);
     outline: none;
 }
@@ -33,10 +32,11 @@
 .input:active {
     background-color: var(--color-dark-500);
     border: 1px solid var(--color-light-100);
+    color: var(--color-light-100);
 }
 
 .input:hover {
-    background-color: var(--color-dark-500);
+
 }
 
 .label {
@@ -63,6 +63,7 @@
 
 .error {
     border-color: var(--color-danger-500);
+    color: var(--color-light-100);
 }
 
 .error:focus, .error:active, .error:hover {
