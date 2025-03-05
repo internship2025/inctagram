@@ -18,7 +18,7 @@ export type InputType = {
 };
 
 type Type = {
-  icons?: Array<{ src: string; width: number; height: number }> | [];
+  icons?: Array<{ src: string; width: number; height: number, onClick?: ()=> void }> | [];
   onClose?: () => void;
 };
 
@@ -44,7 +44,7 @@ export const SignIn = ({ onClose, icons }: Type) => {
 
       if (response) {
         const accessToken = response.accessToken;
-        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("access_token", accessToken);
         localStorage.setItem("email", data.email);
         // Если вход успешен, получаем данные пользователя
         const userResponse = await getUser().unwrap();
@@ -55,20 +55,13 @@ export const SignIn = ({ onClose, icons }: Type) => {
     }
   };
 
-  let images = Array.isArray(icons)
-    ? icons.map((it, ind) => {
-        return (
-          <Image
-            className={styles.images}
-            key={ind}
-            src={it.src}
-            width={it.width}
-            height={it.height}
-            alt=""
-          />
-        );
-      })
-    : null;
+  let images = icons?.map((it, ind) => {
+    return (
+      <button className={styles.btn} key={ind} onClick={it.onClick}>
+        <Image src={it.src} width={it.width} height={it.height} alt="" />
+      </button>
+    );
+  });
 
   return (
     <>
