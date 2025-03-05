@@ -1,3 +1,5 @@
+import styles from "./icons.module.css";
+
 export const defaultIconAttributes = {
   "aria-hidden": true,
   focusable: false,
@@ -7,5 +9,4 @@ export const defaultIconAttributes = {
   xmlns: "http://www.w3.org/2000/svg",
 };
 
-export const defaultIconClassName =
-  "select-none inline-block shrink-0 fill-none";
+export const defaultIconClassName = styles.icon;

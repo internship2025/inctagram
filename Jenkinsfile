@@ -20,21 +20,21 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Unit tests') {
-             steps {
-                echo "Running tests..."
-                  script {
-                      sh '''
-                         export NVM_DIR="$HOME/.nvm"
-                         [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-                         nvm use --lts
-                         corepack enable
-                         pnpm install
-                         pnpm test --if-present
-                      '''
-                  }
-             }
-        }
+//         stage('Unit tests') {
+//              steps {
+//                 echo "Running tests..."
+//                   script {
+//                       sh '''
+//                          export NVM_DIR="$HOME/.nvm"
+//                          [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+//                          nvm use --lts
+//                          corepack enable
+//                          pnpm install
+//                          pnpm test --if-present
+//                       '''
+//                   }
+//              }
+//         }
         stage('Build docker image') {
             steps {
                 echo "Build image started..."

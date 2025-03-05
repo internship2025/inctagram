@@ -6,7 +6,7 @@ import {
 } from "@/assets/icons/components/default-svg-icon-props";
 import { cn } from "@/shared/utils/cn";
 
-const SvgArrowBackOutline = (
+export const SvgArrowBackOutline = (
   { className, ...props }: SVGProps<SVGSVGElement>,
   ref: Ref<SVGSVGElement>,
 ) => (

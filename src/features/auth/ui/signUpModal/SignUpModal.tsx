@@ -1,3 +1,5 @@
+"use client";
+
 import { Modal } from "@/shared/ui/modal/modal";
 import { SignUp } from "@/features/auth/ui/signUpModal/signUp/SignUp";
 import googleImg from "@/shared/ui/modal/assets/google.svg";

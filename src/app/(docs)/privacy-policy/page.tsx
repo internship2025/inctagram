@@ -1,25 +1,26 @@
-import { ArrowBackOutline } from "@/assets/icons/components/outlined/ArrowBackOutline";
+// import { SvgArrowBackOutline } from "@/assets/icons/components/outlined";
 import { PATH } from "@/shared/constants/app-paths";
-import { TextLink, Typography } from "@/shared/ui";
-import styles from "./privacy.module.css"; //
+import styles from "./privacyPolicy.module.css";
+import { TextLink } from "@/shared/ui/textLink/textLink";
+import { Typography } from "@/shared/ui/typography/typography";
 
 const PrivacyPolicy = () => {
   return (
-    <div>
+    <div className={styles.wrapper}>
       <TextLink
         className={styles.backLink}
         href={PATH.SIGN_UP}
         size={"medium"}
         underline={false}
       >
-        <ArrowBackOutline className={styles.arrowIcon} />
+        {/*<SvgArrowBackOutline className={styles.arrowIcon} />*/}
         Back to Sign Up?
       </TextLink>
       <Typography className={styles.title} variant={"h1"}>
         Privacy Policy
       </Typography>
-      <div className={styles.textContainer}>
-        <Typography className={styles.textContent} variant={"regular14"}>
+      <div className={styles.content}>
+        <Typography className={styles.text}>
           <strong>Introduction</strong>
           At [Social Network Name], we are committed to protecting your privacy.
           This Privacy Policy outlines how we collect, use, and share your

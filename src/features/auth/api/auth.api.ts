@@ -1,4 +1,3 @@
-
 import { baseUrl } from "@/shared/constants/app-paths";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseQueryWithReauth } from "./baseApi";
@@ -127,17 +126,17 @@ export const authApi = createApi({
       }),
     }),
     loginWithGoogle: builder.mutation<
-    loginWithGoogleResponse,
-    loginWithGoogleArgs
-  >({
-    query: (body) => {
-      return {
-        body,
-        method: "POST",
-        url: "auth/google/login",
-      };
-    },
-  }),
+      loginWithGoogleResponse,
+      loginWithGoogleArgs
+    >({
+      query: (body) => {
+        return {
+          body,
+          method: "POST",
+          url: "auth/google/login",
+        };
+      },
+    }),
   }),
 });
 
@@ -152,5 +151,5 @@ export const {
   useLogoutMutation,
   useConfirmEmailMutation,
   useResendConfirmationMutation,
-  useLoginWithGoogleMutation
+  useLoginWithGoogleMutation,
 } = authApi;

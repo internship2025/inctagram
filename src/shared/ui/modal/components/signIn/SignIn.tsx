@@ -18,7 +18,14 @@ export type InputType = {
 };
 
 type Type = {
-  icons?: Array<{ src: string; width: number; height: number, onClick?: ()=> void }> | [];
+  icons?:
+    | Array<{
+        src: string;
+        width: number;
+        height: number;
+        onClick?: () => void;
+      }>
+    | [];
   onClose?: () => void;
 };
 
@@ -95,7 +102,7 @@ export const SignIn = ({ onClose, icons }: Type) => {
         <Button fullWidth>Sign In</Button>
         <span className={styles.question}>Do you have an account?</span>
         <div>
-          <Link href="">Sign In</Link>
+          <Link href="">Sign Up</Link>
         </div>
       </form>
     </>
