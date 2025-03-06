@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useConfirmEmailMutation } from "@/features/auth/api/auth.api";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
@@ -11,7 +11,6 @@ import { LinkExpired } from "@/features/auth/ui/registration-confirmation/link-e
 
 export const RegistrationConfirmation = () => {
   const searchParams = useSearchParams();
-  const router = useRouter();
 
   const [confirmEmail, { isError, isLoading, isSuccess }] =
     useConfirmEmailMutation();
@@ -20,13 +19,7 @@ export const RegistrationConfirmation = () => {
     const code = searchParams.get("code");
 
     if (code) {
-      confirmEmail({ confirmationCode: code })
-        .then(() => {
-          // router.push("/auth/email-confirmed");
-        })
-        .catch(() => {
-          toast.error("Error confirming email");
-        });
+      confirmEmail({ confirmationCode: code });
     } else {
       toast.error("Invalid confirmation code");
     }

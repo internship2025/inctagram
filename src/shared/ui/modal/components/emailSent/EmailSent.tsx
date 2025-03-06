@@ -1,5 +1,6 @@
 import styles from "./emailSent.module.css";
 import { Button } from "@/shared/ui/button/button";
+import { useRouter } from "next/navigation";
 
 export const EmailSent = ({
   onClose,
@@ -8,6 +9,15 @@ export const EmailSent = ({
   onClose?: () => void;
   email: string;
 }) => {
+  const router = useRouter();
+
+  const handleClose = () => {
+    if (onClose) {
+      onClose();
+    }
+    router.push("/");
+  };
+
   return (
     <>
       <div className={styles.line}></div>
@@ -16,7 +26,7 @@ export const EmailSent = ({
           {`We have sent a link to confirm your email to ${email}`}
         </span>
         <div className={styles.container}>
-          <Button onClick={onClose}>OK</Button>
+          <Button onClick={handleClose}>OK</Button>
         </div>
       </div>
     </>

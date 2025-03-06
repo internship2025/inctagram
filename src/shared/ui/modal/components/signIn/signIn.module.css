@@ -11,10 +11,6 @@
   margin-left: 12px;
 }
 
-a:visited {
-  color: var(--color-info-300);
-}
-
 .question {
   display: inline-block;
   margin: 18px 0 6px 0;

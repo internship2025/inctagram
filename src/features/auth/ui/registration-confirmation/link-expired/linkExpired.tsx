@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useResendConfirmationMutation } from "@/features/auth/api/auth.api";
 import { useState } from "react";
 import { toast } from "react-toastify";
@@ -8,14 +8,13 @@ import styles from "./linkExpired.module.css";
 import { Typography } from "@/shared/ui/typography/typography";
 import { Button } from "@/shared/ui/button/button";
 import Image from "next/image";
-import { Input } from "@/shared/ui/input/input";
+import { Modal } from "@/shared/ui/modal/modal";
+import { EmailSent } from "@/shared/ui/modal/components/emailSent/EmailSent";
 
 export const LinkExpired = () => {
-  const router = useRouter();
-
   const searchParams = useSearchParams();
   const code = searchParams.get("code");
-  const email = searchParams.get("email");
+  const email = searchParams.get("email") || "";
 
   const [resendConfirmation, { isLoading }] = useResendConfirmationMutation();
 
@@ -30,7 +29,7 @@ export const LinkExpired = () => {
             setModalOpen(true);
           });
       } catch (error: unknown) {
-        toast.error("link error");
+        console.log(`Error: ${error}`);
       }
     } else {
       toast.error("link error");
@@ -47,13 +46,6 @@ export const LinkExpired = () => {
         Looks like the verification link has expired. Not to worry, we can send
         the link again
       </Typography>
-      <Input
-        fullWidth
-        label={"email"}
-        type={"text"}
-        className={styles.emailInput}
-        placeholder={"Epam@epam.com"}
-      />
       <Button
         onClick={onResendHandler}
         variant={"primary"}
@@ -68,6 +60,9 @@ export const LinkExpired = () => {
         width={474}
         className={styles.expiredImage}
       />
+      <Modal open={modalOpen}>
+        <EmailSent email={email} />
+      </Modal>
     </div>
   );
 };
