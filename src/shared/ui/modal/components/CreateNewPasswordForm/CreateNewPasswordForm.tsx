@@ -38,10 +38,7 @@ export const CreateNewPasswordForm = () => {
     if (!code) {
       router.push(PATH.PASSWORD_RECOVERY);
     }
-    if (isSuccess) {
-      router.push(PATH.ROOT);
-    }
-  }, [code, router, isSuccess]);
+  }, [code, router]);
 
   const schema = passwordSchema.refine(
     (data) => data.password === data.passwordConfirmation,
