@@ -1,5 +1,7 @@
-import { inctagramApi } from "@/services/inctagram.api";
+
 import { baseUrl } from "@/shared/constants/app-paths";
+import { createApi } from "@reduxjs/toolkit/query/react";
+import { baseQueryWithReauth } from "./baseApi";
 
 export type MeResponse = {
   userId: number;
@@ -43,24 +45,37 @@ export type ConfirmEmailArgs = {
   confirmationCode: string;
 };
 
-export const authApi = inctagramApi.injectEndpoints({
+export type loginWithGoogleArgs = {
+  redirectUrl: string;
+  code: string;
+};
+
+export type loginWithGoogleResponse = {
+  accessToken: string;
+  email: string;
+};
+
+export const authApi = createApi({
+  reducerPath: "inctagramApi",
+  baseQuery: baseQueryWithReauth,
+  tagTypes: ["Me"],
   endpoints: (builder) => ({
     me: builder.query<MeResponse, void>({
       providesTags: ["Me"],
       query: () => ({
-        url: "v1/auth/me",
+        url: "auth/me",
       }),
     }),
     signup: builder.mutation<void, SignUpArgs>({
       query: (args) => ({
         body: { ...args, baseUrl },
         method: "POST",
-        url: "v1/auth/registration",
+        url: "auth/registration",
       }),
     }),
     login: builder.mutation<LoginResponse, LoginArgs>({
       query: (body) => ({
-        url: "v1/auth/login",
+        url: "auth/login",
         method: "POST",
         body: {
           email: body.email,
@@ -93,7 +108,7 @@ export const authApi = inctagramApi.injectEndpoints({
     logout: builder.mutation<void, void>({
       query: () => ({
         method: "POST",
-        url: "v1/auth/logout",
+        url: "auth/logout",
       }),
       invalidatesTags: ["Me"], // Чтобы обновить состояние после логаута
     }),
@@ -101,16 +116,28 @@ export const authApi = inctagramApi.injectEndpoints({
       query: (args) => ({
         body: args,
         method: "POST",
-        url: `v1/auth/registration-confirmation`,
+        url: `auth/registration-confirmation`,
       }),
     }),
     resendConfirmation: builder.mutation<void, ResendConfirmationArgs>({
       query: (args) => ({
         body: { ...args, baseUrl },
         method: "POST",
-        url: "/v1/auth/registration-email-resending",
+        url: "auth/registration-email-resending",
       }),
     }),
+    loginWithGoogle: builder.mutation<
+    loginWithGoogleResponse,
+    loginWithGoogleArgs
+  >({
+    query: (body) => {
+      return {
+        body,
+        method: "POST",
+        url: "auth/google/login",
+      };
+    },
+  }),
   }),
 });
 
@@ -125,4 +152,5 @@ export const {
   useLogoutMutation,
   useConfirmEmailMutation,
   useResendConfirmationMutation,
+  useLoginWithGoogleMutation
 } = authApi;
