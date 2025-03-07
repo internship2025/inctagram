@@ -11,7 +11,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
 const passwordSchema = z.object({
-  password: z.string()
+  password: z
+    .string()
     .min(6, "Password must be at least 6 characters")
     .max(20, "Password must not exceed 20 characters")
     .regex(/[0-9]/, "Password must contain at least one number")
@@ -19,16 +20,16 @@ const passwordSchema = z.object({
     .regex(/[a-z]/, "Password must contain at least one lowercase letter")
     .regex(
       /[!\"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]/,
-      "Password must contain at least one special character (!@#$%^&* etc.)"
+      "Password must contain at least one special character (!@#$%^&* etc.)",
     ),
-  passwordConfirmation: z.string()
-    .min(1, "Password confirmation is required")
+  passwordConfirmation: z.string().min(1, "Password confirmation is required"),
 });
 
 type InputType = z.infer<typeof passwordSchema>;
 
 export const CreateNewPasswordForm = () => {
-  const [createNewPassword, {isLoading, isSuccess}] = useCreateNewPasswordMutation();
+  const [createNewPassword, { isLoading, isSuccess }] =
+    useCreateNewPasswordMutation();
   const router = useRouter();
   const searchParams = useSearchParams();
   const code = searchParams.get("code");
@@ -47,9 +48,9 @@ export const CreateNewPasswordForm = () => {
     {
       message: "Passwords must match",
       path: ["passwordConfirmation"],
-    }
+    },
   );
-  
+
   const {
     register,
     handleSubmit,
@@ -57,20 +58,22 @@ export const CreateNewPasswordForm = () => {
     formState: { errors },
   } = useForm<InputType>({ resolver: zodResolver(schema), mode: "onBlur" });
 
-  async function onSubmit(data: InputType) {    
-    try {      
+  async function onSubmit(data: InputType) {
+    try {
       await createNewPassword({
-        ...data,
-        recoveryCode: code as string
-      }).unwrap();      
+        newPassword: data.password,
+        recoveryCode: code as string,
+      }).unwrap();
       // Очищаем локальное хранилище
-      localStorage.removeItem('access_token');
+      localStorage.removeItem("access_token");
       // Редирект на страницу логина
       router.push(PATH.SIGN_IN);
     } catch (err) {
       const fetchError = err as FetchBaseQueryError;
-    if ("status" in fetchError && fetchError.status === 400) {
-    setError("password", { message: "Something went wrong. Please try again." });
+      if ("status" in fetchError && fetchError.status === 400) {
+        setError("password", {
+          message: "Something went wrong. Please try again.",
+        });
       }
     }
   }
