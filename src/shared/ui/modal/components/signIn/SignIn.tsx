@@ -18,11 +18,18 @@ export type InputType = {
 };
 
 type Type = {
-  icons?: Array<{ src: string; width: number; height: number, onClick?: ()=> void }> | [];
+  icons?:
+    | Array<{
+        src: string;
+        width: number;
+        height: number;
+        onClick?: () => void;
+      }>
+    | [];
   onClose?: () => void;
 };
 
-export const SignIn = ({ onClose, icons }: Type) => {
+export const SignIn = ({ icons }: Type) => {
   const schema = yup.object().shape({
     email: yup.string().required("Email is required"),
     password: yup.string().required("Password is required"),
@@ -55,7 +62,7 @@ export const SignIn = ({ onClose, icons }: Type) => {
     }
   };
 
-  let images = icons?.map((it, ind) => {
+  const images = icons?.map((it, ind) => {
     return (
       <button className={styles.btn} key={ind} onClick={it.onClick}>
         <Image src={it.src} width={it.width} height={it.height} alt="" />
