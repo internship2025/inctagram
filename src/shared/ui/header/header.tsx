@@ -41,57 +41,15 @@ export const Header = ({
   onSignUpClick,
 }: HeaderProps) => {
   const [currentLang, setCurrentLang] = useState("English");
-  const [showModal, setShowModal] = useState(false);
-  const [showConfirmModal, setShowConfirmModal] = useState(false);
-  const [showCreateModal, setShowCreateModal] = useState(false);
-
-
   const handleLangChange = (value: string) => {
     setCurrentLang(value);
     onLangChange?.(value);
-  };
-
-  const handleModal = (type: 'password' | 'confirm' | 'create', isOpen: boolean) => {
-    switch (type) {
-      case 'password':
-        setShowModal(isOpen);
-        break;
-      case 'confirm':
-        setShowConfirmModal(isOpen);
-        break;
-      case 'create':
-        setShowCreateModal(isOpen);
-        break;
-    }
   };
 
   return (
     <header className={styles.header}>
       <div className={styles.container}>
         <h1 className={styles.title}>Instagram</h1>
-        <Button variant={"outline"} onClick={() => handleModal('password', true)}>
-          ForgotPassword
-        </Button>
-        <Button variant={"outline"} onClick={() => handleModal('confirm', true)}>
-          ForgotPasswordConfirm
-        </Button>
-
-        <Button variant={"outline"} onClick={() => handleModal('create', true)}>
-          CreateNewPassword
-        </Button>
-
-        <ForgotPasswordModal
-          open={showModal}
-          onClose={() => handleModal('password', false)}
-        />
-        <ForgotPasswordConfirmationModal
-          open={showConfirmModal}
-          onClose={() => handleModal('confirm', false)}
-        />
-        <CreateNewPasswordFormModule
-          open={showCreateModal}
-          onClose={() => handleModal('create', false)}
-        />
 
         <div className={styles.rightSection}>
           <Select.Root
@@ -176,7 +134,6 @@ export const Header = ({
                 <Logout />
               </>
             )}
-
           </div>
         </div>
       </div>
