@@ -3,19 +3,22 @@ import { Input } from "../../../input/input";
 import styles from "./signIn.module.css";
 import Link from "next/link";
 import { Button } from "../../../button/button";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import {
   LoginArgs,
   useLazyMeQuery,
   useLoginMutation,
 } from "@/features/auth/api/auth.api";
+import { useState } from "react";
 
-export type InputType = {
-  email: string;
-  password: string;
-};
+const schema = z.object({
+  email: z.string().email("Некорректный email").min(1, "Email обязателен"),
+  password: z.string().min(1, "Пароль обязателен"),
+});
+
+type InputType = z.infer<typeof schema>;
 
 type Type = {
   icons?:
@@ -30,22 +33,22 @@ type Type = {
 };
 
 export const SignIn = ({ icons }: Type) => {
-  const schema = yup.object().shape({
-    email: yup.string().required("Email is required"),
-    password: yup.string().required("Password is required"),
-  });
-
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<InputType>({ resolver: yupResolver(schema), mode: "onBlur" });
+  } = useForm<InputType>({
+    resolver: zodResolver(schema),
+    mode: "onBlur",
+  });
 
   const [login] = useLoginMutation();
   const [getUser] = useLazyMeQuery();
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleLogin: SubmitHandler<InputType> = async (data: LoginArgs) => {
     try {
+      setErrorMessage(null);
       const response = await login(data).unwrap();
       console.log("Вход выполнен успешно:", response);
 
@@ -59,6 +62,7 @@ export const SignIn = ({ icons }: Type) => {
       }
     } catch (error) {
       console.error("Ошибка входа:", error);
+      setErrorMessage("Неверный email или пароль");
     }
   };
 
@@ -100,6 +104,7 @@ export const SignIn = ({ icons }: Type) => {
           <Link href={""}>Forgot Password</Link>
         </div>
         <Button fullWidth>Sign In</Button>
+        {errorMessage && <div className={styles.error}>{errorMessage}</div>}
         <span className={styles.question}>Do you have an account?</span>
         <div>
           <Link href="">Sign In</Link>
