@@ -73,7 +73,7 @@ export const authApi = createApi({
     }),
     login: builder.mutation<LoginResponse, LoginArgs>({
       query: (body) => ({
-        url: "auth/login",
+        url: "/auth/login",
         method: "POST",
         body: {
           email: body.email,
@@ -123,18 +123,20 @@ export const authApi = createApi({
         url: "auth/registration-email-resending",
       }),
     }),
-    loginWithGoogle: builder.mutation<loginWithGoogleResponse,loginWithGoogleArgs>({
-    query: (body) => {
-      return {
-        body,
-        method: "POST",
-        url: "auth/google/login",
-      };
-    },
-  }),
+    loginWithGoogle: builder.mutation<
+      loginWithGoogleResponse,
+      loginWithGoogleArgs
+    >({
+      query: (body) => {
+        return {
+          body,
+          method: "POST",
+          url: "auth/google/login",
+        };
+      },
+    }),
   }),
 });
-
 export const {
   useMeQuery,
   useLazyMeQuery,
