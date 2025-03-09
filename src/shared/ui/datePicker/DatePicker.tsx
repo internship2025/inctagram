@@ -15,7 +15,6 @@ import {
 import s from "./datePicker.module.css";
 import { CalendarIcon } from "./CalendarIcon";
 
-
 type Page = {
   selectedDate: Date | [Date, Date] | null;
   onDateChange: (val: Date | [Date, Date]) => void;
@@ -47,12 +46,12 @@ export const CustomDatePicker = ({
         containerRef.current &&
         !containerRef.current.contains(event.target as Node)
       ) {
-        setIsOpen(false); 
+        setIsOpen(false);
       }
     };
-  
+
     document.addEventListener("mousedown", handleClickOutside);
-  
+
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
@@ -63,7 +62,7 @@ export const CustomDatePicker = ({
     if (Array.isArray(date)) {
       return `${format(date[0], "dd/MM/yyyy")} - ${format(
         date[1],
-        "dd/MM/yyyy"
+        "dd/MM/yyyy",
       )}`;
     }
     return format(date, "dd/MM/yyyy");
@@ -98,7 +97,7 @@ export const CustomDatePicker = ({
       days.push(
         <div className={s.dayName} key={i}>
           {format(addDays(startDate, i), dateFormat)}
-        </div>
+        </div>,
       );
     }
 
@@ -107,7 +106,6 @@ export const CustomDatePicker = ({
 
   const renderCells = () => {
     const monthStart = startOfMonth(currentMonth);
-    const monthEnd = endOfMonth(monthStart);
     const startDate = startOfWeek(monthStart, { weekStartsOn: 1 });
     const endDate = endOfWeek(addDays(startDate, 6 * 7 - 1), {
       weekStartsOn: 1,
@@ -189,28 +187,28 @@ export const CustomDatePicker = ({
               !isSameMonth(day, monthStart)
                 ? s.otherMonth
                 : isRange && isToday(day) && (str || end)
-                ? `${s.selectedRange} ${s.tods}`
-                : isRange && isToday(day)
-                ? s.today
-                : isToday(day) && isSelected
-                ? s.act
-                : isToday(day)
-                ? s.today
-                : isRange && isWeekend && isSelected
-                ? `${s.weekend} ${s.selectedRange}`
-                : isWeekend && isSelected
-                ? s.weekend
-                : isWeekend
-                ? s.weekend
-                : isToday(day) && isSelected
-                ? s.oneSel
-                : isToday(day)
-                ? s.today
-                : isSelected && isRange
-                ? s.selectedRange
-                : isSelected
-                ? s.selected
-                : ""
+                  ? `${s.selectedRange} ${s.tods}`
+                  : isRange && isToday(day)
+                    ? s.today
+                    : isToday(day) && isSelected
+                      ? s.act
+                      : isToday(day)
+                        ? s.today
+                        : isRange && isWeekend && isSelected
+                          ? `${s.weekend} ${s.selectedRange}`
+                          : isWeekend && isSelected
+                            ? s.weekend
+                            : isWeekend
+                              ? s.weekend
+                              : isToday(day) && isSelected
+                                ? s.oneSel
+                                : isToday(day)
+                                  ? s.today
+                                  : isSelected && isRange
+                                    ? s.selectedRange
+                                    : isSelected
+                                      ? s.selected
+                                      : ""
             }  ${date && isSelected ? s.mix : ""} ${str ? s.one : ""} ${
               end ? s.two : ""
             } ${isInHoverRange || isInFixedRange ? s.inRange : ""} ${
@@ -231,18 +229,14 @@ export const CustomDatePicker = ({
             onMouseEnter={() => setHoveredDate(cloneDay)}
           >
             {format(day, dateFormat)}
-          </div>
+          </div>,
         );
-
-
-
-
         day = addDays(day, 1);
       }
       rows.push(
         <div className={s.row} key={day.getTime()}>
           {days}
-        </div>
+        </div>,
       );
       days = [];
     }
@@ -322,12 +316,14 @@ export const CustomDatePicker = ({
           }
         }}
       />
-      <span onClick={() =>{
-        if(!disabled){
-          setIsOpen(!isOpen)
-        }
-        
-      } } className={s.wrapperIcon}>
+      <span
+        onClick={() => {
+          if (!disabled) {
+            setIsOpen(!isOpen);
+          }
+        }}
+        className={s.wrapperIcon}
+      >
         <CalendarIcon error={error} className={s.icon} />
       </span>
       {error && !isOpen ? <div className={s.errorText}>{error}</div> : ""}
