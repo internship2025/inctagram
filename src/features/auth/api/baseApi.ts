@@ -8,6 +8,7 @@ import {
   
   export const baseQueryWithAccessToken = fetchBaseQuery({
     baseUrl: "https://universea.ru/api/v1",
+    credentials: "include",
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("access_token");
   
@@ -26,20 +27,25 @@ import {
     FetchBaseQueryError
   > = async (args, api, extraOptions) => {
     await mutex.waitForUnlock();
+
+    const url = typeof args === 'string' 
+    ? args 
+    : args.url;
   
     let result = await baseQueryWithAccessToken(args, api, extraOptions);
   
     if (
       result.error?.status === 401 ||
       (result.error?.status === "PARSING_ERROR" &&
-        result.error?.originalStatus === 401)
+        result.error?.originalStatus === 401) && 
+        !url.includes("auth/logout")
     ) {
       if (!mutex.isLocked()) {
         const release = await mutex.acquire();
         try {
           const refreshResult = await baseQueryWithAccessToken(
             {
-              url: "v1/auth/update-tokens",
+              url: "auth/update-tokens",
               method: "POST",
               body: {},
             },
@@ -48,7 +54,7 @@ import {
           );
           if (refreshResult.data) {
             const data = refreshResult.data as { accessToken: string };
-            sessionStorage.setItem("access_token", data.accessToken);
+            localStorage.setItem("access_token", data.accessToken);
             result = await baseQueryWithAccessToken(args, api, extraOptions);
           } else {
           }

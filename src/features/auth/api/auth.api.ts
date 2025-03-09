@@ -4,7 +4,7 @@ import { baseQueryWithReauth } from "./baseApi";
 
 export type MeResponse = {
   userId: number;
-  username: string;
+  userName: string;
   email: string;
   isBlocked: boolean;
 };
@@ -106,8 +106,7 @@ export const authApi = createApi({
     logout: builder.mutation<void, void>({
       query: () => ({
         method: "POST",
-        url: "auth/logout",
-      }),
+        url: "auth/logout",       }),
       invalidatesTags: ["Me"], // Чтобы обновить состояние после логаута
     }),
     confirmEmail: builder.mutation<void, ConfirmEmailArgs>({
@@ -124,18 +123,15 @@ export const authApi = createApi({
         url: "auth/registration-email-resending",
       }),
     }),
-    loginWithGoogle: builder.mutation<
-      loginWithGoogleResponse,
-      loginWithGoogleArgs
-    >({
-      query: (body) => {
-        return {
-          body,
-          method: "POST",
-          url: "auth/google/login",
-        };
-      },
-    }),
+    loginWithGoogle: builder.mutation<loginWithGoogleResponse,loginWithGoogleArgs>({
+    query: (body) => {
+      return {
+        body,
+        method: "POST",
+        url: "auth/google/login",
+      };
+    },
+  }),
   }),
 });
 
