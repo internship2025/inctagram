@@ -1,4 +1,3 @@
-
 import { baseUrl } from "@/shared/constants/app-paths";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseQueryWithReauth } from "./baseApi";
@@ -32,8 +31,7 @@ export type ForgotPassword = {
 };
 
 export type CreateNewPassword = {
-  password: string;
-  passwordConfirmation: string;
+  newPassword: string;
   recoveryCode: string;
 };
 
@@ -87,21 +85,21 @@ export const authApi = createApi({
       query: (args) => ({
         body: args,
         method: "POST",
-        url: "/v1/auth/password-recovery",
+        url: "auth/password-recovery",
       }),
     }),
     forgotPasswordConfirmation: builder.mutation<void, ForgotPassword>({
       query: (args) => ({
         body: args,
         method: "POST",
-        url: "/v1/auth/password-recovery-resending",
+        url: "auth/password-recovery-resending",
       }),
     }),
     createNewPassword: builder.mutation<void, CreateNewPassword>({
       query: (args) => ({
         body: args,
         method: "POST",
-        url: "/v1/auth/new-password",
+        url: "auth/new-password",
       }),
       invalidatesTags: ["Me"],
     }),
@@ -148,5 +146,5 @@ export const {
   useLogoutMutation,
   useConfirmEmailMutation,
   useResendConfirmationMutation,
-  useLoginWithGoogleMutation
+  useLoginWithGoogleMutation,
 } = authApi;
