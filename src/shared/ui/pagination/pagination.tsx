@@ -20,11 +20,11 @@ export const Pagination = () => {
     }
   };
 
-  const handlePageClick = (pageNumber) => {
+  const handlePageClick = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
 
-  const handleItemsPerPageChange = (value) => {
+  const handleItemsPerPageChange = (value: string) => {
     setItemsPerPage(value);
     setCurrentPage(1);
   };
@@ -41,7 +41,7 @@ export const Pagination = () => {
       <span className={styles.text}>Show</span>
       <SuperSelect
         value={itemsPerPage}
-        onChange={handleItemsPerPageChange}
+        onChangeAction={handleItemsPerPageChange}
         options={[
           { value: "10", label: "10" },
           { value: "20", label: "20" },

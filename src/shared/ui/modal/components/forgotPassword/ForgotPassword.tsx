@@ -120,7 +120,7 @@ export const ForgotPassword = () => {
         email={sentEmail}
         onClose={() => {
           setShowEmailSentModal(false);
-          router.push(`${PATH.PASSWORD_RESET}?email=${sentEmail}`);
+          router.push(PATH.SIGN_IN);
         }}
       />
     </>

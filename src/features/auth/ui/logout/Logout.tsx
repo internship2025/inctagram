@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { Button } from "@/shared/ui/button/button";
-import { useLogoutMutation } from "@/features/auth/api/auth.api";
+import { useLazyMeQuery, useLogoutMutation } from "@/features/auth/api/auth.api";
 import { useAppDispatch } from "@/services/store";
 import { inctagramApi } from "@/services/inctagram.api";
 import { useRouter } from "next/navigation";
@@ -11,10 +11,12 @@ const Logout = () => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [logout] = useLogoutMutation();
   const dispatch = useAppDispatch();
+  const [getUser, { data: userData, isLoading, error }] = useLazyMeQuery();
+
   const router = useRouter();
 
   const email = localStorage.getItem("email");
-    const name = "John Doe"; // Получить из состояния пользователя
+  const [name, setName] = useState<string>("");
 
   const handleLogout = () => {
     logout()
@@ -23,15 +25,26 @@ const Logout = () => {
         localStorage.removeItem("access_token");
         localStorage.removeItem("email");
         dispatch(inctagramApi.util.resetApiState());
-        router.push("/login");
+        // router.push("/login");
       })
       .catch((error) => {
         console.error("Logout failed", error);
       });
   };
-  
+ // useEffect для получения данных пользователя и обновления имени
+ useEffect(() => {
+  if (userData) {
+    setName(userData.userName); // Обновляем имя, если данные пришли
+  } else if (error) {
+    console.error("Failed to fetch user data", error);
+    setName("Unknown User"); // Если ошибка, устанавливаем "Unknown User"
+  }
+}, [userData, error]);
+
   const confirmLogout = () => {
-    setShowConfirmation(true);
+    // Запрашиваем данные пользователя перед открытием модалки
+    getUser();
+    setShowConfirmation(true); 
   };
 
   const cancelLogout = () => {

@@ -4,6 +4,7 @@ import * as Select from "@radix-ui/react-select";
 import styles from "./superSelect.module.css";
 import image2 from "../../../../../public/cornerDown.svg";
 import image1 from "../../../../../public/cornerTop.svg";
+import Image from "next/image";
 
 type OptionType = {
   value: string; // Значение опции
@@ -12,22 +13,26 @@ type OptionType = {
 
 type SuperSelectProps = {
   value: string; // Текущее значение
-  onChange: (value: string) => void; // Функция для обработки изменения
+  onChangeAction: (value: string) => void; // Переименовано в onChangeAction
   options: OptionType[]; // Массив опций
 };
 
-export const SuperSelect = ({ value, onChange, options }: SuperSelectProps) => {
+export const SuperSelect = ({
+  value,
+  onChangeAction,
+  options,
+}: SuperSelectProps) => {
   const [open, isOpen] = React.useState(false);
 
   return (
     <Select.Root
       value={value}
-      onValueChange={onChange}
+      onValueChange={onChangeAction} // Используем onChangeAction
       onOpenChange={(open) => isOpen(open)}
     >
-      <Select.Trigger className={styles.select} onOpenChange={isOpen}>
+      <Select.Trigger className={styles.select}>
         <Select.Value placeholder="Выберите элемент" />
-        <img
+        <Image
           src={open ? image2.src : image1.src}
           alt="Custom Icon"
           className={styles.CustomIcon}

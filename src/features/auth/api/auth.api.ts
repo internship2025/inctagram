@@ -4,7 +4,7 @@ import { baseQueryWithReauth } from "./baseApi";
 
 export type MeResponse = {
   userId: number;
-  username: string;
+  userName: string;
   email: string;
   isBlocked: boolean;
 };
@@ -31,8 +31,7 @@ export type ForgotPassword = {
 };
 
 export type CreateNewPassword = {
-  password: string;
-  passwordConfirmation: string;
+  newPassword: string;
   recoveryCode: string;
 };
 
@@ -74,7 +73,7 @@ export const authApi = createApi({
     }),
     login: builder.mutation<LoginResponse, LoginArgs>({
       query: (body) => ({
-        url: "auth/login",
+        url: "/auth/login",
         method: "POST",
         body: {
           email: body.email,
@@ -86,29 +85,28 @@ export const authApi = createApi({
       query: (args) => ({
         body: args,
         method: "POST",
-        url: "/v1/auth/password-recovery",
+        url: "auth/password-recovery",
       }),
     }),
     forgotPasswordConfirmation: builder.mutation<void, ForgotPassword>({
       query: (args) => ({
         body: args,
         method: "POST",
-        url: "/v1/auth/password-recovery-resending",
+        url: "auth/password-recovery-resending",
       }),
     }),
     createNewPassword: builder.mutation<void, CreateNewPassword>({
       query: (args) => ({
         body: args,
         method: "POST",
-        url: "/v1/auth/new-password",
+        url: "auth/new-password",
       }),
       invalidatesTags: ["Me"],
     }),
     logout: builder.mutation<void, void>({
       query: () => ({
         method: "POST",
-        url: "auth/logout",
-      }),
+        url: "auth/logout",       }),
       invalidatesTags: ["Me"], // Чтобы обновить состояние после логаута
     }),
     confirmEmail: builder.mutation<void, ConfirmEmailArgs>({
@@ -139,7 +137,6 @@ export const authApi = createApi({
     }),
   }),
 });
-
 export const {
   useMeQuery,
   useLazyMeQuery,

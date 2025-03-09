@@ -1,5 +1,6 @@
 import styles from "./../pagination.module.css";
 import arrowNext from "./../../../../../public//icons/arrowRight.svg";
+import arrowPev from "./../../../../../public//icons/arrowLeft.svg";
 import Image from "next/image";
 
 type ButtonsPropsType = {
@@ -11,7 +12,7 @@ type ButtonsPropsType = {
 export const PrevButton = ({ callback, disabled }: ButtonsPropsType) => {
   return (
     <button onClick={callback} disabled={disabled} className={styles.button}>
-      {"<"}
+      <Image src={arrowPev} alt={"PevButton"} />
     </button>
   );
 };

@@ -6,7 +6,7 @@ import { ForgotPasswordConfirmationModal } from '@/shared/ui/modal/components/Fo
 import { useState } from 'react';
 
 export default function PasswordResetPage() {
-const [open, setOpen] = useState(false);
+const [open, setOpen] = useState(true);
 
   const searchParams = useSearchParams();
   const email = searchParams.get('email');

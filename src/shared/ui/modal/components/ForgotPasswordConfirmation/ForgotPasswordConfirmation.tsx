@@ -28,7 +28,7 @@ export const ForgotPasswordConfirmation = () => {
   const email = searchParams.get("email");
 
   useEffect(() => {
-    if (!email) {
+    if (!email) {   
       router.push(PATH.PASSWORD_RECOVERY);
     }
   }, [email, router]);
