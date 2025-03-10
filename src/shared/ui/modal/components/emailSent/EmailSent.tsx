@@ -1,3 +1,5 @@
+"use client";
+
 import styles from "./emailSent.module.css";
 import { Button } from "@/shared/ui/button/button";
 import { useRouter } from "next/navigation";

@@ -4,6 +4,7 @@ import * as Select from "@radix-ui/react-select";
 import styles from "./select.module.css";
 import image2 from "../../../../public/cornerDown.svg";
 import image1 from "../../../../public/cornerTop.svg";
+import Image from "next/image";
 
 type SelectDemo = {
   disabled?: boolean;
@@ -32,10 +33,12 @@ export const SelectDemo = ({
       >
         <Select.Value placeholder="Текст1" />
         <Select.Icon className={styles.Icon}>
-          <img
+          <Image
             src={open ? image2.src : image1.src}
             alt="Custom Icon"
             className={styles.CustomIcon}
+            width={20}
+            height={20}
           />
         </Select.Icon>
       </Select.Trigger>
@@ -55,12 +58,10 @@ export const SelectDemo = ({
                 <Select.ItemText>Текст1</Select.ItemText>
                 <Select.ItemIndicator />
               </Select.Item>
-
               <Select.Item className={styles.Item} value="Текст2">
                 <Select.ItemText>Текст2</Select.ItemText>
                 <Select.ItemIndicator />
               </Select.Item>
-
               <Select.Item className={styles.Item} value="Текст3">
                 <Select.ItemText>Текст3</Select.ItemText>
                 <Select.ItemIndicator />

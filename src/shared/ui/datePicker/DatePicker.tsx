@@ -4,7 +4,6 @@ import {
   addMonths,
   subMonths,
   startOfMonth,
-  endOfMonth,
   startOfWeek,
   endOfWeek,
   isSameMonth,
@@ -91,7 +90,7 @@ export const CustomDatePicker = ({
   const renderDays = () => {
     const dateFormat = "EEEEEE";
     const days = [];
-    let startDate = startOfWeek(currentMonth, { weekStartsOn: 1 });
+    const startDate = startOfWeek(currentMonth, { weekStartsOn: 1 });
 
     for (let i = 0; i < 7; i++) {
       days.push(
@@ -119,7 +118,7 @@ export const CustomDatePicker = ({
       for (let i = 0; i < 7; i++) {
         const cloneDay = day;
 
-        let isSelected = isRange
+        const isSelected = isRange
           ? rangeStart &&
             rangeEnd &&
             cloneDay >= rangeStart &&

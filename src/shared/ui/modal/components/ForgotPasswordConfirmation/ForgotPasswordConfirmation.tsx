@@ -1,3 +1,5 @@
+"use client";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -28,7 +30,7 @@ export const ForgotPasswordConfirmation = () => {
   const email = searchParams.get("email");
 
   useEffect(() => {
-    if (!email) {   
+    if (!email) {
       router.push(PATH.PASSWORD_RECOVERY);
     }
   }, [email, router]);

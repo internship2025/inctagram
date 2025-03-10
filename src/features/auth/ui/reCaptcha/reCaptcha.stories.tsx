@@ -7,8 +7,6 @@ const meta: Meta<typeof Recaptcha> = {
   tags: ["autodocs"],
   argTypes: {
     onVerify: { action: "verified" },
-    onErrored: { action: "errored" },
-    onExpired: { action: "expired" },
   },
 };
 
@@ -28,9 +26,10 @@ export const ErrorState: Story = {
     siteKey: "6LfpOuMqAAAAAE9xTZ1PP4CH-WUsTq5al9vEw0nJ",
   },
   render: (args) => {
-    // Имитируем вызов onErrored через 1 секунду
+    // Имитируем вызов onVerify или других доступных функций
     setTimeout(() => {
-      args.onErrored();
+      // Допустим, мы вызываем onVerify с ошибкой
+      args.onVerify("error-token");
     }, 1000);
 
     return <Recaptcha {...args} />;
@@ -42,9 +41,9 @@ export const ExpiredState: Story = {
     siteKey: "6LfpOuMqAAAAAE9xTZ1PP4CH-WUsTq5al9vEw0nJ",
   },
   render: (args) => {
-    // Имитируем вызов onExpired через 1 секунду
+    // Имитируем вызов onVerify или других доступных функций
     setTimeout(() => {
-      args.onExpired();
+      args.onVerify("expired-token");
     }, 1000);
 
     return <Recaptcha {...args} />;

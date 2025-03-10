@@ -1,3 +1,5 @@
+"use client";
+
 import styles from "./reCaptcha.module.css";
 import { useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";

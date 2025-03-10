@@ -1,4 +1,5 @@
 "use client";
+
 import { Modal } from "../../modal";
 import { ForgotPassword } from "@/shared/ui/modal/components/forgotPassword/ForgotPassword";
 

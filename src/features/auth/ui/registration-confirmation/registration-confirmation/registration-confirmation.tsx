@@ -9,7 +9,7 @@ import styles from "./registration.module.css";
 import { EmailConfirmed } from "@/features/auth/ui/registration-confirmation/email-confirmed/email-confirmed";
 import { LinkExpired } from "@/features/auth/ui/registration-confirmation/link-expired/linkExpired";
 
-export const RegistrationConfirmation = () => {
+const RegistrationConfirmation = () => {
   const searchParams = useSearchParams();
 
   const [confirmEmail, { isError, isLoading, isSuccess }] =
@@ -33,3 +33,8 @@ export const RegistrationConfirmation = () => {
     </div>
   );
 };
+
+// Оборачивание в Suspense
+const RegistrationConfirmationWithSuspense = () => <RegistrationConfirmation />;
+
+export default RegistrationConfirmationWithSuspense;

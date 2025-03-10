@@ -1,13 +1,11 @@
 "use client";
+
 import * as Select from "@radix-ui/react-select";
 import styles from "./header.module.css";
 import Image from "next/image";
 import { useState } from "react";
 import { Button } from "@/shared/ui/button/button";
 import Logout from "@/features/auth/ui/logout/Logout";
-import { ForgotPasswordModal } from "@/shared/ui/modal/components/forgotPasswordModal/forgotPasswordModal";
-import { ForgotPasswordConfirmationModal } from "../modal/components/ForgotPasswordConfirmationModal/ForgotPasswordConfirmationModal";
-import { CreateNewPasswordFormModule } from "../modal/components/CreateNewPasswordFormModule/CreateNewPasswordFormModule";
 
 const ChevronDownIcon = () => (
   <svg
@@ -41,6 +39,7 @@ export const Header = ({
   onSignUpClick,
 }: HeaderProps) => {
   const [currentLang, setCurrentLang] = useState("English");
+
   const handleLangChange = (value: string) => {
     setCurrentLang(value);
     onLangChange?.(value);

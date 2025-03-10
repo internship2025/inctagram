@@ -137,3 +137,12 @@
     max-width: 100%;
     text-align: left;
 }
+
+.input:-webkit-autofill,
+.input:-webkit-autofill:hover,
+.input:-webkit-autofill:focus,
+.input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px var(--color-dark-700) inset !important; /* Цвет фона */
+    -webkit-text-fill-color: var(--color-light-900) !important; /* Цвет текста */
+    transition: background-color 5000s ease-in-out 0s; /* Отключаем анимацию изменения фона */
+}

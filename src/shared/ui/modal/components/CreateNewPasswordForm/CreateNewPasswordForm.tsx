@@ -1,3 +1,5 @@
+"use client";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -28,11 +30,17 @@ const passwordSchema = z.object({
 type InputType = z.infer<typeof passwordSchema>;
 
 export const CreateNewPasswordForm = () => {
-  const [createNewPassword, { isLoading, isSuccess }] =
-    useCreateNewPasswordMutation();
+  const [createNewPassword, { isLoading }] = useCreateNewPasswordMutation();
   const router = useRouter();
   const searchParams = useSearchParams();
   const code = searchParams.get("code");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("access_token");
+    }
+    router.push(PATH.SIGN_IN);
+  }, []); // Эффект срабатывает при монтировании компонента
 
   useEffect(() => {
     if (!code) {
