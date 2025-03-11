@@ -1,5 +1,10 @@
-import { RecoveryClient } from './components/RecoveryClient'
+import { RecoveryClient } from "./components/RecoveryClient";
+import { Suspense } from "react";
 
 export default function NewPasswordPage() {
-  return <RecoveryClient />
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <RecoveryClient />
+    </Suspense>
+  );
 }

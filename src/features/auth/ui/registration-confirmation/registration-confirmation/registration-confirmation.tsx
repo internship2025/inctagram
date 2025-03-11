@@ -2,7 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import { useConfirmEmailMutation } from "@/features/auth/api/auth.api";
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 import styles from "./registration.module.css";
@@ -34,7 +34,11 @@ const RegistrationConfirmation = () => {
   );
 };
 
-// Оборачивание в Suspense
-const RegistrationConfirmationWithSuspense = () => <RegistrationConfirmation />;
+// Оборачивание компонента в Suspense
+const RegistrationConfirmationWithSuspense = () => (
+  <Suspense fallback={<div>Loading...</div>}>
+    <RegistrationConfirmation />
+  </Suspense>
+);
 
 export default RegistrationConfirmationWithSuspense;

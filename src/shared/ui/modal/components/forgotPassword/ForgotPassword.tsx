@@ -1,27 +1,30 @@
-import { Input } from "@/shared/ui/input/input"
-import styles from "./forgotPassword.module.css"
-import { Button } from "@/shared/ui/button/button"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { EmailSentModal } from "../emailSentModal/EmailSentModal"
-import { PATH } from "@/shared/constants/app-paths"
-import { Recaptcha } from "@/features/auth/ui/reCaptcha/reCaptcha"
-import { useForgotPasswordForm } from "@/app/auth/hooks/useForgotPasswordForm"
+import { Input } from "@/shared/ui/input/input";
+import styles from "./forgotPassword.module.css";
+import { Button } from "@/shared/ui/button/button";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { EmailSentModal } from "../emailSentModal/EmailSentModal";
+import { PATH } from "@/shared/constants/app-paths";
+import { Recaptcha } from "@/features/auth/ui/reCaptcha/reCaptcha";
+import { useForgotPasswordForm } from "@/app/auth/hooks/useForgotPasswordForm";
 
 export const ForgotPassword = () => {
-  const router = useRouter()
+  const router = useRouter();
   const {
     form,
-    form: { register, handleSubmit, formState: { errors } },
+    form: {
+      register,
+      handleSubmit,
+      formState: { errors },
+    },
     onSubmit,
-    recaptchaValue,
     setRecaptchaValue,
     isButtonDisabled,
     isLoading,
     showEmailSentModal,
     setShowEmailSentModal,
-    sentEmail
-  } = useForgotPasswordForm()
+    sentEmail,
+  } = useForgotPasswordForm();
 
   return (
     <>
@@ -58,12 +61,12 @@ export const ForgotPassword = () => {
                 "6LfpOuMqAAAAAE9xTZ1PP4CH-WUsTq5al9vEw0nJ"
               }
               onVerify={(token) => {
-                setRecaptchaValue(token)
+                setRecaptchaValue(token);
                 if (
                   errors.email?.message ===
                   "Please complete the reCAPTCHA verification"
                 ) {
-                  form.setError("email", { message: undefined })
+                  form.setError("email", { message: undefined });
                 }
               }}
             />
@@ -74,10 +77,10 @@ export const ForgotPassword = () => {
         open={showEmailSentModal}
         email={sentEmail}
         onClose={() => {
-          setShowEmailSentModal(false)
-          router.push(PATH.SIGN_IN)
+          setShowEmailSentModal(false);
+          router.push(PATH.SIGN_IN);
         }}
       />
     </>
-  )
-}
+  );
+};
