@@ -1,12 +1,5 @@
-'use client';
+import { PasswordRecoveryClient } from "./components/PasswordRecoveryClient";
 
-import { ForgotPasswordModal } from '@/shared/ui/modal/components/forgotPasswordModal/forgotPasswordModal';
-import { useState } from 'react';
-
-export default function PasswordRecoveryPage() {
-    const [open, setOpen] = useState(true);
-
-  return (
-      <ForgotPasswordModal open={open} onClose={() => setOpen(false)} />
-  );
+export default function NewPasswordRecoveryPage() {
+  return <PasswordRecoveryClient />;
 }
