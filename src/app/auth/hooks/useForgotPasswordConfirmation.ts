@@ -3,20 +3,20 @@ import { PATH } from "@/shared/constants/app-paths";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { useEffect } from "react";
 import { baseUrl } from "@/shared/constants/app-paths";
-import {emailSchema, ConfirmationType } from "../types/schema";
+import { emailSchema, ConfirmationType } from "../types/schema";
 
 export const useForgotPasswordConfirmation = () => {
-  const [forgotPasswordConfirmation, { isLoading }] = useForgotPasswordConfirmationMutation();
+  const [forgotPasswordConfirmation, { isLoading }] =
+    useForgotPasswordConfirmationMutation();
   const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams.get("email");
 
   useEffect(() => {
-    if (!email) {   
+    if (!email) {
       router.push(PATH.PASSWORD_RECOVERY);
     }
   }, [email, router]);
@@ -47,5 +47,5 @@ export const useForgotPasswordConfirmation = () => {
     onSubmit,
     isLoading,
     email,
-  }
-}
+  };
+};
