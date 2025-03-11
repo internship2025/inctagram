@@ -3,7 +3,7 @@
 }
 
 .inputWrapper:has(.error) {
-  margin-bottom: 0px; /* Увеличиваем отступ, если есть ошибка */
+  margin-bottom: 0; /* Увеличиваем отступ, если есть ошибка */
 }
 
 .text {
@@ -11,13 +11,9 @@
   margin-left: 12px;
 }
 
-a:visited {
-  color: var(--color-info-300);
-}
-
 .question {
   display: inline-block;
-  margin: 18px 0px 6px 0px;
+  margin: 18px 0 6px 0;
 }
 
 .error {
@@ -27,7 +23,6 @@ a:visited {
   font-size: 14px;
   line-height: 24px;
   font-weight: 400;
-  font-family: var(--font-family-primary);
   text-align: left;
   &:not(:last-child) {
     margin-bottom: 24px;
@@ -35,7 +30,7 @@ a:visited {
 }
 
 .wrapper {
-  margin: 0px 24px 30px 24px;
+  margin: 0 24px 30px 24px;
 
 }
 
@@ -57,8 +52,7 @@ a:visited {
   margin-top: 13px;
 }
 
-.btn {
-  all: unset;
+.images {
   cursor: pointer;
   &:first-child {
     margin-right: 60px;

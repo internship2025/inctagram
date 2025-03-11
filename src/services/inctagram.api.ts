@@ -5,10 +5,12 @@ export const inctagramApi = createApi({
     baseUrl: "https://inctagram.work/api",
     credentials: "include",
     prepareHeaders: (headers) => {
-      const token = localStorage.getItem("access_token");
+      if (typeof window !== "undefined") {
+        const token = localStorage.getItem("access_token");
 
-      if (token) {
-        headers.set("Authorization", `Bearer ${token}`);
+        if (token) {
+          headers.set("Authorization", `Bearer ${token}`);
+        }
       }
       return headers;
     },

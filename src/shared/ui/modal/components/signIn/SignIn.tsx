@@ -1,3 +1,5 @@
+"use client";
+
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Input } from "../../../input/input";
 import styles from "./signIn.module.css";
@@ -54,8 +56,10 @@ export const SignIn = ({ icons }: Type) => {
 
       if (response) {
         const accessToken = response.accessToken;
-        localStorage.setItem("access_token", accessToken);
-        localStorage.setItem("email", data.email);
+        if (typeof window !== "undefined") {
+          localStorage.setItem("access_token", accessToken);
+          localStorage.setItem("email", data.email);
+        }
         // Если вход успешен, получаем данные пользователя
         const userResponse = await getUser().unwrap();
         console.log("Данные пользователя:", userResponse);
@@ -107,7 +111,7 @@ export const SignIn = ({ icons }: Type) => {
         {errorMessage && <div className={styles.error}>{errorMessage}</div>}
         <span className={styles.question}>Do you have an account?</span>
         <div>
-          <Link href="">Sign In</Link>
+          <Link href="">Sign Up</Link>
         </div>
       </form>
     </>

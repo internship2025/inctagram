@@ -11,22 +11,22 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
+const EmailSentComponent = ({ email }: { email: string }) => {
+  const [isOpen, setOpen] = useState(true);
+
+  return (
+    <>
+      <Button onClick={() => setOpen(!isOpen)}>Click</Button>
+      <EmailSentModal
+        email={email}
+        open={isOpen}
+        onClose={() => setOpen(false)}
+      />
+    </>
+  );
+};
+
 export const EmailSent: Story = {
   args: { email: "sss" },
-  render: (props) => {
-    const [isOpen, setOpen] = useState(true);
-
-    return (
-      <>
-        <Button onClick={() => setOpen(!isOpen)}>Click</Button>
-        <EmailSentModal
-          email={props.email}
-          open={isOpen}
-          onClose={() => {
-            setOpen(false);
-          }}
-        />
-      </>
-    );
-  },
+  render: (args) => <EmailSentComponent {...args} />,
 };

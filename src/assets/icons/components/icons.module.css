@@ -1,0 +1,6 @@
+.icon {
+    user-select: none;
+    display: inline-block;
+    flex-shrink: 0;
+    fill: none;
+}

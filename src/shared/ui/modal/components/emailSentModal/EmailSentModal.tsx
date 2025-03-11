@@ -1,3 +1,5 @@
+"use client";
+
 import { Modal } from "../../modal";
 import { EmailSent } from "@/shared/ui/modal/components/emailSent/EmailSent";
 

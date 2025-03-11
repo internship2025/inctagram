@@ -11,21 +11,21 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
+const ForgotPasswordConfirmationComponent = () => {
+  const [isOpen, setOpen] = useState(true);
+
+  return (
+    <>
+      <Button onClick={() => setOpen(!isOpen)}>Click</Button>
+      <ForgotPasswordConfirmationModal
+        open={isOpen}
+        onClose={() => setOpen(false)}
+      />
+    </>
+  );
+};
+
 export const ForgotPasswordConfirmation: Story = {
   args: {},
-  render: () => {
-    const [isOpen, setOpen] = useState(true);
-
-    return (
-      <>
-        <Button onClick={() => setOpen(!isOpen)}>Click</Button>
-        <ForgotPasswordConfirmationModal
-          open={isOpen}
-          onClose={() => {
-            setOpen(false);
-          }}
-        />
-      </>
-    );
-  },
+  render: () => <ForgotPasswordConfirmationComponent />,
 };

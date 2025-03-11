@@ -5,6 +5,22 @@ import { SignUpModal } from "./SignUpModal";
 import { store } from "next/dist/build/output/store";
 import { Provider } from "react-redux";
 
+const SignUpStoryComponent = () => {
+  const [isOpen, setOpen] = useState(true);
+
+  return (
+    <>
+      <Button onClick={() => setOpen(!isOpen)}>Click</Button>
+      <SignUpModal
+        open={isOpen}
+        onClose={() => {
+          setOpen(false);
+        }}
+      />
+    </>
+  );
+};
+
 const meta: Meta<typeof SignUpModal> = {
   component: SignUpModal,
   decorators: [
@@ -22,19 +38,5 @@ type Story = StoryObj<typeof meta>;
 
 export const SignUp: Story = {
   args: {},
-  render: () => {
-    const [isOpen, setOpen] = useState(true);
-
-    return (
-      <>
-        <Button onClick={() => setOpen(!isOpen)}>Click</Button>
-        <SignUpModal
-          open={isOpen}
-          onClose={() => {
-            setOpen(false);
-          }}
-        />
-      </>
-    );
-  },
+  render: () => <SignUpStoryComponent />,
 };

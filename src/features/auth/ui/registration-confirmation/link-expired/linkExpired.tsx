@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useResendConfirmationMutation } from "@/features/auth/api/auth.api";
 import { useState } from "react";
 import { toast } from "react-toastify";
@@ -8,14 +8,13 @@ import styles from "./linkExpired.module.css";
 import { Typography } from "@/shared/ui/typography/typography";
 import { Button } from "@/shared/ui/button/button";
 import Image from "next/image";
-import { Input } from "@/shared/ui/input/input";
+import { Modal } from "@/shared/ui/modal/modal";
+import { EmailSent } from "@/shared/ui/modal/components/emailSent/EmailSent";
 
 export const LinkExpired = () => {
-  const router = useRouter();
-
   const searchParams = useSearchParams();
   const code = searchParams.get("code");
-  const email = searchParams.get("email");
+  const email = searchParams.get("email") || "";
 
   const [resendConfirmation, { isLoading }] = useResendConfirmationMutation();
 
@@ -30,32 +29,40 @@ export const LinkExpired = () => {
             setModalOpen(true);
           });
       } catch (error: unknown) {
-        toast.error("link error");
+        console.log(`Error: ${error}`);
       }
     } else {
       toast.error("link error");
     }
-
-    return (
-      <div className={styles.linkExpiredContainer}>
-        <Typography>Email verification link expired</Typography>
-        <Typography>
-          Looks like the verification link has expired. Not to worry, we can
-          send the link again
-        </Typography>
-        <Input fullWidth label={"email"} type={"text"} />
-        <Button
-          onClick={onResendHandler}
-          variant={"primary"}
-          className={styles.resendHandlerButton}
-        ></Button>
-        <Image
-          alt={"expired image"}
-          height={352}
-          src={"/images/expired.svg"}
-          width={474}
-        />
-      </div>
-    );
   };
+
+  return (
+    <div className={styles.linkExpiredContainer}>
+      {isLoading && <Typography>Loading...</Typography>}
+      <Typography className={styles.linkExpiredTitle}>
+        Email verification link expired
+      </Typography>
+      <Typography className={styles.linkExpiredDescription}>
+        Looks like the verification link has expired. Not to worry, we can send
+        the link again
+      </Typography>
+      <Button
+        onClick={onResendHandler}
+        variant={"primary"}
+        className={styles.resendHandlerButton}
+      >
+        Resend verification link
+      </Button>
+      <Image
+        alt={"expired image"}
+        height={352}
+        src={"/images/expired.svg"}
+        width={474}
+        className={styles.expiredImage}
+      />
+      <Modal open={modalOpen}>
+        <EmailSent email={email} />
+      </Modal>
+    </div>
+  );
 };

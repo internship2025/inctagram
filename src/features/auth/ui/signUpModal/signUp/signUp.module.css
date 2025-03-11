@@ -18,9 +18,6 @@
     padding: 6px;
 }
 
-a:visited {
-    color: var(--color-info-300);
-}
 
 .question {
     display: inline-block;

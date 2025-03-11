@@ -18,7 +18,6 @@ import { useSignupMutation } from "@/features/auth/api/auth.api";
 import { useState } from "react";
 import { PATH } from "@/shared/constants/app-paths";
 import { EmailSent } from "@/shared/ui/modal/components/emailSent/EmailSent";
-import { useRouter } from "next/navigation";
 
 export type InputType = {
   username: string;
@@ -29,7 +28,14 @@ export type InputType = {
 };
 
 type SignUp = {
-  icons?: Array<{ src: string; width: number; height: number, onClick?: ()=> void }> | [];
+  icons?:
+    | Array<{
+        src: string;
+        width: number;
+        height: number;
+        onClick?: () => void;
+      }>
+    | [];
   onClose?: () => void;
 };
 
@@ -83,7 +89,6 @@ export const SignUp = ({ icons }: SignUp) => {
   const [signup, { isLoading }] = useSignupMutation();
   const [isFormVisible, setIsFormVisible] = useState(true);
   const [userEmail, setUserEmail] = useState("");
-  const router = useRouter();
 
   const {
     field: { value, onChange },
@@ -102,11 +107,15 @@ export const SignUp = ({ icons }: SignUp) => {
           setIsFormVisible(false);
         });
     } catch (error) {
-      setError("root", { message: "Registration failed. Please try again." });
+      if (error instanceof Error) {
+        setError("root", { message: error.message });
+      } else {
+        setError("root", { message: "Registration failed. Please try again." });
+      }
     }
   };
 
-  let images = icons?.map((it, ind) => {
+  const images = icons?.map((it, ind) => {
     return (
       <button className={styles.btn} key={ind} onClick={it.onClick}>
         <Image src={it.src} width={it.width} height={it.height} alt="" />

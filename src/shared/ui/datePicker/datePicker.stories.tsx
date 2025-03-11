@@ -10,52 +10,76 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
+const DatePickerComponent = () => {
+  const [singleDate, setSingleDate] = useState<Date | null>(new Date());
+  return (
+    <CustomDatePicker
+      selectedDate={singleDate}
+      onDateChange={(date) => setSingleDate(date as Date)}
+    />
+  );
+};
+
 export const DatePicker: Story = {
   args: {},
-  render: () => {
-    const [singleDate, setSingleDate] = useState<Date | null>(new Date());
+  render: () => <DatePickerComponent />,
+};
 
-    return (
-      <CustomDatePicker
-        selectedDate={singleDate}
-        onDateChange={(date) => setSingleDate(date as Date)}
-      />
-    );
-  },
+const DatePickerDisabledComponent = ({ disabled }: { disabled?: boolean }) => {
+  const [singleDate, setSingleDate] = useState<Date | null>(new Date());
+  return (
+    <CustomDatePicker
+      disabled={disabled}
+      selectedDate={singleDate}
+      onDateChange={(date) => setSingleDate(date as Date)}
+    />
+  );
 };
 
 export const DatePickerDisabled: Story = {
   args: {
     disabled: true,
   },
-  render: ({ disabled }) => {
-    const [singleDate, setSingleDate] = useState<Date | null>(new Date());
+  render: (args) => <DatePickerDisabledComponent {...args} />,
+};
 
-    return (
-      <CustomDatePicker
-        disabled={disabled}
-        selectedDate={singleDate}
-        onDateChange={(date) => setSingleDate(date as Date)}
-      />
-    );
-  },
+const DatePickerRangeComponent = ({ isRange }: { isRange?: boolean }) => {
+  const [dateRange, setDateRange] = useState<[Date, Date] | null>(null);
+  return (
+    <CustomDatePicker
+      isRange={isRange}
+      selectedDate={dateRange}
+      onDateChange={(range) => setDateRange(range as [Date, Date])}
+    />
+  );
 };
 
 export const DatePickerRange: Story = {
   args: {
     isRange: true,
   },
-  render: ({ isRange }) => {
-    const [dateRange, setDateRange] = useState<[Date, Date] | null>(null);
+  render: (args) => <DatePickerRangeComponent {...args} />,
+};
 
-    return (
-      <CustomDatePicker
-        isRange={isRange}
-        selectedDate={dateRange}
-        onDateChange={(range) => setDateRange(range as [Date, Date])}
-      />
-    );
-  },
+const DatePickerRangeDisabledComponent = ({
+  isRange,
+  disabled,
+}: {
+  isRange?: boolean;
+  disabled?: boolean;
+}) => {
+  const [dateRange, setDateRange] = useState<[Date, Date] | null>([
+    new Date(),
+    new Date(),
+  ]);
+  return (
+    <CustomDatePicker
+      disabled={disabled}
+      isRange={isRange}
+      selectedDate={dateRange}
+      onDateChange={(range) => setDateRange(range as [Date, Date])}
+    />
+  );
 };
 
 export const DatePickerRangeDisabled: Story = {
@@ -63,16 +87,5 @@ export const DatePickerRangeDisabled: Story = {
     isRange: true,
     disabled: true,
   },
-  render: ({ isRange, disabled }) => {
-    const [dateRange, setDateRange] = useState<[Date, Date] | null>(null);
-
-    return (
-      <CustomDatePicker
-        disabled={disabled}
-        isRange={isRange}
-        selectedDate={[new Date(), new Date()]}
-        onDateChange={(range) => setDateRange(range as [Date, Date])}
-      />
-    );
-  },
+  render: (args) => <DatePickerRangeDisabledComponent {...args} />,
 };

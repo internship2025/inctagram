@@ -1,13 +1,13 @@
 "use client";
+
 import * as Select from "@radix-ui/react-select";
 import styles from "./header.module.css";
 import Image from "next/image";
 import { useState } from "react";
 import { Button } from "@/shared/ui/button/button";
 import Logout from "@/features/auth/ui/logout/Logout";
-import { ForgotPasswordModal } from "@/shared/ui/modal/components/forgotPasswordModal/forgotPasswordModal";
-import { ForgotPasswordConfirmationModal } from "../modal/components/ForgotPasswordConfirmationModal/ForgotPasswordConfirmationModal";
-import { CreateNewPasswordFormModule } from "../modal/components/CreateNewPasswordFormModule/CreateNewPasswordFormModule";
+import Link from "next/link";
+import { PATH } from "@/shared/constants/app-paths";
 
 const ChevronDownIcon = () => (
   <svg
@@ -41,6 +41,7 @@ export const Header = ({
   onSignUpClick,
 }: HeaderProps) => {
   const [currentLang, setCurrentLang] = useState("English");
+
   const handleLangChange = (value: string) => {
     setCurrentLang(value);
     onLangChange?.(value);
@@ -125,10 +126,20 @@ export const Header = ({
           <div className={styles.authButtons}>
             {!showAuth && (
               <>
-                <Button variant="outline" onClick={onLoginClick}>
+                <Button
+                  as={Link}
+                  variant="outline"
+                  onClick={onLoginClick}
+                  href={PATH.SIGN_IN}
+                >
                   Log in
                 </Button>
-                <Button variant="primary" onClick={onSignUpClick}>
+                <Button
+                  as={Link}
+                  variant="primary"
+                  onClick={onSignUpClick}
+                  href={PATH.SIGN_UP}
+                >
                   Sign up
                 </Button>
                 <Logout />

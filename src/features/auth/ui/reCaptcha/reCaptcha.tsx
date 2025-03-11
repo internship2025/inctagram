@@ -1,3 +1,5 @@
+"use client";
+
 import styles from "./reCaptcha.module.css";
 import { useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
@@ -7,7 +9,7 @@ type Props = {
   siteKey: string;
 };
 
-export const Recaptcha = ({ onVerify, siteKey, ...props }: Props) => {
+export const Recaptcha = ({ onVerify, siteKey }: Props) => {
   const [isVerified, setIsVerified] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [expired, setExpired] = useState(false);
@@ -45,6 +47,11 @@ export const Recaptcha = ({ onVerify, siteKey, ...props }: Props) => {
         onExpired={handleRecaptchaExpired}
         theme="dark"
       />
+      {false && (
+        <div>{isVerified ? "Проверка пройдена" : "Проверка не пройдена"}</div>
+      )}
+      {false && <div>{error}</div>}
+      {false && <div>{expired ? "Срок действия истек" : ""}</div>}
     </div>
   );
 };

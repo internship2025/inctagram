@@ -12,12 +12,10 @@ type Props = Omit<ComponentProps<"input">, "value"> & {
 };
 
 export const CheckBox = ({
-  variant = "default",
   disabled = false,
   txt,
   onChange,
   checked,
-  ...props
 }: Props) => {
   return (
     <div className={styles.container}>

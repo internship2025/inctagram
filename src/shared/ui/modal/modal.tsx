@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import styles from "./modal.module.css";
@@ -10,7 +12,7 @@ type Modal = {
   title?: string;
   marginTop?: number;
   textAlign?: "left" | "right" | "center";
-  open: boolean;
+  open?: boolean;
   onClose?: () => void;
   isClose?: boolean;
 };

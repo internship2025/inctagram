@@ -1,4 +1,5 @@
 "use client";
+
 import { Modal } from "../../modal";
 import { CreateNewPasswordForm } from "@/shared/ui/modal/components/CreateNewPasswordForm/CreateNewPasswordForm";
 
