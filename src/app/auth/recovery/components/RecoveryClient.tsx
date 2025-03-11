@@ -18,4 +18,3 @@ export function RecoveryClient() {
     <CreateNewPasswordFormModule open={open} onClose={() => setOpen(false)} />
   )
 }
-
