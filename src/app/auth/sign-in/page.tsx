@@ -1,7 +1,7 @@
 import { SignInModal } from "@/shared/ui/modal/components/signInModal/SignInModal";
 
 const SignUpPage = () => {
-  return <SignInModal open={true} />;
+  return <SignInModal open={false} />;
 };
 
 export default SignUpPage;

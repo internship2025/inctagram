@@ -1,9 +1,6 @@
-import HeaderClient from "@/shared/ui/headerClient/headerClient";
+import { redirect } from "next/navigation";
+import { PATH } from "@/shared/constants/app-paths";
 
-export default function HomePage() {
-  return (
-    <div>
-      <HeaderClient />
-    </div>
-  );
+export default function Home() {
+  redirect(PATH.SIGN_IN);
 }
