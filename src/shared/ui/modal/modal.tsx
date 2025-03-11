@@ -12,7 +12,7 @@ type Modal = {
   title?: string;
   marginTop?: number;
   textAlign?: "left" | "right" | "center";
-  open: boolean;
+  open?: boolean;
   onClose?: () => void;
   isClose?: boolean;
 };

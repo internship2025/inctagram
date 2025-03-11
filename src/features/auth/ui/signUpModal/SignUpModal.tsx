@@ -8,7 +8,7 @@ import { useGitHubAuth } from "@/features/auth/ui/hooks/useGitHubAuth";
 import { useGoogleAuth } from "@/features/auth/ui/hooks/useGoogleLogin";
 
 type Props = {
-  open: boolean;
+  open?: boolean;
   onClose?: () => void;
 };
 
