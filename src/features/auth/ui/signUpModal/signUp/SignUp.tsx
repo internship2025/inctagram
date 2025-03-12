@@ -12,20 +12,12 @@ import { CheckBox } from "@/shared/ui/checkBox/checkBox";
 import { Button } from "@/shared/ui/button/button";
 import Image from "next/image";
 import Link from "next/link";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSignupMutation } from "@/features/auth/api/auth.api";
 import { useState } from "react";
 import { PATH } from "@/shared/constants/app-paths";
 import { EmailSent } from "@/shared/ui/modal/components/emailSent/EmailSent";
-
-export type InputType = {
-  username: string;
-  email: string;
-  password: string;
-  passwordConfirmation: string;
-  approval: boolean;
-};
+import { signUpSchema, SignUpType } from "@/app/auth/types/schema";
 
 type SignUp = {
   icons?:
@@ -40,51 +32,16 @@ type SignUp = {
 };
 
 export const SignUp = ({ icons }: SignUp) => {
-  const schema = z
-    .object({
-      email: z
-        .string()
-        .min(1, "Email is required")
-        .email("The email must match the format example@example.com"),
-      username: z
-        .string()
-        .min(6, "Minimum number of characters 6")
-        .max(30, "Maximum number of characters 30")
-        .min(1, "Username is required")
-        .regex(/^[a-zA-Z0-9_-]+$/, "Invalid username symbols"),
-      password: z
-        .string()
-        .min(6, "Minimum number of characters 6")
-        .max(30, "Maximum number of characters 30")
-        .min(1, "Password is required")
-        .regex(
-          /^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/\-=|"']).+$/,
-          "Password must contain 0-9, a-z, A-Z, ! \" # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _` { | } ~",
-        ),
-      passwordConfirmation: z
-        .string()
-        .min(1, "Password confirmation is required"),
-      approval: z.boolean().refine((val) => val, {
-        message: "You have to agree to the terms",
-      }),
-    })
-    .superRefine((data, ctx) => {
-      if (data.passwordConfirmation !== data.password) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: "Passwords must match",
-          path: ["passwordConfirmation"],
-        });
-      }
-    });
-
   const {
     register,
     handleSubmit,
     control,
     setError,
     formState: { errors, isValid, isDirty },
-  } = useForm<InputType>({ resolver: zodResolver(schema), mode: "onBlur" });
+  } = useForm<SignUpType>({
+    resolver: zodResolver(signUpSchema),
+    mode: "onBlur",
+  });
 
   const [signup, { isLoading }] = useSignupMutation();
   const [isFormVisible, setIsFormVisible] = useState(true);
@@ -94,7 +51,7 @@ export const SignUp = ({ icons }: SignUp) => {
     field: { value, onChange },
   } = useController({ name: "approval", control });
 
-  const signupHandler: SubmitHandler<InputType> = async (data) => {
+  const signupHandler: SubmitHandler<SignUpType> = async (data) => {
     try {
       await signup({
         userName: data.username,
@@ -127,7 +84,6 @@ export const SignUp = ({ icons }: SignUp) => {
   return (
     <>
       <div className={styles.wrapperIcons}>{images}</div>
-
       {isFormVisible && (
         <form
           className={styles.wrapper}

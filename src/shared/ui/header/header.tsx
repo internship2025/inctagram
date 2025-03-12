@@ -8,6 +8,9 @@ import { Button } from "@/shared/ui/button/button";
 import Logout from "@/features/auth/ui/logout/Logout";
 import Link from "next/link";
 import { PATH } from "@/shared/constants/app-paths";
+import { Typography } from "@/shared/ui/typography/typography";
+import { SignUpModal } from "@/features/auth/ui/signUpModal/SignUpModal";
+import { SignInModal } from "@/shared/ui/modal/components/signInModal/SignInModal";
 
 const ChevronDownIcon = () => (
   <svg
@@ -30,17 +33,12 @@ const ChevronDownIcon = () => (
 interface HeaderProps {
   onLangChange?: (lang: string) => void;
   showAuth?: boolean;
-  onLoginClick?: () => void;
-  onSignUpClick?: () => void;
 }
 
-export const Header = ({
-  onLangChange,
-  showAuth = false,
-  onLoginClick,
-  onSignUpClick,
-}: HeaderProps) => {
+export const Header = ({ onLangChange, showAuth = false }: HeaderProps) => {
   const [currentLang, setCurrentLang] = useState("English");
+  const [isSignUp, setIsSignUp] = useState(false);
+  const [isSignIn, setIsSignIn] = useState(false);
 
   const handleLangChange = (value: string) => {
     setCurrentLang(value);
@@ -50,7 +48,9 @@ export const Header = ({
   return (
     <header className={styles.header}>
       <div className={styles.container}>
-        <h1 className={styles.title}>Instagram</h1>
+        <Link href={"/public"}>
+          <Typography variant={"h1"}>Inctagram</Typography>
+        </Link>
 
         <div className={styles.rightSection}>
           <Select.Root
@@ -127,22 +127,26 @@ export const Header = ({
             {!showAuth && (
               <>
                 <Button
-                  as={Link}
                   variant="outline"
-                  onClick={onLoginClick}
+                  onClick={() => setIsSignIn(true)}
                   href={PATH.SIGN_IN}
                 >
                   Log in
                 </Button>
                 <Button
-                  as={Link}
                   variant="primary"
-                  onClick={onSignUpClick}
+                  onClick={() => setIsSignUp(true)}
                   href={PATH.SIGN_UP}
                 >
                   Sign up
                 </Button>
                 <Logout />
+                {isSignUp && (
+                  <SignUpModal open={true} onClose={() => setIsSignUp(false)} />
+                )}
+                {isSignIn && (
+                  <SignInModal open={true} onClose={() => setIsSignIn(false)} />
+                )}
               </>
             )}
           </div>
