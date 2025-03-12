@@ -10,10 +10,10 @@ export function AuthGuard({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (isSuccess) {
-      router.push("/private/profile");
+      // router.push("/private/profile");
     }
     if (isError) {
-      router.push("/public/posts");
+      // router.push("/public/posts");
     }
   }, [isError, isSuccess, router]);
 
