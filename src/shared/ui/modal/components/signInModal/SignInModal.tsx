@@ -7,12 +7,12 @@ import gitImg from "@/shared/ui/modal/assets/git.svg";
 import { useGitHubAuth } from "@/features/auth/ui/hooks/useGitHubAuth";
 import { useGoogleAuth } from "@/features/auth/ui/hooks/useGoogleLogin";
 
-type Type = {
+type Props = {
   open: boolean;
   onClose?: () => void;
 };
 
-export const SignInModal = ({ open, onClose }: Type) => {
+export const SignInModal = ({ open, onClose }: Props) => {
   const handleLoginGitHub = useGitHubAuth();
   const handleLoginGoogle = useGoogleAuth();
   return (

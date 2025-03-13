@@ -8,7 +8,7 @@ import { useGitHubAuth } from "@/features/auth/ui/hooks/useGitHubAuth";
 import { useGoogleAuth } from "@/features/auth/ui/hooks/useGoogleLogin";
 
 type Props = {
-  open?: boolean;
+  open: boolean;
   onClose?: () => void;
 };
 
@@ -19,7 +19,6 @@ export const SignUpModal = ({ open, onClose }: Props) => {
   return (
     <Modal title={"Sign Up"} open={open} onClose={onClose}>
       <SignUp
-        onClose={onClose}
         icons={[
           { src: googleImg, width: 36, height: 36, onClick: handleLoginGoogle },
           { src: gitImg, width: 36, height: 36, onClick: handleLoginGitHub },

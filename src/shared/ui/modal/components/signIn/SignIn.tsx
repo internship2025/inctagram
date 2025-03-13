@@ -5,7 +5,6 @@ import { Input } from "../../../input/input";
 import styles from "./signIn.module.css";
 import Link from "next/link";
 import { Button } from "../../../button/button";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import {
@@ -14,13 +13,9 @@ import {
   useLoginMutation,
 } from "@/features/auth/api/auth.api";
 import { useState } from "react";
-
-const schema = z.object({
-  email: z.string().email("Некорректный email").min(1, "Email обязателен"),
-  password: z.string().min(1, "Пароль обязателен"),
-});
-
-type InputType = z.infer<typeof schema>;
+import { useRouter } from "next/navigation";
+import { signIpSchema, SignInType } from "@/app/auth/types/schema";
+import { PATH } from "@/shared/constants/app-paths";
 
 type Type = {
   icons?:
@@ -39,16 +34,17 @@ export const SignIn = ({ icons }: Type) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<InputType>({
-    resolver: zodResolver(schema),
+  } = useForm<SignInType>({
+    resolver: zodResolver(signIpSchema),
     mode: "onBlur",
   });
 
   const [login] = useLoginMutation();
   const [getUser] = useLazyMeQuery();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const router = useRouter();
 
-  const handleLogin: SubmitHandler<InputType> = async (data: LoginArgs) => {
+  const handleLogin: SubmitHandler<SignInType> = async (data: LoginArgs) => {
     try {
       setErrorMessage(null);
       const response = await login(data).unwrap();
@@ -105,13 +101,13 @@ export const SignIn = ({ icons }: Type) => {
           )}
         </div>
         <div className={styles.forgotPassword}>
-          <Link href={""}>Forgot Password</Link>
+          <Link href={PATH.PASSWORD_RECOVERY}>Forgot Password</Link>
         </div>
         <Button fullWidth>Sign In</Button>
         {errorMessage && <div className={styles.error}>{errorMessage}</div>}
         <span className={styles.question}>Do you have an account?</span>
         <div>
-          <Link href="">Sign Up</Link>
+          <Link href={PATH.SIGN_UP}>Sign Up</Link>
         </div>
       </form>
     </>
