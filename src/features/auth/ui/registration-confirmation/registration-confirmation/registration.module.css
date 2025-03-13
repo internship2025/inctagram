@@ -1,0 +1,12 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.errorText {
+    color: var(--color-danger-500);
+    font-size: var(--font-size-m);
+    margin-top: 10px;
+}
