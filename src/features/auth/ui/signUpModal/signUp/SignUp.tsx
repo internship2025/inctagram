@@ -1,25 +1,17 @@
 "use client";
 
-import {
-  useForm,
-  SubmitHandler,
-  Controller,
-  useController,
-} from "react-hook-form";
+import { Controller } from "react-hook-form";
 import styles from "./signUp.module.css";
 import { Input } from "@/shared/ui/input/input";
 import { CheckBox } from "@/shared/ui/checkBox/checkBox";
 import { Button } from "@/shared/ui/button/button";
 import Image from "next/image";
 import Link from "next/link";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useSignupMutation } from "@/features/auth/api/auth.api";
-import { useState } from "react";
 import { PATH } from "@/shared/constants/app-paths";
 import { EmailSent } from "@/shared/ui/modal/components/emailSent/EmailSent";
-import { signUpSchema, SignUpType } from "@/app/auth/types/schema";
+import { useSignUp } from "@/features/auth/ui/hooks/useSignUp";
 
-type SignUp = {
+type Props = {
   icons?:
     | Array<{
         src: string;
@@ -28,49 +20,27 @@ type SignUp = {
         onClick?: () => void;
       }>
     | [];
-  onClose?: () => void;
 };
 
-export const SignUp = ({ icons }: SignUp) => {
+export const SignUp = ({
+  icons,
+  formMethods,
+}: Props & { formMethods: ReturnType<typeof useSignUp> }) => {
   const {
     register,
     handleSubmit,
     control,
-    setError,
-    formState: { errors, isValid, isDirty },
-  } = useForm<SignUpType>({
-    resolver: zodResolver(signUpSchema),
-    mode: "onBlur",
-  });
-
-  const [signup, { isLoading }] = useSignupMutation();
-  const [isFormVisible, setIsFormVisible] = useState(true);
-  const [userEmail, setUserEmail] = useState("");
-
-  const {
-    field: { value, onChange },
-  } = useController({ name: "approval", control });
-
-  const signupHandler: SubmitHandler<SignUpType> = async (data) => {
-    try {
-      await signup({
-        userName: data.username,
-        email: data.email,
-        password: data.password,
-      })
-        .unwrap()
-        .then(() => {
-          setUserEmail(data.email);
-          setIsFormVisible(false);
-        });
-    } catch (error) {
-      if (error instanceof Error) {
-        setError("root", { message: error.message });
-      } else {
-        setError("root", { message: "Registration failed. Please try again." });
-      }
-    }
-  };
+    errors,
+    isValid,
+    isDirty,
+    isLoading,
+    isFormVisible,
+    userEmail,
+    setIsFormVisible,
+    signupHandler,
+    value,
+    onChange,
+  } = formMethods;
 
   const images = icons?.map((it, ind) => {
     return (
@@ -79,12 +49,13 @@ export const SignUp = ({ icons }: SignUp) => {
       </button>
     );
   });
+
   const isButtonDisabled = !isValid || !isDirty || !value;
 
   return (
     <>
       <div className={styles.wrapperIcons}>{images}</div>
-      {isFormVisible && (
+      {isFormVisible ? (
         <form
           className={styles.wrapper}
           onSubmit={handleSubmit(signupHandler)}
@@ -169,8 +140,7 @@ export const SignUp = ({ icons }: SignUp) => {
             <Link href={PATH.SIGN_IN}>Sign In</Link>
           </div>
         </form>
-      )}
-      {!isFormVisible && (
+      ) : (
         <EmailSent email={userEmail} onClose={() => setIsFormVisible(true)} />
       )}
     </>

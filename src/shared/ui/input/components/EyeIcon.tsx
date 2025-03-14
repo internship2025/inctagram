@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-const EyeIcon: FC<{ color?: string }> = ({ color = "#000" }) => (
+const EyeIcon: FC<{ color?: string }> = ({ color = "#ffffff" }) => (
   <svg
     width="24"
     height="24"

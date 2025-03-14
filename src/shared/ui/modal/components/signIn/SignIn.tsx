@@ -1,23 +1,14 @@
 "use client";
 
-import { SubmitHandler, useForm } from "react-hook-form";
 import { Input } from "../../../input/input";
 import styles from "./signIn.module.css";
 import Link from "next/link";
 import { Button } from "../../../button/button";
-import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
-import {
-  LoginArgs,
-  useLazyMeQuery,
-  useLoginMutation,
-} from "@/features/auth/api/auth.api";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { signIpSchema, SignInType } from "@/app/auth/types/schema";
 import { PATH } from "@/shared/constants/app-paths";
+import { useSignIn } from "@/features/auth/ui/hooks/useSignIn";
 
-type Type = {
+type Props = {
   icons?:
     | Array<{
         src: string;
@@ -26,45 +17,14 @@ type Type = {
         onClick?: () => void;
       }>
     | [];
-  onClose?: () => void;
 };
 
-export const SignIn = ({ icons }: Type) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<SignInType>({
-    resolver: zodResolver(signIpSchema),
-    mode: "onBlur",
-  });
-
-  const [login] = useLoginMutation();
-  const [getUser] = useLazyMeQuery();
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const router = useRouter();
-
-  const handleLogin: SubmitHandler<SignInType> = async (data: LoginArgs) => {
-    try {
-      setErrorMessage(null);
-      const response = await login(data).unwrap();
-      console.log("Вход выполнен успешно:", response);
-
-      if (response) {
-        const accessToken = response.accessToken;
-        if (typeof window !== "undefined") {
-          localStorage.setItem("access_token", accessToken);
-          localStorage.setItem("email", data.email);
-        }
-        // Если вход успешен, получаем данные пользователя
-        const userResponse = await getUser().unwrap();
-        console.log("Данные пользователя:", userResponse);
-      }
-    } catch (error) {
-      console.error("Ошибка входа:", error);
-      setErrorMessage("Неверный email или пароль");
-    }
-  };
+export const SignIn = ({
+  icons,
+  formMethods,
+}: Props & { formMethods: ReturnType<typeof useSignIn> }) => {
+  const { register, handleSubmit, errors, handleLogin, errorMessage } =
+    formMethods;
 
   const images = icons?.map((it, ind) => {
     return (

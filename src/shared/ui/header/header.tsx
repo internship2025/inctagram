@@ -141,13 +141,13 @@ export const Header = ({ onLangChange, showAuth = false }: HeaderProps) => {
                   Sign up
                 </Button>
                 <Logout />
-                {isSignUp && (
-                  <SignUpModal open={true} onClose={() => setIsSignUp(false)} />
-                )}
-                {isSignIn && (
-                  <SignInModal open={true} onClose={() => setIsSignIn(false)} />
-                )}
               </>
+            )}
+            {isSignUp && !isSignIn && (
+              <SignUpModal open={true} onClose={() => setIsSignUp(false)} />
+            )}
+            {isSignIn && !isSignUp && (
+              <SignInModal open={true} onClose={() => setIsSignIn(false)} />
             )}
           </div>
         </div>
