@@ -28,9 +28,14 @@ export const SignIn = ({
 
   const images = icons?.map((it, ind) => {
     return (
-      <button className={styles.btn} key={ind} onClick={it.onClick}>
+      <Button
+        className={styles.btn}
+        variant={"text"}
+        key={ind}
+        onClick={it.onClick}
+      >
         <Image src={it.src} width={it.width} height={it.height} alt="" />
-      </button>
+      </Button>
     );
   });
 

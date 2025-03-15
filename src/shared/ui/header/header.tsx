@@ -127,7 +127,8 @@ export const Header = ({ onLangChange, showAuth = false }: HeaderProps) => {
             {!showAuth && (
               <>
                 <Button
-                  variant="outline"
+                  className={styles.signInButton}
+                  variant="text"
                   onClick={() => setIsSignIn(true)}
                   href={PATH.SIGN_IN}
                 >
