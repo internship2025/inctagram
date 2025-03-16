@@ -22,7 +22,7 @@
 .title {
     text-align: center;
     margin: 24px 0;
-    font-size: 32px;
+    font-size: var(--font-size-xl)
 }
 
 .content {
@@ -33,19 +33,20 @@
 }
 
 .text {
-    width: 80%;
+    width: 49%;
     text-align: center;
-    font-size: 14px;
+    font-size: var(--font-size-s);
+    line-height: var(--line-height-m);
 }
 
-.text strong {
-    font-weight: bold;
+.arrowIcon {
+    color: white;
 }
 
-.text br {
-    margin: 8px 0;
-}
+.buttonContaiter {
+    display: flex;
+    align-items: center;
+    position: absolute;
 
-.text p {
-    margin-bottom: 16px;
+    left: 70px;
 }

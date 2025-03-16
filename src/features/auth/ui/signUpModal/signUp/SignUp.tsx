@@ -21,11 +21,13 @@ type Props = {
         onClick?: () => void;
       }>
     | [];
+  onClose?: () => void;
 };
 
 export const SignUp = ({
   icons,
   formMethods,
+  onClose,
 }: Props & { formMethods: ReturnType<typeof useSignUp> }) => {
   const {
     register,
@@ -140,9 +142,7 @@ export const SignUp = ({
               <Link
                 className={styles.policylink}
                 href={PATH.TERMS_OF_SERVICE}
-                onClick={() => {
-                  setIsFormVisible(false);
-                }}
+                onClick={onClose}
               >
                 {" "}
                 Terms of Service{" "}
@@ -151,9 +151,7 @@ export const SignUp = ({
               <Link
                 className={styles.policylink}
                 href={PATH.PRIVACY_POLICY}
-                onClick={() => {
-                  setIsFormVisible(false);
-                }}
+                onClick={onClose}
               >
                 Privacy Policy
               </Link>

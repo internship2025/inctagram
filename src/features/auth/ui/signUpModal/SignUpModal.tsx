@@ -26,6 +26,7 @@ export const SignUpModal = ({ open, onClose }: Props) => {
           { src: gitImg, width: 36, height: 36, onClick: handleLoginGitHub },
         ]}
         formMethods={formMethods}
+        onClose={onClose}
       />
     </Modal>
   );
