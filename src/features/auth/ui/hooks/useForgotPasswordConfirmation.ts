@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { useEffect } from "react";
 import { baseUrl } from "@/shared/constants/app-paths";
-import { emailSchema, ConfirmationType } from "../types/schema";
+import { emailSchema, ConfirmationType } from "../../../../app/auth/types/schema";
 
 export const useForgotPasswordConfirmation = () => {
   const [forgotPasswordConfirmation, { isLoading }] =

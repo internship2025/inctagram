@@ -127,7 +127,8 @@ export const Header = ({ onLangChange, showAuth = false }: HeaderProps) => {
             {!showAuth && (
               <>
                 <Button
-                  variant="outline"
+                  className={styles.signInButton}
+                  variant="text"
                   onClick={() => setIsSignIn(true)}
                   href={PATH.SIGN_IN}
                 >
@@ -141,13 +142,13 @@ export const Header = ({ onLangChange, showAuth = false }: HeaderProps) => {
                   Sign up
                 </Button>
                 <Logout />
-                {isSignUp && (
-                  <SignUpModal open={true} onClose={() => setIsSignUp(false)} />
-                )}
-                {isSignIn && (
-                  <SignInModal open={true} onClose={() => setIsSignIn(false)} />
-                )}
               </>
+            )}
+            {isSignUp && !isSignIn && (
+              <SignUpModal open={true} onClose={() => setIsSignUp(false)} />
+            )}
+            {isSignIn && !isSignUp && (
+              <SignInModal open={true} onClose={() => setIsSignIn(false)} />
             )}
           </div>
         </div>

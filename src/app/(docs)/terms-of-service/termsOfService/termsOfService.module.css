@@ -1,0 +1,52 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.back-link {
+    color: var( --color-light-100);
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.back-link svg {
+    margin-right: 12px;
+    width: 24px;
+    height: 24px;
+}
+
+.title {
+    text-align: center;
+    margin: 24px 0;
+    font-size: var(--font-size-xl)
+}
+
+.content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.text {
+    width: 49%;
+    text-align: center;
+    font-size: var(--font-size-s);
+    line-height: var(--line-height-m);
+}
+
+.arrowIcon {
+    color: white;
+}
+
+.buttonContaiter {
+    display: flex;
+    align-items: center;
+    position: absolute;
+
+    left: 70px;
+}

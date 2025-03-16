@@ -1,25 +1,18 @@
 "use client";
 
-import {
-  useForm,
-  SubmitHandler,
-  Controller,
-  useController,
-} from "react-hook-form";
+import { Controller } from "react-hook-form";
 import styles from "./signUp.module.css";
 import { Input } from "@/shared/ui/input/input";
 import { CheckBox } from "@/shared/ui/checkBox/checkBox";
 import { Button } from "@/shared/ui/button/button";
 import Image from "next/image";
 import Link from "next/link";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useSignupMutation } from "@/features/auth/api/auth.api";
-import { useState } from "react";
 import { PATH } from "@/shared/constants/app-paths";
 import { EmailSent } from "@/shared/ui/modal/components/emailSent/EmailSent";
-import { signUpSchema, SignUpType } from "@/app/auth/types/schema";
+import { useSignUp } from "@/features/auth/ui/hooks/useSignUp";
+import { Typography } from "@/shared/ui/typography/typography";
 
-type SignUp = {
+type Props = {
   icons?:
     | Array<{
         src: string;
@@ -31,60 +24,46 @@ type SignUp = {
   onClose?: () => void;
 };
 
-export const SignUp = ({ icons }: SignUp) => {
+export const SignUp = ({
+  icons,
+  formMethods,
+  onClose,
+}: Props & { formMethods: ReturnType<typeof useSignUp> }) => {
   const {
     register,
     handleSubmit,
     control,
-    setError,
-    formState: { errors, isValid, isDirty },
-  } = useForm<SignUpType>({
-    resolver: zodResolver(signUpSchema),
-    mode: "onBlur",
-  });
-
-  const [signup, { isLoading }] = useSignupMutation();
-  const [isFormVisible, setIsFormVisible] = useState(true);
-  const [userEmail, setUserEmail] = useState("");
-
-  const {
-    field: { value, onChange },
-  } = useController({ name: "approval", control });
-
-  const signupHandler: SubmitHandler<SignUpType> = async (data) => {
-    try {
-      await signup({
-        userName: data.username,
-        email: data.email,
-        password: data.password,
-      })
-        .unwrap()
-        .then(() => {
-          setUserEmail(data.email);
-          setIsFormVisible(false);
-        });
-    } catch (error) {
-      if (error instanceof Error) {
-        setError("root", { message: error.message });
-      } else {
-        setError("root", { message: "Registration failed. Please try again." });
-      }
-    }
-  };
+    errors,
+    isValid,
+    isDirty,
+    isLoading,
+    isFormVisible,
+    userEmail,
+    setIsFormVisible,
+    signupHandler,
+    value,
+    onChange,
+  } = formMethods;
 
   const images = icons?.map((it, ind) => {
     return (
-      <button className={styles.btn} key={ind} onClick={it.onClick}>
+      <Button
+        className={styles.btn}
+        variant={"text"}
+        key={ind}
+        onClick={it.onClick}
+      >
         <Image src={it.src} width={it.width} height={it.height} alt="" />
-      </button>
+      </Button>
     );
   });
+
   const isButtonDisabled = !isValid || !isDirty || !value;
 
   return (
     <>
       <div className={styles.wrapperIcons}>{images}</div>
-      {isFormVisible && (
+      {isFormVisible ? (
         <form
           className={styles.wrapper}
           onSubmit={handleSubmit(signupHandler)}
@@ -120,6 +99,7 @@ export const SignUp = ({ icons }: SignUp) => {
               label="Password"
               type="password"
               fullWidth
+              placeholder={"******************"}
               {...register("password")}
             />
             {errors.password && (
@@ -133,6 +113,7 @@ export const SignUp = ({ icons }: SignUp) => {
               label="Password confirmation"
               type="password"
               fullWidth
+              placeholder={"******************"}
               {...register("passwordConfirmation")}
             />
 
@@ -152,25 +133,41 @@ export const SignUp = ({ icons }: SignUp) => {
               )}
             />
             {errors.approval && (
-              <span className={styles.error}>{errors.approval.message}</span>
+              <Typography className={styles.error}>
+                {errors.approval.message}
+              </Typography>
             )}
-
-            <span className={styles.text}>
-              I agree to the{" "}
-              <Link href={PATH.TERMS_OF_SERVICE}>Terms of Service</Link> and{" "}
-              <Link href={PATH.PRIVACY_POLICY}>Privacy Policy</Link>
-            </span>
+            <Typography className={styles.policyAgreement} variant={"span"}>
+              I agree to the
+              <Link
+                className={styles.policylink}
+                href={PATH.TERMS_OF_SERVICE}
+                onClick={onClose}
+              >
+                {" "}
+                Terms of Service{" "}
+              </Link>{" "}
+              and{" "}
+              <Link
+                className={styles.policylink}
+                href={PATH.PRIVACY_POLICY}
+                onClick={onClose}
+              >
+                Privacy Policy
+              </Link>
+            </Typography>
           </div>
           <Button fullWidth disabled={isButtonDisabled || isLoading}>
             Sign Up
           </Button>
           <span className={styles.question}>Do you have an account?</span>
           <div>
-            <Link href={PATH.SIGN_IN}>Sign In</Link>
+            <Link className={styles.signInLink} href={PATH.SIGN_IN}>
+              Sign In
+            </Link>
           </div>
         </form>
-      )}
-      {!isFormVisible && (
+      ) : (
         <EmailSent email={userEmail} onClose={() => setIsFormVisible(true)} />
       )}
     </>

@@ -1,7 +1,7 @@
 import { Button } from "@/shared/ui/button/button";
 import { Input } from "@/shared/ui/input/input";
 import styles from "./CreateNewPasswordForm.module.css";
-import { useCreateNewPasswordForm } from "@/app/auth/hooks/useCreateNewPasswordForm";
+import { useCreateNewPasswordForm } from "@/features/auth/ui/hooks/useCreateNewPasswordForm";
 
 export const CreateNewPasswordForm = () => {
   const { form, onSubmit, isLoading } = useCreateNewPasswordForm();

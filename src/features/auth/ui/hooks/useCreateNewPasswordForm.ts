@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CreateNewPasswordFormType, createNewPasswordSchema } from "../types/schema";
+import { CreateNewPasswordFormType, createNewPasswordSchema } from "@/app/auth/types/schema";
 
 export const useCreateNewPasswordForm = () => {
   const [createNewPassword, { isLoading, isSuccess }] = useCreateNewPasswordMutation();
