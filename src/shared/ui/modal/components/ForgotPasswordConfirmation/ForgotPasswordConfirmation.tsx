@@ -1,4 +1,4 @@
-import { useForgotPasswordConfirmation } from "@/app/auth/hooks/useForgotPasswordConfirmation";
+import { useForgotPasswordConfirmation } from "@/features/auth/ui/hooks/useForgotPasswordConfirmation";
 import { PATH } from "@/shared/constants/app-paths";
 import { Button } from "@/shared/ui/button/button";
 import { Input } from "@/shared/ui/input/input";

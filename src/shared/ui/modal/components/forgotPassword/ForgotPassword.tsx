@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { EmailSentModal } from "../emailSentModal/EmailSentModal";
 import { PATH } from "@/shared/constants/app-paths";
 import { Recaptcha } from "@/features/auth/ui/reCaptcha/reCaptcha";
-import { useForgotPasswordForm } from "@/app/auth/hooks/useForgotPasswordForm";
+import { useForgotPasswordForm } from "@/features/auth/ui/hooks/useForgotPasswordForm";
 
 export const ForgotPassword = () => {
   const router = useRouter();

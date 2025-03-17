@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useState } from "react"
 import { useForgotPasswordMutation } from "@/features/auth/api/auth.api"
-import { ForgotPasswordFormType, emailSchema } from "../types/schema"
+import { ForgotPasswordFormType, emailSchema } from "../../../../app/auth/types/schema"
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query"
 import { baseUrl } from "@/shared/constants/app-paths"
 
