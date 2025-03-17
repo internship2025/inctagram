@@ -18,37 +18,46 @@ const Logout = () => {
   const [logout] = useLogoutMutation();
   const dispatch = useAppDispatch();
   const [getUser, { data: userData, error }] = useLazyMeQuery();
-
   const router = useRouter();
 
   const email = localStorage.getItem("email");
   const [name, setName] = useState<string>("");
 
-  const handleLogout = () => {
-    logout()
-      .unwrap()
-      .then(() => {
-        localStorage.removeItem("access_token");
-        localStorage.removeItem("email");
-        dispatch(inctagramApi.util.resetApiState());
-        router.push(PATH.SIGN_IN);
-      })
-      .catch((error) => {
-        console.error("Logout failed", error);
-      });
-  };
-  // useEffect для получения данных пользователя и обновления имени
   useEffect(() => {
     if (userData) {
-      setName(userData.userName); // Обновляем имя, если данные пришли
+      setName(userData.userName);
     } else if (error) {
-      console.error("Failed to fetch user data", error);
-      setName("Unknown User"); // Если ошибка, устанавливаем "Unknown User"
+      setName("Unknown User");
     }
   }, [userData, error]);
 
+  const handleLogout = async () => {
+    try {
+      await logout().unwrap();
+      
+      // Очистка хранилища
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("email");
+      setName("");
+      
+      // Сброс кэша RTK Query
+      await dispatch(inctagramApi.util.resetApiState());
+      
+      // Редирект с принудительным обновлением
+      router.replace(PATH.SIGN_IN);
+      router.refresh();
+      
+      // Для гарантированного перехода (раскомментировать если нужно)
+      // window.location.href = PATH.SIGN_IN;
+      
+    } catch (error) {
+      console.error("Logout failed:", error);
+    } finally {
+      setShowConfirmation(false);
+    }
+  };
+
   const confirmLogout = () => {
-    // Запрашиваем данные пользователя перед открытием модалки
     getUser();
     setShowConfirmation(true);
   };
