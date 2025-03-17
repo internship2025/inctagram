@@ -1,0 +1,27 @@
+"use client"
+
+import { SignUp } from "@/features/auth/ui/signUpModal/signUp/SignUp"
+import { AuthLayout } from "@/shared/ui/modal/components/authLayout/AuthLayout"
+import { useSignUp } from "@/features/auth/ui/hooks/useSignUp"
+import { useGitHubAuth } from "@/features/auth/ui/hooks/useGitHubAuth"
+import { useGoogleAuth } from "@/features/auth/ui/hooks/useGoogleLogin"
+import googleImg from "@/shared/ui/modal/assets/google.svg"
+import gitImg from "@/shared/ui/modal/assets/git.svg"
+
+export const SignUpClient = () => {
+  const formMethods = useSignUp()
+  const handleLoginGitHub = useGitHubAuth()
+  const handleLoginGoogle = useGoogleAuth()
+
+  return (
+    <AuthLayout title="Sign Up">
+      <SignUp
+        icons={[
+          { src: googleImg, width: 36, height: 36, onClick: handleLoginGoogle },
+          { src: gitImg, width: 36, height: 36, onClick: handleLoginGitHub },
+        ]}
+        formMethods={formMethods}
+      />
+    </AuthLayout>
+  )
+}

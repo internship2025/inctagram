@@ -120,31 +120,21 @@
 .authButtons {
   display: flex;
   gap: 12px;
+  align-items: center;
 }
 
-/*.authButton {*/
-/*  padding: 6px 24px;*/
-/*  height: 36px;*/
-/*  border-radius: 2px;*/
-/*  font-size: 16px;*/
-/*  font-weight: 600;*/
-/*  cursor: pointer;*/
-/*  background: transparent;*/
-/*  border: 1px solid var(--color-accent-500);*/
-/*  color: var(--color-accent-500);*/
-/*  transition: all 0.2s ease;*/
-/*}*/
+.signInButton {
+  text-decoration: none;
+  color: inherit;
+}
 
-/*.authButton:hover {*/
-/*  background: var(--color-dark-500);*/
-/*}*/
+.authButtons a {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  align-items: center;
+}
 
-/*.signUpButton {*/
-/*  background: var(--color-accent-500);*/
-/*  color: var(--color-light-100);*/
-/*}*/
-
-/*.signUpButton:hover {*/
-/*  background: var(--color-accent-700);*/
-/*  border-color: var(--color-accent-700);*/
-/*}*/
+.authButtons button {
+  height: 36px;
+}

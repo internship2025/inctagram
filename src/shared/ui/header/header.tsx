@@ -9,8 +9,8 @@ import Logout from "@/features/auth/ui/logout/Logout";
 import Link from "next/link";
 import { PATH } from "@/shared/constants/app-paths";
 import { Typography } from "@/shared/ui/typography/typography";
-import { SignUpModal } from "@/features/auth/ui/signUpModal/SignUpModal";
-import { SignInModal } from "@/shared/ui/modal/components/signInModal/SignInModal";
+import { useMeQuery } from "@/features/auth/api/auth.api";
+
 
 const ChevronDownIcon = () => (
   <svg
@@ -37,8 +37,8 @@ interface HeaderProps {
 
 export const Header = ({ onLangChange, showAuth = false }: HeaderProps) => {
   const [currentLang, setCurrentLang] = useState("English");
-  const [isSignUp, setIsSignUp] = useState(false);
-  const [isSignIn, setIsSignIn] = useState(false);
+  const {isSuccess} = useMeQuery()
+
 
   const handleLangChange = (value: string) => {
     setCurrentLang(value);
@@ -124,31 +124,17 @@ export const Header = ({ onLangChange, showAuth = false }: HeaderProps) => {
           </Select.Root>
 
           <div className={styles.authButtons}>
-            {!showAuth && (
+            {!isSuccess  ? (
               <>
-                <Button
-                  className={styles.signInButton}
-                  variant="text"
-                  onClick={() => setIsSignIn(true)}
-                  href={PATH.SIGN_IN}
-                >
-                  Log in
-                </Button>
-                <Button
-                  variant="primary"
-                  onClick={() => setIsSignUp(true)}
-                  href={PATH.SIGN_UP}
-                >
-                  Sign up
-                </Button>
-                <Logout />
+                <Link href="/auth/sign-in" className={styles.signInButton}>
+                  <Button variant="text">Log in</Button>
+                </Link>
+                <Link href="/auth/sign-up">
+                  <Button variant="primary">Sign up</Button>
+                </Link>                
               </>
-            )}
-            {isSignUp && !isSignIn && (
-              <SignUpModal open={true} onClose={() => setIsSignUp(false)} />
-            )}
-            {isSignIn && !isSignUp && (
-              <SignInModal open={true} onClose={() => setIsSignIn(false)} />
+            ) : (
+              <Logout />
             )}
           </div>
         </div>
@@ -156,3 +142,4 @@ export const Header = ({ onLangChange, showAuth = false }: HeaderProps) => {
     </header>
   );
 };
+  
