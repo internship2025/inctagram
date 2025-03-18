@@ -10,7 +10,7 @@ import Link from "next/link";
 import { PATH } from "@/shared/constants/app-paths";
 import { Typography } from "@/shared/ui/typography/typography";
 import { SignUpModal } from "@/features/auth/ui/signUpModal/SignUpModal";
-import { SignInModal } from "@/shared/ui/modal/components/signInModal/SignInModal";
+import { SignInModal } from "@/features/auth/ui/signInModal/SignInModal";
 
 const ChevronDownIcon = () => (
   <svg

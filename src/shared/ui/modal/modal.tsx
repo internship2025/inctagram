@@ -4,7 +4,7 @@ import * as React from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import styles from "./modal.module.css";
 import Image from "next/image";
-import close from "@/shared/ui/modal/assets/close.svg";
+import close from "@/features/auth/ui/assets/close.svg";
 
 type Modal = {
   children?: React.ReactNode;

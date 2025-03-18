@@ -1,7 +1,7 @@
 "use client";
 
-import { Modal } from "../../modal";
-import { CreateNewPasswordForm } from "@/shared/ui/modal/components/CreateNewPasswordForm/CreateNewPasswordForm";
+import { Modal } from "../../../../shared/ui/modal/modal";
+import { CreateNewPasswordForm } from "@/features/auth/ui/CreateNewPasswordForm/CreateNewPasswordForm";
 
 type Type = {
   open: boolean;

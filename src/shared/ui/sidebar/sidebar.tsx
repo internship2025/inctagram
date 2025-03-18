@@ -10,6 +10,7 @@ interface NavItem {
   label: string;
   path: string;
   icon: string;
+  onClick?: () => void;
 }
 
 interface SidebarProps {
@@ -32,6 +33,7 @@ export const Sidebar: FC<SidebarProps> = ({ isAuthenticated = true }) => {
       label: "Create",
       path: "/create",
       icon: "/icons/create-outline.svg",
+      onClick: () => alert("hi"),
     },
     {
       id: 3,

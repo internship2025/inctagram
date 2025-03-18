@@ -1,7 +1,7 @@
 "use client";
 
-import { Modal } from "../../modal";
-import { EmailSent } from "@/shared/ui/modal/components/emailSent/EmailSent";
+import { Modal } from "../../../../shared/ui/modal/modal";
+import { EmailSent } from "@/features/auth/ui/emailSent/EmailSent";
 
 type Props = {
   open: boolean;
