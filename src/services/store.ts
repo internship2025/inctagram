@@ -1,12 +1,13 @@
 import { combineSlices, configureStore } from "@reduxjs/toolkit";
 import { useDispatch, useSelector, useStore } from "react-redux";
 import { authApi } from "@/features/auth/api/auth.api";
+import { createPostSlice } from "@/features/create-post/utils/createPostSlice";
 
 export const makeStore = () => {
   return configureStore({
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(authApi.middleware),
-    reducer: combineSlices(authApi),
+    reducer: combineSlices(authApi, createPostSlice),
   });
 };
 
@@ -14,6 +15,12 @@ export type AppStore = ReturnType<typeof makeStore>;
 export type RootState = ReturnType<AppStore["getState"]>;
 export type AppDispatch = AppStore["dispatch"];
 
-export const useAppDispatch = useDispatch.withTypes<AppDispatch>();
-export const useAppSelector = useSelector.withTypes<RootState>();
-export const useAppStore = useStore.withTypes<AppStore>();
+// Типизация для useDispatch
+export const useAppDispatch = () => useDispatch<AppDispatch>();
+
+export const useAppSelector = <TSelected>(
+  selector: (state: RootState) => TSelected,
+): TSelected => useSelector(selector);
+
+// Типизация для useStore
+export const useAppStore = () => useStore<AppStore>();

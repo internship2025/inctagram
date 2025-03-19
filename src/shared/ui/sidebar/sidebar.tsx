@@ -18,8 +18,7 @@ interface SidebarProps {
 }
 
 export const Sidebar: FC<SidebarProps> = ({ isAuthenticated = true }) => {
-  const pathname = usePathname();
-  const currentPath = pathname;
+  const currentPath = usePathname();
 
   const navItems: NavItem[] = [
     {

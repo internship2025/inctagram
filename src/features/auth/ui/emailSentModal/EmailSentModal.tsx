@@ -1,6 +1,6 @@
 "use client";
 
-import { Modal } from "../../../../shared/ui/modal/modal";
+import { Modal } from "@/shared/ui/modal/modal";
 import { EmailSent } from "@/features/auth/ui/emailSent/EmailSent";
 
 type Props = {
