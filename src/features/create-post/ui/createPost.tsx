@@ -5,7 +5,7 @@ import {
   createPostSliceActions,
   createPostSliceSelectors,
 } from "@/features/create-post/utils/createPostSlice";
-import { Modal } from "@/shared/ui/modal/modal";
+import { Dialog } from "@/shared/ui/dialogs/dialog/dialog";
 
 type Props = {
   onPostPublished: () => void;
@@ -29,6 +29,8 @@ export const CreatePost = ({
     CreatePostStages.AddFiles,
   );
 
+  const [openAlertModal, setOpenAlertModal] = useState(false);
+
   const dispatch = useAppDispatch();
 
   const [photoToUpload, setPhotoToUpload] = useState<File | null>(null);
@@ -43,7 +45,19 @@ export const CreatePost = ({
 
   return (
     <>
-      <Modal></Modal>
+      <Dialog
+        {...props}
+        closePosition={stage === CreatePostStages.AddFiles ? "inside" : "none"}
+        onOpenChange={(open) => {
+          if (onOpenChange) {
+            if (!open && images.length > 0) {
+              setOpenAlertModal(true);
+            } else {
+              onOpenChange(open);
+            }
+          }
+        }}
+      ></Dialog>
     </>
   );
 };

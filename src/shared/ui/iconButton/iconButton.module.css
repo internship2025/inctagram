@@ -1,0 +1,27 @@
+.iconButton {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px; /* Полный круг */
+    outline: none; /* Убираем стандартное выделение */
+    transition: background-color 0.2s ease;
+}
+
+.iconButtonFocus {
+    outline: 2px solid #ff5e00; /* Пример фокуса */
+}
+
+.iconButtonHover {
+    background-color: rgba(0, 0, 0, 0.1); /* Ховер эффект */
+}
+
+.iconButtonActive {
+    background-color: rgba(0, 0, 0, 0.2); /* Эффект активной кнопки */
+}
+
+.iconButtonDisabled {
+    background-color: transparent;
+    color: #888; /* Цвет для отключенной кнопки */
+    cursor: not-allowed;
+}

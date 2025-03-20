@@ -1,0 +1,9 @@
+.bodyContainer {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
