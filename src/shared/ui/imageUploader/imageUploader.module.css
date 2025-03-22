@@ -1,0 +1,13 @@
+.relative {
+    position: relative;
+}
+
+.hidden {
+    display: none;
+}
+
+.dropArea {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+}
