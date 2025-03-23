@@ -3,7 +3,7 @@ import { SvgCloseOutline } from "@/assets/icons/components/CloseOutline";
 import { IconButton } from "@/shared/ui/iconButton/iconButton";
 import { cn } from "@/shared/utils/cn";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
-import styles from "./DialogCloseIcon.module.css";
+import styles from "./dialogCloseIcon.module.css";
 
 interface DialogCloseIconProps
   extends Omit<ComponentPropsWithoutRef<typeof DialogPrimitive.Close>, "ref"> {

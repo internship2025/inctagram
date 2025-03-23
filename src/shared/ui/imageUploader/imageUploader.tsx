@@ -3,7 +3,7 @@ import styles from "./imageUploader.module.css";
 
 type Props = {
   children: ReactNode;
-  fileInputRef: RefObject<HTMLInputElement>;
+  fileInputRef: RefObject<HTMLInputElement | null>;
   maxSizeMb?: number;
   setError: (error: string) => void;
   setPhotoUpload: (file: File) => void;
@@ -19,7 +19,7 @@ export const ImageUploader = ({
   const onFileSelected = (files: FileList | null) => {
     setError("");
 
-    if (maxSizeMb === undefined) {
+    if (!maxSizeMb) {
       setError("Max size is not defined");
       return;
     }
@@ -46,7 +46,6 @@ export const ImageUploader = ({
   const handleDrop = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     const files = e.dataTransfer.files;
-
     onFileSelected(files);
   };
 
@@ -61,7 +60,7 @@ export const ImageUploader = ({
       onDrop={handleDrop}
     >
       <input
-        accept={"."}
+        accept="image/png, image/jpeg"
         className={styles.hidden}
         onChange={(e) => onFileSelected(e.currentTarget.files)}
         ref={fileInputRef}

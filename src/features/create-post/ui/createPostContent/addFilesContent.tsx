@@ -4,11 +4,13 @@ import { useAppSelector } from "@/services/store";
 import { createPostSliceSelectors } from "@/features/create-post/utils/createPostSlice";
 import styles from "./addFilesContent.module.css";
 import { ImageUploader } from "@/shared/ui/imageUploader/imageUploader";
+import { SvgImageOutline } from "@/assets/icons/components/ImageOutline";
+import { Button } from "@/shared/ui/button/button";
 
 type Props = {
   fileInputRef: RefObject<HTMLInputElement>;
   handleFileSelect: () => void;
-  handleOpenDraft: (file: File) => void;
+  handleOpenDraft: () => void;
   setPhotoToUpload: (file: File) => void;
 };
 
@@ -25,16 +27,39 @@ export const AddFilesContent = ({
   );
 
   return (
-    <div>
-      <div>
-        <Typography>{"Add Photo"}</Typography>
+    <div className={styles.mainContainer}>
+      <div className={styles.addPhoto}>
+        <Typography className={styles.photoText}>{"Add photo"}</Typography>
       </div>
       <div className={styles.bodyContainer}>
         <ImageUploader
           fileInputRef={fileInputRef}
           setError={setError}
           setPhotoUpload={setPhotoToUpload}
-        ></ImageUploader>
+        >
+          <div className={styles.upLoaderContainer}>
+            {error && (
+              <div className={styles.errorContainer}>
+                <Typography>{error}</Typography>
+              </div>
+            )}
+            <div className={styles.imageOutline}>
+              <SvgImageOutline height={36} width={36} />
+            </div>
+          </div>
+        </ImageUploader>
+        <div className={styles.butttonContainers}>
+          <Button onClick={handleFileSelect} variant={"primary"}>
+            Select from computer
+          </Button>
+          <Button
+            disabled={draftImages.length === 0}
+            onClick={handleOpenDraft}
+            variant={"outline"}
+          >
+            Open draft
+          </Button>
+        </div>
       </div>
     </div>
   );

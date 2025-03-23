@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, useState } from "react";
+import { ComponentPropsWithoutRef, RefObject, useRef, useState } from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { useAppDispatch, useAppSelector } from "@/services/store";
 import {
@@ -6,6 +6,7 @@ import {
   createPostSliceSelectors,
 } from "@/features/create-post/utils/createPostSlice";
 import { Dialog } from "@/shared/ui/dialogs/dialog/dialog";
+import { AddFilesContent } from "@/features/create-post/ui/createPostContent/addFilesContent";
 
 type Props = {
   onPostPublished: () => void;
@@ -43,6 +44,21 @@ export const CreatePost = ({
     setStage(CreatePostStages.Cropping);
   }
 
+  const handleOpenDraft = () => {
+    setStage(CreatePostStages.Cropping);
+    dispatch(createPostSliceActions.getImagesFromDraft());
+  };
+
+  const fileInputRef = useRef<HTMLInputElement>(
+    null!,
+  ) as RefObject<HTMLInputElement>;
+
+  const handleFileSelect = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
   return (
     <>
       <Dialog
@@ -57,7 +73,16 @@ export const CreatePost = ({
             }
           }
         }}
-      ></Dialog>
+      >
+        {stage === CreatePostStages.AddFiles && (
+          <AddFilesContent
+            fileInputRef={fileInputRef}
+            handleFileSelect={handleFileSelect}
+            handleOpenDraft={handleOpenDraft}
+            setPhotoToUpload={setPhotoToUpload}
+          />
+        )}
+      </Dialog>
     </>
   );
 };

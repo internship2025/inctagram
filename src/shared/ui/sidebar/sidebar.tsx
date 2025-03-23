@@ -1,9 +1,10 @@
 "use client";
-import { FC } from "react";
+import { FC, useState } from "react";
 import Link from "next/link";
 import styles from "./sidebar.module.css";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
+import { CreatePost } from "@/features/create-post/ui/createPost";
 
 interface NavItem {
   id: number;
@@ -32,7 +33,6 @@ export const Sidebar: FC<SidebarProps> = ({ isAuthenticated = true }) => {
       label: "Create",
       path: "/create",
       icon: "/icons/create-outline.svg",
-      onClick: () => alert("hi"),
     },
     {
       id: 3,
@@ -77,10 +77,20 @@ export const Sidebar: FC<SidebarProps> = ({ isAuthenticated = true }) => {
       isAuthenticated ||
       (!isAuthenticated && ["/", "/search"].includes(item.path)),
   );
+  const [isCreatingPost, setIsCreatingPost] = useState<boolean>(true);
+
+  const onPostPublished = () => {
+    setIsCreatingPost(false);
+  };
 
   return (
     <aside className={styles.sidebar}>
       <nav className={styles.nav}>
+        <CreatePost
+          onPostPublished={onPostPublished}
+          onOpenChange={setIsCreatingPost}
+          open={isCreatingPost}
+        />
         <ul className={styles.navList}>
           {authNavItems.map((item) => (
             <li key={item.id} className={styles.navItem}>

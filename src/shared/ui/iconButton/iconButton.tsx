@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef, forwardRef } from "react";
 import { cn } from "@/shared/utils/cn";
-import styles from "./IconButton.module.css";
+import styles from "./iconButton.module.css";
 
 type Props = ComponentPropsWithoutRef<"button"> & {
   disabled?: boolean;
