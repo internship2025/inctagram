@@ -6,7 +6,7 @@ import {
   createPostSliceSelectors,
 } from "@/features/create-post/utils/createPostSlice";
 import { Dialog } from "@/shared/ui/dialogs/dialog/dialog";
-import { AddFilesContent } from "@/features/create-post/ui/createPostContent/addFilesContent";
+import { AddFilesContent } from "@/features/create-post/ui/addFilesContent/addFilesContent";
 
 type Props = {
   onPostPublished: () => void;
@@ -81,6 +81,9 @@ export const CreatePost = ({
             handleOpenDraft={handleOpenDraft}
             setPhotoToUpload={setPhotoToUpload}
           />
+        )}
+        {stage === CreatePostStages.Cropping && (
+
         )}
       </Dialog>
     </>

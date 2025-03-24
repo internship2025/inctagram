@@ -1,0 +1,18 @@
+.mainContainer {
+    width: 492px;
+    height: 564px;
+    display: flex;
+    flex-direction: column;
+}
+
+.bodyContainer {
+    height: 100%;
+}
+
+.contentContainer {
+    height: 100%;
+    position: relative;
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+}

@@ -1,0 +1,18 @@
+.carouselContentContainer {
+    height: 100%;
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    height: 100%;
+}
+
+.horizontal {
+    margin-left: -1rem;
+}
+
+.vertical {
+    margin-top: -1rem;
+    flex-direction: column;
+}
