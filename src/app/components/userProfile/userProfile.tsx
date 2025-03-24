@@ -122,7 +122,7 @@ export const useInitializeCache = ({
 const UserProfile = ({ data, initialPosts, post }: UserProfileType) => {
   const authMe = useAppSelector((state) => state.auth.isAuthenticated);
   const [isModal, setIsmodal] = useState(false);
-  
+
   const [endCursorPostId, setEndCursorPostId] = useState<null | number>(
     null
   );
@@ -132,8 +132,8 @@ const UserProfile = ({ data, initialPosts, post }: UserProfileType) => {
   useInitializeCache({
     id: data.id,
     initialPosts,
+    
   });
-
   const { data: posts, isFetching } = useGetPostsUserQuery({
     id: data.id,
     endCursorPostId,
@@ -141,32 +141,6 @@ const UserProfile = ({ data, initialPosts, post }: UserProfileType) => {
 
   const [allPosts, setAllPosts] = useState<any>(initialPosts.items);
   
-  useEffect(() => {
-    if (posts && endCursorPostId) {
-      setAllPosts((prev: any) => [...prev, ...posts.items]);
-    }
-  }, [posts, endCursorPostId]);
-
-
-  useEffect(() => {
-    const handleScroll = () => {
-
-      if (
-        window.innerHeight + document.documentElement.scrollTop >=
-          document.documentElement.offsetHeight - 100 && 
-        !isFetching
-      ) {
-        if(allPosts[allPosts.length - 1].id !== endCursorPostId){
-           setEndCursorPostId(allPosts[allPosts.length - 1].id);
-        }
-       
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [isFetching, allPosts]);
-
 
 
   return (

@@ -33,10 +33,11 @@ export type PostsUserType = {
 };
 
 const PostsUser = ({ setIsmodal, posts }: PostsUserType) => {
+ console.log(posts)
   return (
     <div className={s.wrapper}>
       {posts.map((it) => {
-        return <PostUser setIsmodal={setIsmodal} postImg={it.images[0]?.url} />;
+        return <PostUser key = {it.id}  setIsmodal={setIsmodal} postImg={it.images[0]?.url} />;
       })}
     </div>
   );
