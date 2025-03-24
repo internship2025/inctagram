@@ -91,6 +91,21 @@ export type PostsPublic = {
 
 }
 
+
+export type NotificationsType = {
+  pageSize: number
+  totalCount: number
+  notReadCount: number
+  items: [
+    {
+      id: number
+      message: string
+      isRead: boolean
+      createdAt: string
+    }
+  ]
+}
+
 export const authApi = createApi({
   reducerPath: "inctagramApi",
   baseQuery: baseQueryWithReauth,
@@ -175,8 +190,17 @@ export const authApi = createApi({
     }),
     getPostsPublic: builder.query<PostsPublic, void>({
       query: ()=> 'public-posts/all?pageSize=4'
-    })
+    }), 
+    getPostsUser: builder.query<any, {id: number, endCursorPostId: number | null}>({
+       query: ({id, endCursorPostId})=> {
+        return `public-posts/user/${id}/${endCursorPostId}?pageSize=8`
+       }
+    }),
+     getNotification: builder.query<NotificationsType, void>({
+        query: ()=> 'notifications'
+     })
   }),
+
 });
 export const {
   useMeQuery,
@@ -190,5 +214,8 @@ export const {
   useConfirmEmailMutation,
   useResendConfirmationMutation,
   useLoginWithGoogleMutation,
-  useGetPostsPublicQuery
+  useGetPostsPublicQuery,
+  useGetPostsUserQuery,
+  useGetNotificationQuery
+
 } = authApi;

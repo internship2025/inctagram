@@ -1,16 +1,23 @@
-async function getPublicPosts() {
-  const response = await fetch('https://inctagram.work/api/v1/public-posts/all?pageSize=4');
-  return response.json();
-}
+import { getPublicPosts } from "@/services/userApi";
+import PostsHome from "../postsHome/postsHome";
+import RegisteredUsers from "../registeredUsers/RegisteredUsers";
+import s from './GuestHomePage.module.css'
+
+
+
 
 const GuestHomePage = async () => {
   const data = await getPublicPosts();
-  console.log(data);
+
+
+  let posts = data?.items.map((it: any) => {
+    return <PostsHome key={it.id} {...it} />;
+  });
 
   return (
     <div>
-      <h1>GuestHomePage</h1>
-  
+      <RegisteredUsers />
+      <div className={s.wrapper}>{posts}</div>
     </div>
   );
 };

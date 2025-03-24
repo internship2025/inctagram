@@ -1,10 +1,9 @@
 import GuestHomePage from "./components/guestHomePage/GuestHomePage";
-import UserAuth from "./components/userAuth";
+
 
 const HomePage = () => {
   return (
-    <div>
-      <UserAuth />
+    <div >
       <GuestHomePage />
     </div>
   );
