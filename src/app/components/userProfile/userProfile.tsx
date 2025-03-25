@@ -179,6 +179,9 @@ const UserProfile = ({ data, initialPosts, post }: UserProfileType) => {
       <PostsUser posts={allPosts} setIsmodal={setIsmodal} />
 
 {/* Вместо false проверка по post */}
+{/* Вместо false проверка по post */}
+
+
       {false && <PostModal />}
     </>
   );
