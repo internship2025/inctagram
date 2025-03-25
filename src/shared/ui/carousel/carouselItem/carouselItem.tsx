@@ -1,7 +1,7 @@
 import { cn } from "@/shared/utils/cn";
 import * as React from "react";
 import { useCarousel } from "@/shared/ui/carousel/carousel";
-import styles from "/carouselItem.module.css";
+import styles from "./carouselItem.module.css";
 
 export const CarouselItem = React.forwardRef<
   HTMLDivElement,

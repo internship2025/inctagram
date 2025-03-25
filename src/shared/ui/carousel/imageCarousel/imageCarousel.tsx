@@ -2,7 +2,9 @@ import Image from "next/image";
 import { Carousel } from "@/shared/ui/carousel/carousel";
 import { CarouselContent } from "@/shared/ui/carousel/carouselContent/carouselContent";
 import { CarouselItem } from "@/shared/ui/carousel/carouselItem/carouselItem";
-import styles from "/imageCarousel.module.css";
+import styles from "./imageCarousel.module.css";
+import { CarouselPrevious } from "@/shared/ui/carousel/carouselPrevious/carouselPrevious";
+import { CarouselNext } from "@/shared/ui/carousel/carouselNext/carouselNext";
 
 type Props = {
   images: string[];
@@ -35,6 +37,9 @@ export const ImageCarousel = ({
           </CarouselItem>
         ))}
       </CarouselContent>
+      <CarouselPrevious />
+      <CarouselNext />
+      {/*CAROUSEL DOTS*/}
     </Carousel>
   );
 };

@@ -7,6 +7,7 @@ import {
 } from "@/features/create-post/utils/createPostSlice";
 import { Dialog } from "@/shared/ui/dialogs/dialog/dialog";
 import { AddFilesContent } from "@/features/create-post/ui/addFilesContent/addFilesContent";
+import { CroppingContent } from "@/features/create-post/ui/croppingContent/croppingContent";
 
 type Props = {
   onPostPublished: () => void;
@@ -82,9 +83,7 @@ export const CreatePost = ({
             setPhotoToUpload={setPhotoToUpload}
           />
         )}
-        {stage === CreatePostStages.Cropping && (
-
-        )}
+        {stage === CreatePostStages.Cropping && <CroppingContent />}
       </Dialog>
     </>
   );

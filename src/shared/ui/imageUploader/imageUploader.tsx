@@ -12,7 +12,7 @@ type Props = {
 export const ImageUploader = ({
   children,
   fileInputRef,
-  maxSizeMb,
+  maxSizeMb = 20,
   setError,
   setPhotoUpload,
 }: Props) => {

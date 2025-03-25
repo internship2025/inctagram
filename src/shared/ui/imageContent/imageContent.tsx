@@ -1,10 +1,19 @@
 import Image from "next/image";
-import styles from "/imageContent.module.css";
+import styles from "./imageContent.module.css";
 import imageDefault from "@/assets/icons/png/imageDefault.png";
+import { ImageCarousel } from "@/shared/ui/carousel/imageCarousel/imageCarousel";
 
-type Props = { itemImages: string[] };
+type Props = {
+  itemImages: string[];
+  onClick?: () => void;
+  selectedIndexCallBack?: (index: number) => void;
+};
 
-export const ImageContent = ({ itemImages }: Props) => {
+export const ImageContent = ({
+  itemImages,
+  onClick,
+  selectedIndexCallBack,
+}: Props) => {
   if (itemImages.length === 0) {
     return (
       <Image
@@ -15,10 +24,11 @@ export const ImageContent = ({ itemImages }: Props) => {
       />
     );
   } else if (itemImages.length === 1) {
+    // Показываем одно изображение, если 1 картинка
     return (
       <Image
         className={styles.image}
-        src={itemImages[0] ?? imageDefault}
+        src={itemImages[0] ?? imageDefault} // Показываем выбранное изображение
         alt={"Post image"}
         height={400}
         width={400}
@@ -26,8 +36,13 @@ export const ImageContent = ({ itemImages }: Props) => {
       />
     );
   } else {
+    // Показываем карусель
     return (
-
-    )
+      <ImageCarousel
+        images={itemImages}
+        onClick={onClick}
+        selectedIndexCallBack={selectedIndexCallBack}
+      />
+    );
   }
 };
