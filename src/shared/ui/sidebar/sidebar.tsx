@@ -1,4 +1,5 @@
 "use client";
+
 import { FC, useState } from "react";
 import Link from "next/link";
 import styles from "./sidebar.module.css";
@@ -20,6 +21,7 @@ interface SidebarProps {
 
 export const Sidebar: FC<SidebarProps> = ({ isAuthenticated = true }) => {
   const currentPath = usePathname();
+  const [isCreatingPost, setIsCreatingPost] = useState<boolean>(false);
 
   const navItems: NavItem[] = [
     {
@@ -33,6 +35,7 @@ export const Sidebar: FC<SidebarProps> = ({ isAuthenticated = true }) => {
       label: "Create",
       path: "/create",
       icon: "/icons/create-outline.svg",
+      onClick: () => setIsCreatingPost(true),
     },
     {
       id: 3,
@@ -77,7 +80,6 @@ export const Sidebar: FC<SidebarProps> = ({ isAuthenticated = true }) => {
       isAuthenticated ||
       (!isAuthenticated && ["/", "/search"].includes(item.path)),
   );
-  const [isCreatingPost, setIsCreatingPost] = useState<boolean>(true);
 
   const onPostPublished = () => {
     setIsCreatingPost(false);
@@ -85,29 +87,48 @@ export const Sidebar: FC<SidebarProps> = ({ isAuthenticated = true }) => {
 
   return (
     <aside className={styles.sidebar}>
-      <nav className={styles.nav}>
+      {isCreatingPost && (
         <CreatePost
           onPostPublished={onPostPublished}
           onOpenChange={setIsCreatingPost}
           open={isCreatingPost}
         />
+      )}
+      <nav className={styles.nav}>
         <ul className={styles.navList}>
           {authNavItems.map((item) => (
             <li key={item.id} className={styles.navItem}>
-              <Link
-                href={item.path}
-                className={`${styles.navLink} ${currentPath === item.path ? styles.active : ""}`}
-              >
-                <span className={styles.icon}>
-                  <Image
-                    src={item.icon}
-                    alt={item.label}
-                    width={24}
-                    height={24}
-                  />
-                </span>
-                <span className={styles.label}>{item.label}</span>
-              </Link>
+              {item.onClick ? (
+                <button
+                  className={`${styles.navLink} ${styles.navButton}`}
+                  onClick={item.onClick}
+                >
+                  <span className={styles.icon}>
+                    <Image
+                      src={item.icon}
+                      alt={item.label}
+                      width={24}
+                      height={24}
+                    />
+                  </span>
+                  <span className={styles.label}>{item.label}</span>
+                </button>
+              ) : (
+                <Link
+                  href={item.path}
+                  className={`${styles.navLink} ${currentPath === item.path ? styles.active : ""}`}
+                >
+                  <span className={styles.icon}>
+                    <Image
+                      src={item.icon}
+                      alt={item.label}
+                      width={24}
+                      height={24}
+                    />
+                  </span>
+                  <span className={styles.label}>{item.label}</span>
+                </Link>
+              )}
             </li>
           ))}
         </ul>
