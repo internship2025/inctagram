@@ -3,9 +3,9 @@
   height: 60px;
   background: #171717;
   border-bottom: 1px solid #333333;
-  /*position: fixed;*/
-  /*top: 0;*/
-  /*left: 0;*/
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 
 .container {
