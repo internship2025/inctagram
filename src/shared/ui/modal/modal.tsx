@@ -29,7 +29,7 @@ export const Modal = ({
     <Dialog.Root open={open} onOpenChange={onClose}>
       <Dialog.Portal>
         <Dialog.Overlay className={styles.overlay} />
-        <Dialog.Content className={`${styles.commonStyles}`}>
+        <Dialog.Content className={`${styles.commonStyles} ${className}`}>
           <Dialog.Title className={`${styles.title} ${styles[className]}`}>
             {title}
           </Dialog.Title>
