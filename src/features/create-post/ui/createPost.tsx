@@ -83,7 +83,9 @@ export const CreatePost = ({
             setPhotoToUpload={setPhotoToUpload}
           />
         )}
-        {stage === CreatePostStages.Cropping && <CroppingContent />}
+        {stage === CreatePostStages.Cropping && (
+          <CroppingContent setStage={setStage} />
+        )}
       </Dialog>
     </>
   );
