@@ -53,6 +53,59 @@ export type loginWithGoogleResponse = {
   email: string;
 };
 
+
+export type PostsPublic = {
+  
+  totalCount: number
+  pageSize: number
+  totalUsers: number
+  items: [
+    {
+      id: number
+      userName: string
+      description: string
+      location: string
+      images: [
+        {
+          url: string
+          width: number
+          height: number
+          fileSize: number
+          createdAt: string
+          uploadId: string
+        }
+      ],
+      createdAt: string
+      updatedAt: string
+      ownerId: 1,
+      avatarOwner: string
+      owner: {
+        firstName: string
+        lastName: string
+      },
+      likesCount: number 
+      isLiked: boolean
+      avatarWhoLikes: boolean
+    }
+  ]
+
+}
+
+
+export type NotificationsType = {
+  pageSize: number
+  totalCount: number
+  notReadCount: number
+  items: [
+    {
+      id: number
+      message: string
+      isRead: boolean
+      createdAt: string
+    }
+  ]
+}
+
 export const authApi = createApi({
   reducerPath: "inctagramApi",
   baseQuery: baseQueryWithReauth,
@@ -135,7 +188,19 @@ export const authApi = createApi({
         };
       },
     }),
+    getPostsPublic: builder.query<PostsPublic, void>({
+      query: ()=> 'public-posts/all?pageSize=4'
+    }), 
+    getPostsUser: builder.query<any, {id: number, endCursorPostId: number | null}>({
+       query: ({id, endCursorPostId})=> {
+        return `public-posts/user/${id}/${endCursorPostId}?pageSize=8`
+       }
+    }),
+     getNotification: builder.query<NotificationsType, void>({
+        query: ()=> 'notifications'
+     })
   }),
+
 });
 export const {
   useMeQuery,
@@ -149,4 +214,8 @@ export const {
   useConfirmEmailMutation,
   useResendConfirmationMutation,
   useLoginWithGoogleMutation,
+  useGetPostsPublicQuery,
+  useGetPostsUserQuery,
+  useGetNotificationQuery
+
 } = authApi;

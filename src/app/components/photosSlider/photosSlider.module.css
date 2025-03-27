@@ -1,0 +1,84 @@
+.commonStyle {
+  position: relative;
+}
+
+.sizeSmall {
+  width: 234px;
+  height: 240px;
+  position: relative;
+}
+
+.sizeLarge {
+  width: 972px;
+  height: 564px;
+  position: relative;
+}
+
+.scrollBar {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 10px;
+  border-radius: 2px;
+  background-color: #333333;
+  display: flex;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.scrollBarSmall {
+  padding: 3px 8px 3px 8px;
+}
+
+.scrollBarLarge {
+  padding: 8px;
+}
+.curcle {
+  position: relative;
+  background-color: white;
+  border-radius: 50%;
+  
+}
+
+.curcleSmall{
+  width: 6px;
+  height: 6px;
+}
+
+.curcleLarge{
+  width: 8px;
+  height: 8px;
+  background-color: aqua;
+}
+
+.active {
+  background-color: #397df6;
+}
+
+.buttonRight {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  cursor: pointer;
+  background: rgba(128, 128, 128, 0.5);
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.buttonLeft {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  cursor: pointer;
+  background: rgba(128, 128, 128, 0.5);
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
