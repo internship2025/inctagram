@@ -1,3 +1,5 @@
+"use client";
+
 import { ComponentPropsWithoutRef, RefObject, useRef, useState } from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { useAppDispatch, useAppSelector } from "@/services/store";
