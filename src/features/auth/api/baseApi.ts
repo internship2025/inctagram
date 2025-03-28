@@ -9,7 +9,7 @@ import {
 import { Mutex } from "async-mutex";
 
 export const baseQueryWithAccessToken = fetchBaseQuery({
-  baseUrl: "https://universea.ru/api/v1",
+  baseUrl: "https://inctagram.work/api/v1",
   credentials: "include",
   prepareHeaders: (headers) => {
     if (typeof window !== "undefined") {

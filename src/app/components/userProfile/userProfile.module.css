@@ -1,0 +1,30 @@
+
+.wrapper{
+    display: flex;
+    margin-bottom: 53px;
+
+}
+
+.ava{
+border-radius: 50%;
+width: 207px;
+height: 207px;
+}
+
+.wrapperAva{
+    margin-right: 38px;
+}
+
+.info{
+
+}
+
+.container{
+    display: flex;
+    gap: 100px;
+    margin: 20px 0 20px 0;
+}
+
+.value{
+font-weight: 700;
+}
