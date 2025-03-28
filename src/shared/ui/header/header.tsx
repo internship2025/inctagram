@@ -7,9 +7,8 @@ import { useEffect, useState } from "react";
 import { Button } from "@/shared/ui/button/button";
 import Logout from "@/features/auth/ui/logout/Logout";
 import Link from "next/link";
-import { PATH } from "@/shared/constants/app-paths";
 import { Typography } from "@/shared/ui/typography/typography";
-import { useAppDispatch, useAppSelector } from "@/services/store";
+import { useAppDispatch } from "@/services/store";
 import { useMeQuery } from "@/features/auth/api/auth.api";
 import { setAuthenticated } from "@/features/auth/api/authSlice";
 import { NotificationBell } from "../notificationBell/NotificationBell";
@@ -34,14 +33,12 @@ const ChevronDownIcon = () => (
 
 interface HeaderProps {
   onLangChange?: (lang: string) => void;
-  showAuth?: boolean;
 }
 
-export const Header = ({ onLangChange, showAuth = false }: HeaderProps) => {
+export const Header = ({ onLangChange }: HeaderProps) => {
   const [currentLang, setCurrentLang] = useState("English");
 
   const { data: userData, isFetching } = useMeQuery();
-  const {isSuccess} = useMeQuery();
 
   const dispatch = useAppDispatch();
 
@@ -66,7 +63,7 @@ export const Header = ({ onLangChange, showAuth = false }: HeaderProps) => {
           <div>Loading</div>
         ) : (
           <div className={styles.rightSection}>
-           {userData && <NotificationBell />}
+            {userData && <NotificationBell />}
             <Select.Root
               value={currentLang}
               onValueChange={handleLangChange}
@@ -140,7 +137,7 @@ export const Header = ({ onLangChange, showAuth = false }: HeaderProps) => {
             </Select.Root>
 
             <div className={styles.authButtons}>
-              {!isSuccess ? (
+              {!userData ? (
                 <>
                   <Link href="/auth/sign-in" className={styles.signInButton}>
                     <Button variant="text">Log in</Button>
