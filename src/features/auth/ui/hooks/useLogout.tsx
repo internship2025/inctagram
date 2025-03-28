@@ -26,7 +26,7 @@ export const useLogout = () => {
       localStorage.removeItem("email");
       dispatch(inctagramApi.util.resetApiState());
       setShowConfirmation(false);
-      router.push(PATH.PRIVATE_HOME);
+      router.push(PATH.ROOT);
     } catch (error) {
       console.error("Logout failed", error);
     }
