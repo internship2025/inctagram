@@ -1,7 +1,5 @@
-"use client";
-
 import styles from "@/features/create-post/ui/croppingContent/croppingContent.module.css";
-import { useState } from "react";
+import { RefObject, useState } from "react";
 import { ImageContent } from "@/shared/ui/imageContent/imageContent";
 import { useAppDispatch, useAppSelector } from "@/services/store";
 import {
@@ -17,15 +15,26 @@ import SvgEdit2 from "@/assets/icons/components/Edit2";
 import SvgEdit2Outline from "@/assets/icons/components/Edit2Outline";
 import SvgMaximize from "@/assets/icons/components/Maximize";
 import SvgMaximizeOutline from "@/assets/icons/components/MaximizeOutline";
+import SvgCloseOutline from "@/assets/icons/components/CloseOutline";
 import { Slider } from "@/shared/ui/slider/slider";
 import Image from "@/assets/icons/components/Image";
 import SvgImageOutline from "@/assets/icons/components/ImageOutline";
+import SvgPlusCircleOutline from "@/assets/icons/components/PlusCircleOutline";
+import { ImageUploader } from "@/shared/ui/imageUploader/imageUploader";
 
 type Props = {
   setStage: (stage: CreatePostStages) => void;
+  fileInputRef: RefObject<HTMLInputElement>;
+  handleFileSelect: () => void;
+  setPhotoToUpload: (file: File) => void;
 };
 
-export const CroppingContent = ({ setStage }: Props) => {
+export const CroppingContent = ({
+  setStage,
+  fileInputRef,
+  handleFileSelect,
+  setPhotoToUpload,
+}: Props) => {
   const dispatch = useAppDispatch();
   const imagesState = useAppSelector(createPostSliceSelectors.selectImages);
 
@@ -36,6 +45,7 @@ export const CroppingContent = ({ setStage }: Props) => {
   const [showZoom, setShowZoom] = useState(false);
   const [zoom, setZoom] = useState(1);
   const [showImages, setShowImages] = useState(false);
+  const [error, setError] = useState("");
 
   const onSetEdit = async () => {
     if (edit && croppedAreaPixels) {
@@ -117,11 +127,40 @@ export const CroppingContent = ({ setStage }: Props) => {
             )}
           </IconButton>
 
-          {/*{showImages && (<div className={styles.showImagesContainer}>*/}
-          {/*  {imagesState.map((image, index) => {*/}
-          {/*    <div></div>*/}
-          {/*  })}*/}
-          {/*</div>)}*/}
+          {showImages && (
+            <div className={styles.showImagesContainer}>
+              {imagesState.map((image, index) => (
+                <div className={styles.relative} key={index}>
+                  <img
+                    alt={`image ${index + 1}`}
+                    className={styles.img}
+                    src={image}
+                  />
+                  <IconButton
+                    className={styles.deleteImage}
+                    onClick={() => {
+                      dispatch(createPostSliceActions.deleteImage({ index }));
+                    }}
+                  >
+                    <SvgCloseOutline />
+                  </IconButton>
+                </div>
+              ))}
+              <ImageUploader
+                fileInputRef={fileInputRef}
+                setError={setError}
+                setPhotoUpload={setPhotoToUpload}
+              >
+                <IconButton>
+                  <SvgPlusCircleOutline
+                    onClick={() => {
+                      handleFileSelect();
+                    }}
+                  />
+                </IconButton>
+              </ImageUploader>
+            </div>
+          )}
         </div>
       </div>
     </div>

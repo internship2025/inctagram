@@ -85,3 +85,19 @@
     padding: 0.75rem;
     flex-wrap: wrap;
 }
+
+.relative {
+    position: relative;
+}
+
+.img {
+    width: 5rem;
+    height: 5rem;
+    object-fit: contain;
+}
+
+.deleteImage {
+    position: absolute;
+    top: 0.25rem;
+    right: 0.25rem;
+}
