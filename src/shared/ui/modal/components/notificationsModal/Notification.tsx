@@ -2,6 +2,10 @@ import { calculatingDate } from '@/features/auth/utils/dateUtils'
 import s from './Notification.module.css'
 
 
+// <div className={styles.Tag} key={it.id}>
+// {it.message}
+// </div>
+
 type NotificationType = {
     messages: {
     id: number

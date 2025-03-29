@@ -7,11 +7,14 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import { SidebarWrapper } from "@/app/components/sidebar/SidebarWrapper";
 import s from './appProvider.module.css'
 
+
 type Props = {
   children: ReactNode;
 };
 
 export default function AppProvider({ children }: Props) {
+
+
   return (
     <GoogleOAuthProvider clientId="272583913867-t74i019ufdvmarh05jlv8bcu1ak0a6o6.apps.googleusercontent.com">
       <StoreProvider>
