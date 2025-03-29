@@ -1,190 +1,118 @@
 "use client";
-
-import { useAppDispatch, useAppSelector } from "@/services/store";
-import s from "./userProfile.module.css";
-import Image from "next/image";
-import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import PostUsers from "../post-users/PostUser";
-import PostModal from "../postModal/postModal";
-import photo from "./../../../../public/images/photo.png";
-import PostsUser from "../post-users/PostsUsers";
-import { authApi, useGetPostsUserQuery } from "@/features/auth/api/auth.api";
-import { getPostsUser } from "@/services/userApi";
+import { useInView } from "react-intersection-observer";
+import Image from "next/image";
+import { PostsUserResponse, useGetPostsUserQuery } from "@/features/auth/api/auth.api";
+import s from './userProfile.module.css';
+import { PostsUser } from "../post-users/PostsUsers";
+import { Loader } from "@/shared/ui/loader/Loader";
 
-export type UserProfileType = {
+interface UserProfileProps {
   data: {
-    aboutMe: string;
-    avatars: [
-      | {
-          url: string;
-          width: number;
-          height: number;
-          fileSize: number;
-          createdAt: string;
-        }
-      | undefined,
-    ];
     id: number;
+    userName: string;
+    aboutMe: string;
+    avatars: Array<{
+      url: string;
+      width: number;
+      height: number;
+      fileSize: number;
+      createdAt: string;
+    }>;
     userMetadata: {
       following: number;
       followers: number;
       publications: number;
     };
-    userName: string;
   };
-  initialPosts: {
-    totalCount: number;
-    pageSize: number;
-    totalUsers: number;
-    items: [
-      {
-        id: number;
-        userName: string;
-        description: string;
-        location: string;
-        images: [
-          {
-            url: string;
-            width: number;
-            height: number;
-            fileSize: number;
-            createdAt: string;
-            uploadId: string;
-          },
-        ];
-        createdAt: string;
-        updatedAt: string;
-        ownerId: number;
-        avatarOwner: string;
-        owner: {
-          firstName: string;
-          lastName: string;
-        };
-        likesCount: number;
-        isLiked: true;
-        avatarWhoLikes: false;
-      },
-    ];
-  };
-  post?: {
-    
-    id: number
-    userName: string
-    description: string
-    location: string
-    images: [
-      {
-        url: string
-        width: number
-        height: number
-        fileSize:number
-        createdAt: string
-        uploadId: string
-      }
-    ],
-    createdAt: string
-    updatedAt: string
-    ownerId: number
-    avatarOwner: string
-    owner: {
-      firstName: string
-      lastName: string
-    },
-    likesCount: number,
-    isLiked: boolean
-    avatarWhoLikes: boolean
-  }
-};
+  initialPosts: PostsUserResponse;
+}
 
-
-
-export const useInitializeCache = ({
-  id,
-  initialPosts,
-}: {
-  id: number;
-  initialPosts: any;
-}) => {
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(
-      authApi.util.upsertQueryData(
-        "getPostsUser",
-        { id, endCursorPostId: null },
-        initialPosts
-      )
-    );
-  }, []);
-};
-
-
-const UserProfile = ({ data, initialPosts, post }: UserProfileType) => {
-  const authMe = useAppSelector((state) => state.auth.isAuthenticated);
-  const [isModal, setIsmodal] = useState(false);
-
-  const [endCursorPostId, setEndCursorPostId] = useState<null | number>(
-    null
+export const UserProfile = ({ data, initialPosts }: UserProfileProps) => {
+  const [posts, setPosts] = useState(initialPosts.items);
+  const [nextCursor, setNextCursor] = useState(initialPosts.nextCursor);
+  const { ref, inView } = useInView({ threshold: 0.1 });
+  const { data: newPosts, isFetching, error } = useGetPostsUserQuery(
+    { id: data.id, endCursorPostId: nextCursor },
+    { skip: !nextCursor }
   );
 
+  useEffect(() => {
+    if (inView && nextCursor && !isFetching) {
+      setNextCursor(newPosts?.nextCursor || null);
+    }
+  }, [inView, isFetching]);
 
+  useEffect(() => {
+    if (newPosts) {
+      setPosts((prev) => [...prev, ...newPosts.items]);
+    }
+  }, [newPosts]);
 
-  useInitializeCache({
-    id: data.id,
-    initialPosts,
-    
-  });
-  const { data: posts, isFetching } = useGetPostsUserQuery({
-    id: data.id,
-    endCursorPostId,
-  });
-
-  const [allPosts, setAllPosts] = useState<any>(initialPosts.items);
-  
-
+  if (error) {
+    return (
+      <div className={s.errorContainer}>
+        Failed to load posts. Please try again later.
+      </div>
+    );
+  }
 
   return (
-    <>
-      <div className={s.wrapper}>
-        <div className={s.wrapperAva}>
+    <div className={s.container}>
+      {/* Profile Header */}
+      <div className={s.profileHeader}>
+        <div className={s.avatarWrapper}>
           <Image
-            className={s.ava}
-            src={data?.avatars[0]?.url || photo}
-            alt=""
-            width={207}
-            height={207}
+            src={data.avatars[0]?.url || "/default-avatar.png"}
+            alt="User avatar"
+            width={150}
+            height={150}
+            className={s.avatar}
           />
         </div>
-        <div className={s.info}>
-          <div className={s.name}>{data.userName}</div>
-          <div className={s.container}>
-            <div className={s.following}>
-              <div className={s.value}>{data.userMetadata.following}</div>
-              <div className={s.title}>Following</div>
+
+        <div className={s.profileInfo}>
+          <h1 className={s.username}>{data.userName}</h1>
+          
+          <div className={s.stats}>
+          <div className={s.statItem}>
+              <span className={s.statValue}>
+                {data.userMetadata.following}
+              </span>
+              <span className={s.statLabel}>Following</span>
             </div>
-            <div className={s.followers}>
-              <div className={s.value}>{data.userMetadata.followers}</div>
-              <div className={s.title}>Followers</div>
+            <div className={s.statItem}>
+              <span className={s.statValue}>
+                {data.userMetadata.followers}
+              </span>
+              <span className={s.statLabel}>Followers</span>
             </div>
-            <div className={s.publications}>
-              <div className={s.value}>{data.userMetadata.publications}</div>
-              <div className={s.title}>Publications</div>
+            
+            <div className={s.statItem}>
+              <span className={s.statValue}>
+                {data.userMetadata.publications}
+              </span>
+              <span className={s.statLabel}>Publications</span>
             </div>
           </div>
-          <div className={s.description}>
-            {data.aboutMe || "Описание отсутствует"}
-          </div>
+
+          <p className={s.bio}>{data.aboutMe || "No description provided"}</p>
         </div>
       </div>
-      <PostsUser posts={allPosts} setIsmodal={setIsmodal} />
 
-{/* Вместо false проверка по post */}
-{/* Вместо false проверка по post */}
+      {/* Posts Grid */}
+      <PostsUser posts={posts} />
 
-
-      {false && <PostModal />}
-    </>
+      {/* Infinite Scroll Trigger */}
+      <div ref={ref} className={s.loaderContainer}>
+        {isFetching ? (
+          <Loader size="medium" />
+        ) : nextCursor ? (
+          <span className={s.scrollPrompt}>Scroll to load more</span>
+        ) : (
+          <p className={s.endMessage}>No more posts to show</p>
+        )}
+      </div>
+    </div>
   );
 };
-
-export default UserProfile;

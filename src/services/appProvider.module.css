@@ -6,13 +6,13 @@
 
 .wrapper {
 
-  display: flex;
+  /* display: flex; */
 }
 
 
 @media (max-width: 1470px) {
   .container {
-    padding-left: 220px; 
+    /* padding-left: 220px;  */
     padding-right: 15px;
     max-width: 100%;
   }

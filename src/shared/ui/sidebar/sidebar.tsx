@@ -4,6 +4,7 @@ import Link from "next/link";
 import styles from "./sidebar.module.css";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
+import { useAppSelector } from "@/services/store";
 
 interface NavItem {
   id: number;
@@ -18,6 +19,8 @@ interface SidebarProps {
 
 export const Sidebar: FC<SidebarProps> = ({ isAuthenticated = true }) => {
   const pathname = usePathname();
+  const userId = useAppSelector((state) => state.auth.userId);
+
   const currentPath = pathname;
 
   const navItems: NavItem[] = [
@@ -36,7 +39,7 @@ export const Sidebar: FC<SidebarProps> = ({ isAuthenticated = true }) => {
     {
       id: 3,
       label: "My Profile",
-      path: "/profile",
+      path: `/profile/${userId}`,
       icon: "/icons/myProfile-outline.svg",
     },
     {
