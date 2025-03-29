@@ -18,7 +18,7 @@ export default function AppProvider({ children }: Props) {
   return (
     <GoogleOAuthProvider clientId="272583913867-t74i019ufdvmarh05jlv8bcu1ak0a6o6.apps.googleusercontent.com">
       <StoreProvider>
-          <Header />
+          <Header/>
           <div className={s.wrapper}>
           <SidebarWrapper/>
           <main className={s.container}>{children}</main>
