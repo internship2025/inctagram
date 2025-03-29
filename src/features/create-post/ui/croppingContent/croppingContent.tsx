@@ -142,23 +142,25 @@ export const CroppingContent = ({
                       dispatch(createPostSliceActions.deleteImage({ index }));
                     }}
                   >
-                    <SvgCloseOutline />
+                    <SvgCloseOutline className={styles.svgCloseOutline} />
                   </IconButton>
                 </div>
               ))}
-              <ImageUploader
-                fileInputRef={fileInputRef}
-                setError={setError}
-                setPhotoUpload={setPhotoToUpload}
-              >
-                <IconButton>
-                  <SvgPlusCircleOutline
-                    onClick={() => {
-                      handleFileSelect();
-                    }}
-                  />
-                </IconButton>
-              </ImageUploader>
+              <div className={styles.relative}>
+                <ImageUploader
+                  fileInputRef={fileInputRef}
+                  setError={setError}
+                  setPhotoUpload={setPhotoToUpload}
+                >
+                  <IconButton>
+                    <SvgPlusCircleOutline
+                      onClick={() => {
+                        handleFileSelect();
+                      }}
+                    />
+                  </IconButton>
+                </ImageUploader>
+              </div>
             </div>
           )}
         </div>

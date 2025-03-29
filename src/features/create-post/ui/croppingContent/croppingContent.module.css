@@ -100,4 +100,12 @@
     position: absolute;
     top: 0.25rem;
     right: 0.25rem;
+    border-radius: 0;
+    background-color: var(--color-dark-500);
+
+}
+
+.svgCloseOutline {
+    cursor: pointer;
+
 }

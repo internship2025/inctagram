@@ -7,10 +7,5 @@
 }
 
 .dropArea {
-    border: 2px solid var(--color-dark-700);
-    background-color:var(--color-dark-700) ;
-    padding: 20px;
-    text-align: center;
-    width: 222px;
-    height: 228px;
+
 }

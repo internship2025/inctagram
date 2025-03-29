@@ -3,9 +3,9 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border-radius: 9999px; /* Полный круг */
     outline: none; /* Убираем стандартное выделение */
     transition: background-color 0.2s ease;
+    cursor: pointer;
 }
 
 .iconButtonFocus {
@@ -22,6 +22,5 @@
 
 .iconButtonDisabled {
     background-color: transparent;
-    color: #888; /* Цвет для отключенной кнопки */
     cursor: not-allowed;
 }

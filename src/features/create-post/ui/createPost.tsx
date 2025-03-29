@@ -10,6 +10,7 @@ import {
 import { Dialog } from "@/shared/ui/dialogs/dialog/dialog";
 import { AddFilesContent } from "@/features/create-post/ui/addFilesContent/addFilesContent";
 import { CroppingContent } from "@/features/create-post/ui/croppingContent/croppingContent";
+import { PublishContent } from "@/features/create-post/ui/publishContent/publishContent";
 
 type Props = {
   onPostPublished: () => void;
@@ -86,8 +87,15 @@ export const CreatePost = ({
           />
         )}
         {stage === CreatePostStages.Cropping && (
-          <CroppingContent setStage={setStage} />
+          <CroppingContent
+            fileInputRef={fileInputRef}
+            handleFileSelect={handleFileSelect}
+            setPhotoToUpload={setPhotoToUpload}
+            setStage={setStage}
+          />
         )}
+        {/*{stage === CreatePostStages.Filtering && <FilteringDialogContent setStage={setStage} />}*/}
+        {stage === CreatePostStages.Publish && <PublishContent />}
       </Dialog>
     </>
   );
