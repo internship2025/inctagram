@@ -44,6 +44,23 @@
   gap: 12px;
 }
 
+/* Стили для кнопки в сайдбаре */
+.navLink button {
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  color: var(--color-light-100) !important;
+  cursor: pointer;
+}
+
+/* Наследование ховера от родителя */
+.navLink:hover button {
+  color: var(--color-info-100) !important;
+}
+
 .navLink:hover {
   color: var(--color-info-100);
 }

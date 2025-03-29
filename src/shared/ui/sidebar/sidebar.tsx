@@ -4,12 +4,14 @@ import Link from "next/link";
 import styles from "./sidebar.module.css";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
+import Logout from "@/features/auth/ui/logout/Logout";
 
 interface NavItem {
   id: number;
   label: string;
   path: string;
   icon: string;
+  component?: React.ReactNode;
 }
 
 interface SidebarProps {
@@ -68,6 +70,7 @@ export const Sidebar: FC<SidebarProps> = ({ isAuthenticated = true }) => {
       label: "Log Out",
       path: "/logout",
       icon: "/icons/logOut-outline.svg",
+      component: <Logout />,
     },
   ];
 
@@ -86,6 +89,7 @@ export const Sidebar: FC<SidebarProps> = ({ isAuthenticated = true }) => {
               <Link
                 href={item.path}
                 className={`${styles.navLink} ${currentPath === item.path ? styles.active : ""}`}
+                onClick={(e) => item.component && e.preventDefault()}
               >
                 <span className={styles.icon}>
                   <Image
@@ -95,7 +99,9 @@ export const Sidebar: FC<SidebarProps> = ({ isAuthenticated = true }) => {
                     height={24}
                   />
                 </span>
-                <span className={styles.label}>{item.label}</span>
+                {item.component || (
+                  <span className={styles.label}>{item.label}</span>
+                )}
               </Link>
             </li>
           ))}

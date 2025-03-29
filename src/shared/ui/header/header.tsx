@@ -5,7 +5,6 @@ import styles from "./header.module.css";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Button } from "@/shared/ui/button/button";
-import Logout from "@/features/auth/ui/logout/Logout";
 import Link from "next/link";
 import { Typography } from "@/shared/ui/typography/typography";
 import { useAppDispatch } from "@/services/store";
@@ -45,6 +44,7 @@ export const Header = ({ onLangChange }: HeaderProps) => {
   useEffect(() => {
     if (userData && !isFetching) {
       dispatch(setAuthenticated({ userId: userData.userId }));
+      localStorage.setItem("userName", userData.userName);
     }
   }, [userData]);
 
@@ -137,7 +137,7 @@ export const Header = ({ onLangChange }: HeaderProps) => {
             </Select.Root>
 
             <div className={styles.authButtons}>
-              {!userData ? (
+              {!userData && (
                 <>
                   <Link href="/auth/sign-in" className={styles.signInButton}>
                     <Button variant="text">Log in</Button>
@@ -146,8 +146,6 @@ export const Header = ({ onLangChange }: HeaderProps) => {
                     <Button variant="primary">Sign up</Button>
                   </Link>
                 </>
-              ) : (
-                <Logout />
               )}
             </div>
           </div>
