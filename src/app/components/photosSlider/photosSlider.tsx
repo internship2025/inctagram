@@ -59,6 +59,7 @@ const PhotosSlider = ({
   const length = images.length;
   let src = length !== 0 ? images[currentIndex].url : photo;
 
+
    const setSize = useCallback((size: string) =>{
     let obj = {
       width: 972,

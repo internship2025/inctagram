@@ -60,7 +60,7 @@ export const Header = ({ onLangChange, showAuth = false }: HeaderProps) => {
   };
 
   return (
-    <header className={styles.header}>
+    <header id = 'header' className={styles.header}>
       <div className={styles.container}>
         <Link href={"/public"}>
           <Typography variant={"h1"}>Inctagram</Typography>

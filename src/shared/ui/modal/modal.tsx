@@ -15,6 +15,7 @@ type Modal = {
   open?: boolean;
   onClose?: () => void;
   isClose?: boolean;
+  portalContainer?: HTMLDivElement | null
 };
 
 export const Modal = ({
@@ -24,12 +25,17 @@ export const Modal = ({
   open = true,
   onClose,
   isClose = false,
+  portalContainer
+  
 }: Modal) => {
+
+
+
   return (
     <Dialog.Root open={open} onOpenChange={onClose}>
-      <Dialog.Portal>
+      <Dialog.Portal container={portalContainer}>
         <Dialog.Overlay className={styles.overlay} />
-        <Dialog.Content className={`${styles.commonStyles} ${className}`}>
+        <Dialog.Content aria-describedby={undefined} className={`${styles.commonStyles} ${className}`}>
           <Dialog.Title className={`${styles.title} ${styles[className]}`}>
             {title}
           </Dialog.Title>
