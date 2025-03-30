@@ -30,6 +30,7 @@ type Post = {
 const PostsHome = (props: Post) => {
   const textRef = useRef<HTMLDivElement | null>(null);
 
+
   const [isOverflowing, setIsOverflowing] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isSlider, setIslider] = useState(false)
