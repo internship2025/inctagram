@@ -2,24 +2,36 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseQueryWithReauth } from "@/features/auth/api/baseApi";
 import {
   CreatePostRequest,
-  Posts,
+  PostItem,
   ResponceAllPosts,
-} from "@/features/auth/api/post/types";
+  UploadFileResponse,
+} from "@/features/create-post/api/types";
 
-const PostApi = createApi({
+export const PostApi = createApi({
   reducerPath: "postApi",
   baseQuery: baseQueryWithReauth,
   tagTypes: ["Post"],
   endpoints: (builder) => ({
-    createPost: builder.mutation<Posts, CreatePostRequest>({
-      query: (payload) => ({
-        url: "/v1/posts",
-        method: "POST",
-        body: payload,
-      }),
-      invalidatesTags: ["Post"],
+    createPost: builder.mutation<
+      PostItem,
+      { description: string; uploadId: string[] }
+    >({
+      query: ({ description, uploadId }) => {
+        return {
+          body: {
+            childrenMetadata: uploadId.map((id) => {
+              return {
+                uploadId: id,
+              };
+            }),
+            description,
+          },
+          method: "POST",
+          url: "/v1/posts",
+        };
+      },
     }),
-    getPosts: builder.query<Posts[], void>({
+    getPosts: builder.query<PostItem[], void>({
       query: () => "/posts",
       providesTags: ["Post"],
     }),
@@ -51,7 +63,7 @@ const PostApi = createApi({
         return endpointName;
       },
     }),
-    editPost: builder.mutation<Posts, { id: number; description: string }>({
+    editPost: builder.mutation<PostItem, { id: number; description: string }>({
       query: ({ id, description }) => ({
         url: `v1/posts/${id}`,
         method: "PUT",
@@ -67,9 +79,20 @@ const PostApi = createApi({
       }),
       //invalidatesTags: ["Post"],
     }),
+    uploadImageForPost: builder.mutation<UploadFileResponse, { file: File }>({
+      query: ({ file }) => {
+        const formData = new FormData();
+
+        formData.append("file", file);
+
+        return {
+          body: formData,
+          method: "POST",
+          url: "v1/posts/image",
+        };
+      },
+    }),
   }),
 });
 
-export const {} = PostApi.endpoints;
-export const {} = PostApi;
-export default PostApi;
+export const { useCreatePostMutation, useUploadImageForPostMutation } = PostApi;

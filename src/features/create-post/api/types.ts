@@ -15,7 +15,7 @@ export type Owner = {
 };
 
 // Основной тип поста
-export type Posts = {
+export type PostItem = {
   id: number;
   userName: string;
   description: string;
@@ -46,5 +46,9 @@ export type ResponceAllPosts = {
   totalCount: number;
   pageSize: number;
   totalUsers: number;
-  items: Posts[];
+  items: PostItem[];
+};
+
+export type UploadFileResponse = {
+  images: Image[];
 };

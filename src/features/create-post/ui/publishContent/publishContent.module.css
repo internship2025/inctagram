@@ -1,0 +1,27 @@
+.mainContainer {
+    display: flex;
+    flex-direction: column;
+    width: 972px;
+    height: 564px;
+}
+
+.bodyContainer {
+    display: flex;
+    flex-grow: 1;
+}
+
+.imageContainer {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 1.5rem 2.5rem;
+}
+
+.textLinkContainer {
+    padding-bottom: 1.5rem;
+}
+
+.textLinkContainer:hover {
+    text-decoration: underline;
+}
