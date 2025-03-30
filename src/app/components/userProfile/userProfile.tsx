@@ -6,6 +6,9 @@ import { PostsUserResponse, useGetPostsUserQuery } from "@/features/auth/api/aut
 import s from './userProfile.module.css';
 import { PostsUser } from "../post-users/PostsUsers";
 import { Loader } from "@/shared/ui/loader/Loader";
+import { useAppSelector } from "@/services/store";
+import { Button } from "@/shared/ui/button/button";
+import Link from "next/link";
 
 interface UserProfileProps {
   data: {
@@ -36,6 +39,9 @@ export const UserProfile = ({ data, initialPosts }: UserProfileProps) => {
     { id: data.id, endCursorPostId: nextCursor },
     { skip: !nextCursor }
   );
+
+  const currentUserId = useAppSelector((state) => state.auth.userId);
+  const isOwner = currentUserId === data.id;
 
   useEffect(() => {
     if (inView && nextCursor && !isFetching) {
@@ -105,14 +111,33 @@ export const UserProfile = ({ data, initialPosts }: UserProfileProps) => {
 
       {/* Infinite Scroll Trigger */}
       <div ref={ref} className={s.loaderContainer}>
-        {isFetching ? (
-          <Loader size="medium" />
-        ) : nextCursor ? (
-          <span className={s.scrollPrompt}>Scroll to load more</span>
-        ) : (
-          <p className={s.endMessage}>No more posts to show</p>
-        )}
-      </div>
+  {isFetching ? (
+    <Loader size="medium" />
+  ) : nextCursor ? (
+    <span className={s.scrollPrompt}>Scroll to load more</span>
+  ) : (
+    <>
+      <p className={s.endMessage}>No more posts to show.</p>
+      {isOwner && (
+        <Button
+          variant="outline"
+          as={Link}
+          href="/settings/profile"
+          className={s.settingsButton}
+        >
+          <Image
+            src="/icons/settings.svg"
+            alt="Settings"
+            width={20}
+            height={20}
+            className={s.settingsIcon}
+          />
+          Profile Settings
+        </Button>
+      )}
+    </>
+  )}
+</div>
     </div>
   );
 };
