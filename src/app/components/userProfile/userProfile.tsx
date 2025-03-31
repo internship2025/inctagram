@@ -78,8 +78,20 @@ export const UserProfile = ({ data, initialPosts }: UserProfileProps) => {
         </div>
 
         <div className={s.profileInfo}>
+        <div className={s.nameBox}>
           <h1 className={s.username}>{data.userName}</h1>
-          
+          {isOwner && (
+            <Button
+              variant={'secondary'}
+              as={Link}
+              href="/settings/profile"
+              className={s.settingsButton}
+            >
+              Profile Settings
+            </Button>
+          )}
+        </div>
+
           <div className={s.stats}>
           <div className={s.statItem}>
               <span className={s.statValue}>
@@ -118,23 +130,7 @@ export const UserProfile = ({ data, initialPosts }: UserProfileProps) => {
   ) : (
     <>
       <p className={s.endMessage}>No more posts to show.</p>
-      {isOwner && (
-        <Button
-          variant="outline"
-          as={Link}
-          href="/settings/profile"
-          className={s.settingsButton}
-        >
-          <Image
-            src="/icons/settings.svg"
-            alt="Settings"
-            width={20}
-            height={20}
-            className={s.settingsIcon}
-          />
-          Profile Settings
-        </Button>
-      )}
+      
     </>
   )}
 </div>

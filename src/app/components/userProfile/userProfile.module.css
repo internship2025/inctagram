@@ -65,6 +65,24 @@
     padding: 40px 0;
     min-height: 100px;
   }
+  .settingsButton {
+    gap: 8px;
+    padding: 8px 16px;
+    margin-top: 16px;
+    margin-top: 0; 
+    flex-shrink: 0;
+  }
+  
+  .settingsIcon {
+    filter: invert(0.4);
+  }
+  .nameBox{
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+    width: 100%; 
+    margin-bottom: 20px; 
+  }
   
   @media (min-width: 768px) {
     .profileHeader {
