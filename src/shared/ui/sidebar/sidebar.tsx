@@ -5,6 +5,7 @@ import Link from "next/link";
 import styles from "./sidebar.module.css";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
+import { useAppSelector } from "@/services/store";
 import { CreatePost } from "@/features/create-post/ui/createPost";
 
 interface NavItem {
@@ -20,7 +21,10 @@ interface SidebarProps {
 }
 
 export const Sidebar: FC<SidebarProps> = ({ isAuthenticated = true }) => {
-  const currentPath = usePathname();
+  const pathname = usePathname();
+  const userId = useAppSelector((state) => state.auth.userId);
+
+  const currentPath = pathname;
   const [isCreatingPost, setIsCreatingPost] = useState<boolean>(false);
 
   const navItems: NavItem[] = [
@@ -40,7 +44,7 @@ export const Sidebar: FC<SidebarProps> = ({ isAuthenticated = true }) => {
     {
       id: 3,
       label: "My Profile",
-      path: "/profile",
+      path: `/profile/${userId}`,
       icon: "/icons/myProfile-outline.svg",
     },
     {
