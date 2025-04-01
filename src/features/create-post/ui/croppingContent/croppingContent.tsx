@@ -70,7 +70,7 @@ export const CroppingContent = ({
       <CreatePostHeader
         handleBack={() => setStage(CreatePostStages.AddFiles)}
         title={"Cropping"}
-        handleNext={() => setStage(CreatePostStages.Filtering)}
+        handleNext={() => setStage(CreatePostStages.Publish)}
       />
       <div className={styles.bodyContainer}>
         <div className={styles.contentContainer}>

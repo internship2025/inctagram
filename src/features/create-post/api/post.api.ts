@@ -1,13 +1,12 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { baseQueryWithReauth } from "@/features/auth/api/baseApi";
+import { baseQueryWithReauth } from "@/features/auth/api/base.api";
 import {
-  CreatePostRequest,
   PostItem,
   ResponceAllPosts,
   UploadFileResponse,
 } from "@/features/create-post/api/types";
 
-export const PostApi = createApi({
+export const postApi = createApi({
   reducerPath: "postApi",
   baseQuery: baseQueryWithReauth,
   tagTypes: ["Post"],
@@ -27,7 +26,7 @@ export const PostApi = createApi({
             description,
           },
           method: "POST",
-          url: "/v1/posts",
+          url: "/posts",
         };
       },
     }),
@@ -56,7 +55,7 @@ export const PostApi = createApi({
         return {
           method: "GET",
           params: { pageSize, endCursorPostId, userId },
-          url: `v1/public-posts/user/${userId}/${endCursorPostId || ""}`,
+          url: `/public-posts/user/${userId}/${endCursorPostId || ""}`,
         };
       },
       serializeQueryArgs: ({ endpointName }) => {
@@ -65,7 +64,7 @@ export const PostApi = createApi({
     }),
     editPost: builder.mutation<PostItem, { id: number; description: string }>({
       query: ({ id, description }) => ({
-        url: `v1/posts/${id}`,
+        url: `/posts/${id}`,
         method: "PUT",
         body: { description },
       }),
@@ -74,7 +73,7 @@ export const PostApi = createApi({
 
     deletePost: builder.mutation<void, number>({
       query: (postId) => ({
-        url: `v1/posts/${postId}`,
+        url: `/posts/${postId}`,
         method: "DELETE",
       }),
       //invalidatesTags: ["Post"],
@@ -88,11 +87,11 @@ export const PostApi = createApi({
         return {
           body: formData,
           method: "POST",
-          url: "v1/posts/image",
+          url: "/posts/image",
         };
       },
     }),
   }),
 });
 
-export const { useCreatePostMutation, useUploadImageForPostMutation } = PostApi;
+export const { useCreatePostMutation, useUploadImageForPostMutation } = postApi;

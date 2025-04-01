@@ -25,3 +25,17 @@
 .textLinkContainer:hover {
     text-decoration: underline;
 }
+
+.avatar {
+    margin-right: 0.75rem;
+}
+
+.textArea {
+    height: 200px;
+    resize: none;
+    background-color: red;
+}
+
+.form {
+    display: flex;
+}

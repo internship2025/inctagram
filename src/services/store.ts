@@ -3,12 +3,24 @@ import { useDispatch, useSelector, useStore } from "react-redux";
 import { authApi } from "@/features/auth/api/auth.api";
 import { authSlice } from "@/features/auth/api/authSlice";
 import { createPostSlice } from "@/features/create-post/utils/createPostSlice";
+import { postApi } from "@/features/create-post/api/post.api";
+import { userProfileApi } from "@/features/user-profile/api/userProfile.api";
 
 export const makeStore = () => {
   return configureStore({
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(authApi.middleware),
-    reducer: combineSlices(authApi, authSlice, createPostSlice),
+      getDefaultMiddleware().concat(
+        authApi.middleware,
+        postApi.middleware,
+        userProfileApi.middleware,
+      ),
+    reducer: combineSlices(
+      authApi,
+      postApi,
+      userProfileApi,
+      authSlice,
+      createPostSlice,
+    ),
   });
 };
 

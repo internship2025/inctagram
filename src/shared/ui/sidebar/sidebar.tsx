@@ -3,10 +3,13 @@
 import { FC, useState } from "react";
 import Link from "next/link";
 import styles from "./sidebar.module.css";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import { useAppSelector } from "@/services/store";
 import { CreatePost } from "@/features/create-post/ui/createPost";
+import { useMeQuery } from "@/features/auth/api/auth.api";
+import { PATH } from "@/shared/constants/app-paths";
+import { toast } from "react-toastify";
 
 interface NavItem {
   id: number;
@@ -23,6 +26,9 @@ interface SidebarProps {
 export const Sidebar: FC<SidebarProps> = ({ isAuthenticated = true }) => {
   const pathname = usePathname();
   const userId = useAppSelector((state) => state.auth.userId);
+
+  const { data: getMeData } = useMeQuery();
+  const router = useRouter();
 
   const currentPath = pathname;
   const [isCreatingPost, setIsCreatingPost] = useState<boolean>(false);
@@ -87,6 +93,10 @@ export const Sidebar: FC<SidebarProps> = ({ isAuthenticated = true }) => {
 
   const onPostPublished = () => {
     setIsCreatingPost(false);
+    toast.success("Post has been published successfully");
+    if (getMeData?.userId) {
+      router.push(PATH.PROFILE.replace(":id", getMeData?.userId?.toString()));
+    }
   };
 
   return (

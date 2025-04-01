@@ -1,5 +1,3 @@
-"use client";
-
 import { ComponentPropsWithoutRef, RefObject, useRef, useState } from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { useAppDispatch, useAppSelector } from "@/services/store";
@@ -58,9 +56,7 @@ export const CreatePost = ({
   ) as RefObject<HTMLInputElement>;
 
   const handleFileSelect = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
+    fileInputRef.current.click();
   };
 
   return (
@@ -95,7 +91,15 @@ export const CreatePost = ({
           />
         )}
         {/*{stage === CreatePostStages.Filtering && <FilteringDialogContent setStage={setStage} />}*/}
-        {stage === CreatePostStages.Publish && <PublishContent />}
+        {stage === CreatePostStages.Publish && (
+          <PublishContent
+            onPostPublished={() => {
+              setStage(CreatePostStages.AddFiles);
+              onPostPublished();
+            }}
+            setStage={setStage}
+          />
+        )}
       </Dialog>
     </>
   );
