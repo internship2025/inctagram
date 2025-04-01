@@ -106,10 +106,46 @@ export type NotificationsType = {
   ]
 }
 
+export type PostImage = {
+  url: string;
+  width: number;
+  height: number;
+  fileSize: number;
+  createdAt: string;
+  uploadId: string;
+};
+
+export type PostDetailsResponse = {
+  id: number;
+  userName: string;
+  description: string;
+  location: string;
+  images: PostImage[];
+  createdAt: string;
+  updatedAt: string;
+  ownerId: number;
+  avatarOwner: string;
+  owner: {
+    firstName: string;
+    lastName: string;
+  };
+  likesCount: number;
+  isLiked: boolean;
+  avatarWhoLikes: boolean;
+};
+
+export type PostsUserResponse = {
+  totalCount: number;
+  pageSize: number;
+  items: PostDetailsResponse[];
+  nextCursor: number | null;
+};
+
+
 export const authApi = createApi({
   reducerPath: "inctagramApi",
   baseQuery: baseQueryWithReauth,
-  tagTypes: ["Me"],
+  tagTypes: ["Me", "Posts"],
   endpoints: (builder) => ({
     me: builder.query<MeResponse, void>({
       providesTags: ["Me"],
@@ -191,10 +227,21 @@ export const authApi = createApi({
     getPostsPublic: builder.query<PostsPublic, void>({
       query: ()=> 'public-posts/all?pageSize=4'
     }), 
-    getPostsUser: builder.query<any, {id: number, endCursorPostId: number | null}>({
-       query: ({id, endCursorPostId})=> {
-        return `public-posts/user/${id}/${endCursorPostId}?pageSize=8`
-       }
+    getPostsUser: builder.query<PostsUserResponse, { id: number; endCursorPostId?: number | null }>({
+      query: ({ id, endCursorPostId }) => 
+        `public-posts/user/${id}/${endCursorPostId || ""}?pageSize=8`,
+      serializeQueryArgs: ({ endpointName, queryArgs }) => `${endpointName}-${queryArgs.id}`,
+      merge: (currentCache, newItems) => ({
+        ...newItems,
+        items: [...currentCache.items, ...newItems.items]
+      }),
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg?.endCursorPostId !== previousArg?.endCursorPostId;
+      }
+    }),
+    getPostById: builder.query<PostDetailsResponse, number>({
+      query: (postId) => `posts/id/${postId}`,
+      providesTags: (result, error, postId) => [{ type: "Posts", id: postId }]
     }),
      getNotification: builder.query<NotificationsType, void>({
         query: ()=> 'notifications'
@@ -215,7 +262,8 @@ export const {
   useResendConfirmationMutation,
   useLoginWithGoogleMutation,
   useGetPostsPublicQuery,
+  useGetNotificationQuery,
   useGetPostsUserQuery,
-  useGetNotificationQuery
-
+  useGetPostByIdQuery
+  
 } = authApi;

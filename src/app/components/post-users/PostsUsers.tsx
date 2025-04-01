@@ -1,46 +1,33 @@
 "use client";
+import Link from "next/link";
+import Image from "next/image";
+import { PostDetailsResponse } from "@/features/auth/api/auth.api";
+import s from './postsUser.module.css';
 
-import PostUser from "./PostUser";
-import s from "./postsUser.module.css";
-
-export type PostsUserType = {
-  setIsmodal: (isVal: boolean) => void;
-  posts: Array<{
-    id: number;
-    userName: string;
-    description: string;
-    location: string;
-    images: Array<{
-      url: string;
-      width: number;
-      height: number;
-      fileSize: number;
-      createdAt: string;
-      uploadId: string;
-    }>;
-    createdAt: string;
-    updatedAt: string;
-    ownerId: number;
-    avatarOwner: string;
-    owner: {
-      firstName: string;
-      lastName: string;
-    };
-    likesCount: number;
-    isLiked: boolean;
-    avatarWhoLikes: boolean;
-  }>;
+type PostsUsersProps = {
+  posts: PostDetailsResponse[];
 };
 
-const PostsUser = ({ setIsmodal, posts }: PostsUserType) => {
- console.log(posts)
+export const PostsUser = ({ posts }: PostsUsersProps) => {
   return (
-    <div className={s.wrapper}>
-      {posts.map((it) => {
-        return <PostUser key = {it.id}  setIsmodal={setIsmodal} postImg={it.images[0]?.url} />;
-      })}
+    <div className={s.postsGrid}>
+      {posts.map((post) => (
+        <Link
+          key={post.id}
+          href={`/posts/${post.id}`}
+          className={s.postItem}
+        >
+          <div className={s.imageContainer}>
+            <Image
+              src={post.images[0]?.url}
+              alt={post.description || "Post image"}
+              fill
+              className={s.postImage}
+              sizes="(max-width: 768px) 100vw, 33vw"
+            />
+          </div>
+        </Link>
+      ))}
     </div>
   );
 };
-
-export default PostsUser;
