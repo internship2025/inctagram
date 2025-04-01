@@ -2,7 +2,9 @@
 
 export async function getPublicUser(id: number) {
     const response = await fetch(
-      `https://inctagram.work/api/v1/public-user/profile/${id}`
+      `https://inctagram.work/api/v1/public-user/profile/${id}`,{
+        next: { revalidate: 0 },
+      }
     );
   
     return await response.json();
@@ -10,7 +12,9 @@ export async function getPublicUser(id: number) {
   
   export async function getPostsUser(id: number) {
     const response = await fetch(
-      `https://inctagram.work/api/v1/public-posts/user/${id}?pageSize=8`
+      `https://inctagram.work/api/v1/public-posts/user/${id}?pageSize=8`,{
+        next: { revalidate: 0 },
+      }
     );
     
   
@@ -20,7 +24,9 @@ export async function getPublicUser(id: number) {
 
   export async function getPostUser(id: any) {
     const response = await fetch(
-      `https://inctagram.work/api/v1/public-posts/${id}`
+      `https://inctagram.work/api/v1/public-posts/${id}`,{
+        next: { revalidate: 0 },
+      }
     );
   
     return await response.json();
@@ -29,7 +35,9 @@ export async function getPublicUser(id: number) {
 
  export async function getPublicPosts() {
     const response = await fetch(
-      `https://inctagram.work/api/v1/public-posts/all?pageSize=4`
+      `https://inctagram.work/api/v1/public-posts/all?pageSize=4`,{
+        next: { revalidate: 0 },
+      }
     );
     return response.json();
   }
