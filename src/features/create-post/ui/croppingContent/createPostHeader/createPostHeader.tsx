@@ -37,6 +37,7 @@ export const CreatePostHeader = ({
           className={styles.publishButton}
           type={"submit"}
           form={"publish-form"}
+          variant={"text"}
         >
           {"Publish"}
         </Button>
