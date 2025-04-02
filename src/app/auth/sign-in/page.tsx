@@ -1,4 +1,4 @@
-import { SignInModal } from "@/shared/ui/modal/components/signInModal/SignInModal";
+import { SignInModal } from "@/features/auth/ui/signInModal/SignInModal";
 
 const SignUpPage = () => {
   return <SignInModal open={false} />;

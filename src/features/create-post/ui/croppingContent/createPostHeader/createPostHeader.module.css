@@ -1,0 +1,29 @@
+.mainHeader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    min-height: 60px;
+}
+
+.iconButton {
+    position: absolute;
+    left: 1.5rem;
+    transition: background-color 0.2s ease-in-out;
+    background-color: inherit;
+    border: none;
+}
+
+.iconButton:hover {
+    background-color: var(--color-dark-100);
+}
+
+.nextButton {
+    position: absolute;
+    right: 1.5rem;
+}
+
+.publishButton {
+    position: absolute;
+    right: 1.5rem;
+}
