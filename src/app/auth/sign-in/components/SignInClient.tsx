@@ -1,17 +1,17 @@
-"use client"
+"use client";
 
-import { SignIn } from "@/shared/ui/modal/components/signIn/SignIn"
-import { AuthLayout } from "@/shared/ui/modal/components/authLayout/AuthLayout"
-import { useSignIn } from "@/features/auth/ui/hooks/useSignIn"
-import { useGitHubAuth } from "@/features/auth/ui/hooks/useGitHubAuth"
-import { useGoogleAuth } from "@/features/auth/ui/hooks/useGoogleLogin"
-import googleImg from "@/shared/ui/modal/assets/google.svg"
-import gitImg from "@/shared/ui/modal/assets/git.svg"
+import { SignIn } from "@/features/auth/ui/signIn/SignIn";
+import { AuthLayout } from "@/shared/ui/modal/components/authLayout/AuthLayout";
+import { useSignIn } from "@/features/auth/ui/hooks/useSignIn";
+import { useGitHubAuth } from "@/features/auth/ui/hooks/useGitHubAuth";
+import { useGoogleAuth } from "@/features/auth/ui/hooks/useGoogleLogin";
+import googleImg from "@/assets/icons/components/GoogleSvg";
+import gitImg from "@/assets/icons/components/GithubSvg";
 
 export const SignInClient = () => {
-  const formMethods = useSignIn()
-  const handleLoginGitHub = useGitHubAuth()
-  const handleLoginGoogle = useGoogleAuth()
+  const formMethods = useSignIn();
+  const handleLoginGitHub = useGitHubAuth();
+  const handleLoginGoogle = useGoogleAuth();
 
   return (
     <AuthLayout title="Sign In">
@@ -23,5 +23,5 @@ export const SignInClient = () => {
         formMethods={formMethods}
       />
     </AuthLayout>
-  )
-}
+  );
+};
