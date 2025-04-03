@@ -14,10 +14,9 @@
 .textarea {
     width: 100%;
     padding: 12px;
-    color: red;
     border: 1px solid var(--color-light-900);
-    border-radius: 8px;
     font-size: 16px;
+    background-color: var(--color-dark-700);
 }
 
 .textarea:focus {
@@ -48,3 +47,4 @@
 .textarea:disabled {
     background-color: var(--color-dark-500);
 }
+

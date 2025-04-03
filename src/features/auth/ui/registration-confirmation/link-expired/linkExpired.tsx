@@ -9,7 +9,7 @@ import { Typography } from "@/shared/ui/typography/typography";
 import { Button } from "@/shared/ui/button/button";
 import Image from "next/image";
 import { Modal } from "@/shared/ui/modal/modal";
-import { EmailSent } from "@/shared/ui/modal/components/emailSent/EmailSent";
+import { EmailSent } from "@/features/auth/ui/emailSent/EmailSent";
 
 export const LinkExpired = () => {
   const searchParams = useSearchParams();

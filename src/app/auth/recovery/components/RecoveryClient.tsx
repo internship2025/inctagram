@@ -2,7 +2,7 @@
 
 import { useSearchParams, redirect } from "next/navigation";
 import { PATH } from "@/shared/constants/app-paths";
-import { CreateNewPasswordFormModule } from "@/shared/ui/modal/components/CreateNewPasswordFormModule/CreateNewPasswordFormModule";
+import { CreateNewPasswordFormModule } from "@/features/auth/ui/CreateNewPasswordFormModule/CreateNewPasswordFormModule";
 import { useState } from "react";
 
 export function RecoveryClient() {

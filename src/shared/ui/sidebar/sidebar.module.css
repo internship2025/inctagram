@@ -43,6 +43,12 @@
   text-decoration: none;
   transition: background-color 0.2s;
   gap: 12px;
+  border: none;
+}
+
+.navButton {
+  background-color: inherit;
+  cursor: pointer;
 }
 
 /* Стили для кнопки в сайдбаре */
