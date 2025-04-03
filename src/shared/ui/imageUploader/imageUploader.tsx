@@ -55,7 +55,7 @@ export const ImageUploader = ({
 
   return (
     <div
-      className={`${styles.relative} ${styles.dropArea}`}
+      className={styles.relative}
       onDragOver={handleDragOver}
       onDrop={handleDrop}
     >

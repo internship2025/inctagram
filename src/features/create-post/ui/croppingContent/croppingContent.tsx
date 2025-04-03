@@ -152,7 +152,7 @@ export const CroppingContent = ({
                   setError={setError}
                   setPhotoUpload={setPhotoToUpload}
                 >
-                  <IconButton>
+                  <IconButton className={styles.circleButton}>
                     <SvgPlusCircleOutline
                       onClick={() => {
                         handleFileSelect();
