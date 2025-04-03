@@ -5,7 +5,7 @@ import {
 } from "@/features/auth/api/auth.api";
 import { useAppDispatch } from "@/services/store";
 import { useRouter } from "next/navigation";
-import { inctagramApi } from "@/services/inctagram.api";
+import { authApi } from "@/features/auth/api/auth.api";
 import { PATH } from "@/shared/constants/app-paths";
 import { setAuthenticated } from "../../api/authSlice";
 
@@ -18,7 +18,9 @@ export const useLogout = () => {
   const router = useRouter();
 
   const email = localStorage.getItem("email");
-  const [name, setName] = useState<string>(localStorage.getItem("userName") || "");
+  const [name, setName] = useState<string>(
+    localStorage.getItem("userName") || "",
+  );
 
   const handleLogout = async () => {
     try {
@@ -30,8 +32,8 @@ export const useLogout = () => {
       localStorage.removeItem("access_token");
       localStorage.removeItem("email");
       localStorage.removeItem("userName");
-      dispatch(inctagramApi.util.resetApiState());
-      dispatch(setAuthenticated({ userId: null}))
+      dispatch(authApi.util.resetApiState());
+      dispatch(setAuthenticated({ userId: null }));
       setShowConfirmation(false);
       router.push(PATH.ROOT);
     }
@@ -55,12 +57,12 @@ export const useLogout = () => {
 
     try {
       const userData = await getUser().unwrap();
-      console.log('User data received:', userData);
+      console.log("User data received:", userData);
       setName(userData.userName);
       setShowConfirmation(true);
     } catch (error) {
-      console.error('Failed to get user data', error);
-      setName('Unknown User');
+      console.error("Failed to get user data", error);
+      setName("Unknown User");
       setShowConfirmation(true);
     }
   };
