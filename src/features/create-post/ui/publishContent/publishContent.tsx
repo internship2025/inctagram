@@ -43,6 +43,7 @@ export const PublishContent = ({
 }: CroppingDialogContentProps) => {
   const [createPost, { isLoading: isLoadingCreatePost }] =
     useCreatePostMutation();
+
   const [uploadPhoto, { isLoading: isLoadingUploadPhoto }] =
     useUploadImageForPostMutation();
 
@@ -102,7 +103,7 @@ export const PublishContent = ({
 
     createPost({
       description,
-      uploadId: uploadIds,
+      uploadIds,
     })
       .unwrap()
       .then(() => {
@@ -127,39 +128,41 @@ export const PublishContent = ({
         <div className={styles.imageContainer}>
           <ImageContent itemImages={images} />
         </div>
-        {!profileIsLoading ? (
-          <div>
-            <TextLink
-              className={styles.textLinkContainer}
-              href={`/profile/${JSON.stringify(authData?.userId)}`}
-              size={"large"}
-              target={"_blank"}
-              underline={false}
-            >
-              <Avatar
-                alt={"avatar"}
-                className={styles.avatar}
-                size={9}
-                src={profileAvatarUrl}
-              />
-              {profileData?.userName}
-            </TextLink>
-          </div>
-        ) : (
-          <Loading />
-        )}
-        <form
-          id={"publish-form"}
-          className={styles.form}
-          onSubmit={handleSubmit(onSubmitHandler)}
-        >
-          <ControlledTextArea
-            control={control}
-            error={!!errors.description}
-            helperText={errors.description?.message}
-            name={"description"}
-          />
-        </form>
+        <div className={styles.descriptionContainer}>
+          {!profileIsLoading ? (
+            <div>
+              <TextLink
+                className={styles.textLinkContainer}
+                href={`/profile/${JSON.stringify(authData?.userId)}`}
+                size={"large"}
+                target={"_blank"}
+                underline={false}
+              >
+                <Avatar
+                  alt={"avatar"}
+                  className={styles.avatar}
+                  size={9}
+                  src={profileAvatarUrl}
+                />
+                {profileData?.userName}
+              </TextLink>
+            </div>
+          ) : (
+            <Loading />
+          )}
+          <form
+            id={"publish-form"}
+            className={styles.form}
+            onSubmit={handleSubmit(onSubmitHandler)}
+          >
+            <ControlledTextArea
+              control={control}
+              error={!!errors.description}
+              helperText={errors.description?.message}
+              name={"description"}
+            />
+          </form>
+        </div>
       </div>
     </div>
   );

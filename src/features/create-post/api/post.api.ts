@@ -13,12 +13,12 @@ export const postApi = createApi({
   endpoints: (builder) => ({
     createPost: builder.mutation<
       PostItem,
-      { description: string; uploadId: string[] }
+      { description: string; uploadIds: string[] }
     >({
-      query: ({ description, uploadId }) => {
+      query: ({ description, uploadIds }) => {
         return {
           body: {
-            childrenMetadata: uploadId.map((id) => {
+            childrenMetadata: uploadIds.map((id) => {
               return {
                 uploadId: id,
               };
