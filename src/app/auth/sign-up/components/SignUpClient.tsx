@@ -17,8 +17,8 @@ export const SignUpClient = () => {
     <AuthLayout title="Sign Up">
       <SignUp
         icons={[
-          { src: googleImg, width: 36, height: 36, onClick: handleLoginGoogle },
-          { src: gitImg, width: 36, height: 36, onClick: handleLoginGitHub },
+          { icon: googleImg, width: 36, height: 36, onClick: handleLoginGoogle },
+          { icon: gitImg, width: 36, height: 36, onClick: handleLoginGitHub },
         ]}
         formMethods={formMethods}
       />

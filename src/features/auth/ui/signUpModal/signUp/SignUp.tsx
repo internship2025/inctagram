@@ -1,11 +1,11 @@
 "use client";
 
+import React from 'react';
 import { Controller } from "react-hook-form";
 import styles from "./signUp.module.css";
 import { Input } from "@/shared/ui/input/input";
 import { CheckBox } from "@/shared/ui/checkBox/checkBox";
 import { Button } from "@/shared/ui/button/button";
-import Image from "next/image";
 import Link from "next/link";
 import { PATH } from "@/shared/constants/app-paths";
 import { EmailSent } from "@/features/auth/ui/emailSent/EmailSent";
@@ -15,7 +15,7 @@ import { Typography } from "@/shared/ui/typography/typography";
 type Props = {
   icons?:
     | Array<{
-        src: string;
+        icon: React.ComponentType<{ width: number; height: number }>;
         width: number;
         height: number;
         onClick?: () => void;
@@ -53,7 +53,7 @@ export const SignUp = ({
         key={ind}
         onClick={it.onClick}
       >
-        <Image src={it.src} width={it.width} height={it.height} alt="" />
+        {it.icon && React.createElement(it.icon, { width: it.width, height: it.height })}
       </Button>
     );
   });
