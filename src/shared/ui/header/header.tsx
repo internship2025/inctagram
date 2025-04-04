@@ -10,8 +10,8 @@ import Link from "next/link";
 import { PATH } from "@/shared/constants/app-paths";
 import { Typography } from "@/shared/ui/typography/typography";
 import { SignUpModal } from "@/features/auth/ui/signUpModal/SignUpModal";
-import { SignInModal } from "@/shared/ui/modal/components/signInModal/SignInModal";
-import { useAppDispatch, useAppSelector } from "@/services/store";
+import { SignInModal } from "@/features/auth/ui/signInModal/SignInModal";
+import { useAppDispatch } from "@/services/store";
 import { useMeQuery } from "@/features/auth/api/auth.api";
 import { setAuthenticated } from "@/features/auth/api/authSlice";
 import { NotificationBell } from "../notificationBell/NotificationBell";
@@ -69,7 +69,7 @@ export const Header = ({ onLangChange, showAuth = false }: HeaderProps) => {
           <div>Loading</div>
         ) : (
           <div className={styles.rightSection}>
-           {userData && <NotificationBell />}
+            {userData && <NotificationBell />}
             <Select.Root
               value={currentLang}
               onValueChange={handleLangChange}

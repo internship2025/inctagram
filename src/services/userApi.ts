@@ -1,5 +1,4 @@
 
-
 export async function getPublicUser(id: number) {
     const response = await fetch(
       `https://inctagram.work/api/v1/public-user/profile/${id}`,{

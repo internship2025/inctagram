@@ -8,7 +8,7 @@ import { Button } from "@/shared/ui/button/button";
 import Image from "next/image";
 import Link from "next/link";
 import { PATH } from "@/shared/constants/app-paths";
-import { EmailSent } from "@/shared/ui/modal/components/emailSent/EmailSent";
+import { EmailSent } from "@/features/auth/ui/emailSent/EmailSent";
 import { useSignUp } from "@/features/auth/ui/hooks/useSignUp";
 import { Typography } from "@/shared/ui/typography/typography";
 

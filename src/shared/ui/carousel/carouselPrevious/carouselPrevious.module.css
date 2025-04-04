@@ -1,0 +1,35 @@
+.iconButton {
+    position: absolute;
+    height: 3rem;
+    width: 3rem;
+    border-radius: 0;
+}
+
+.iconButtonHorizontal {
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.iconButtonVertical {
+    top: 0.75rem;
+    left: 50%;
+    transform: translateX(-50%) rotate(90deg);
+}
+
+.iconSize {
+    height: 3rem;
+    width: 3rem;
+}
+
+.srOnly {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+    overflow: hidden;
+}

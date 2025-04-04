@@ -1,0 +1,63 @@
+.overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    background-color: rgba(0, 0, 0, 0.6);
+    animation: fadeInOut 0.3s ease;
+}
+
+.dialogContent {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    z-index: 50;
+    transform: translate(-50%, -50%);
+    background-color: var(--color-dark-500);
+    border: 1px solid var(--color-dark-500);
+    border-radius: 0.25rem;
+    animation: zoomInOut 0.3s ease,  ease slideUp 0.3s ;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translate(-50%, 100%);
+    }
+    to {
+        transform: translate(-50%, 0);
+    }
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes zoomInOut {
+    0% {
+        transform: scale(0.75);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes slideInOut {
+    0% {
+        transform: translateX(50%) translateY(20%);
+    }
+    100% {
+        transform: translateX(0) translateY(0);
+    }
+}
+
+[data-state='open'] .dialogContent {
+    animation: zoomInOut 0.3s ease, slideInOut 0.3s ease;
+}
+
+[data-state='closed'] .dialogContent {
+    animation: zoomInOut 0.3s ease reverse, slideInOut 0.3s ease reverse;
+}

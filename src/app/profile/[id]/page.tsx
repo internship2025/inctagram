@@ -1,4 +1,4 @@
-import UserProfile from "@/app/components/userProfile/userProfile";
+import { UserProfile } from "@/app/components/userProfile/userProfile";
 import { getPostsUser, getPostUser, getPublicUser } from "@/services/userApi";
 
 
@@ -13,7 +13,7 @@ const Profile = async (
 
   return (
     <>
-      <UserProfile data={data} initialPosts = {posts} post = {post}/>
+      <UserProfile data={data} initialPosts = {posts}/>
     </>
   );
 };

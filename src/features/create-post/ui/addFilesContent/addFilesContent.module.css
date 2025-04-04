@@ -1,0 +1,51 @@
+.mainContainer {
+    width: 492px;
+    height: 564px;
+    display: flex;
+    flex-direction: column;
+}
+
+.bodyContainer {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+.photoText {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+}
+
+.upLoaderContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.errorContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: var(--color-danger-900);
+    border: 1px solid var(--color-danger-500);
+    padding: 0.5rem 1.5rem;
+}
+
+.imageOutline {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.addPhoto {
+    padding: 0.75rem 1.5rem;
+    border-bottom: 1px solid var(--color-dark-100);
+    cursor: default;
+}

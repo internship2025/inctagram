@@ -1,0 +1,15 @@
+.item {
+    height: 100%;
+    min-width: 0;
+    flex-shrink: 0;
+    flex-grow: 0;
+    flex-basis: 100%;
+}
+
+.horizontal {
+    padding-left: 1rem; /* 16px, если используется стандартный масштаб 1rem = 16px */
+}
+
+.vertical {
+    padding-top: 1rem;
+}

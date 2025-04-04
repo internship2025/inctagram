@@ -1,15 +1,22 @@
 "use client";
-import { FC } from "react";
+
+import { FC, useState } from "react";
 import Link from "next/link";
 import styles from "./sidebar.module.css";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
+import { useAppSelector } from "@/services/store";
+import { CreatePost } from "@/features/create-post/ui/createPost";
+import { useMeQuery } from "@/features/auth/api/auth.api";
+import { PATH } from "@/shared/constants/app-paths";
+import { toast } from "react-toastify";
 
 interface NavItem {
   id: number;
   label: string;
   path: string;
   icon: string;
+  onClick?: () => void;
 }
 
 interface SidebarProps {
@@ -18,7 +25,13 @@ interface SidebarProps {
 
 export const Sidebar: FC<SidebarProps> = ({ isAuthenticated = true }) => {
   const pathname = usePathname();
+  const userId = useAppSelector((state) => state.auth.userId);
+
+  const { data: getMeData } = useMeQuery();
+  const router = useRouter();
+
   const currentPath = pathname;
+  const [isCreatingPost, setIsCreatingPost] = useState<boolean>(false);
 
   const navItems: NavItem[] = [
     {
@@ -32,11 +45,12 @@ export const Sidebar: FC<SidebarProps> = ({ isAuthenticated = true }) => {
       label: "Create",
       path: "/create",
       icon: "/icons/create-outline.svg",
+      onClick: () => setIsCreatingPost(true),
     },
     {
       id: 3,
       label: "My Profile",
-      path: "/profile",
+      path: `/profile/${userId}`,
       icon: "/icons/myProfile-outline.svg",
     },
     {
@@ -77,26 +91,58 @@ export const Sidebar: FC<SidebarProps> = ({ isAuthenticated = true }) => {
       (!isAuthenticated && ["/", "/search"].includes(item.path)),
   );
 
+  const onPostPublished = () => {
+    setIsCreatingPost(false);
+    toast.success("Post has been published successfully");
+    if (getMeData?.userId) {
+      router.push(PATH.PROFILE.replace(":id", getMeData?.userId?.toString()));
+    }
+  };
+
   return (
     <aside className={styles.sidebar}>
+      {isCreatingPost && (
+        <CreatePost
+          onPostPublished={onPostPublished}
+          onOpenChange={setIsCreatingPost}
+          open={isCreatingPost}
+        />
+      )}
       <nav className={styles.nav}>
         <ul className={styles.navList}>
           {authNavItems.map((item) => (
             <li key={item.id} className={styles.navItem}>
-              <Link
-                href={item.path}
-                className={`${styles.navLink} ${currentPath === item.path ? styles.active : ""}`}
-              >
-                <span className={styles.icon}>
-                  <Image
-                    src={item.icon}
-                    alt={item.label}
-                    width={24}
-                    height={24}
-                  />
-                </span>
-                <span className={styles.label}>{item.label}</span>
-              </Link>
+              {item.onClick ? (
+                <button
+                  className={`${styles.navLink} ${styles.navButton}`}
+                  onClick={item.onClick}
+                >
+                  <span className={styles.icon}>
+                    <Image
+                      src={item.icon}
+                      alt={item.label}
+                      width={24}
+                      height={24}
+                    />
+                  </span>
+                  <span className={styles.label}>{item.label}</span>
+                </button>
+              ) : (
+                <Link
+                  href={item.path}
+                  className={`${styles.navLink} ${currentPath === item.path ? styles.active : ""}`}
+                >
+                  <span className={styles.icon}>
+                    <Image
+                      src={item.icon}
+                      alt={item.label}
+                      width={24}
+                      height={24}
+                    />
+                  </span>
+                  <span className={styles.label}>{item.label}</span>
+                </Link>
+              )}
             </li>
           ))}
         </ul>

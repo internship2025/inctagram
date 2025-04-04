@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import {
   useLazyMeQuery,
@@ -5,8 +7,8 @@ import {
 } from "@/features/auth/api/auth.api";
 import { useAppDispatch } from "@/services/store";
 import { useRouter } from "next/navigation";
-import { inctagramApi } from "@/services/inctagram.api";
 import { PATH } from "@/shared/constants/app-paths";
+import { authApi } from "@/features/auth/api/auth.api";
 
 export const useLogout = () => {
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -24,7 +26,7 @@ export const useLogout = () => {
       await logout().unwrap();
       localStorage.removeItem("access_token");
       localStorage.removeItem("email");
-      dispatch(inctagramApi.util.resetApiState());
+      dispatch(authApi.util.resetApiState());
       setShowConfirmation(false);
       router.push(PATH.PRIVATE_HOME);
     } catch (error) {

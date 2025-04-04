@@ -1,6 +1,6 @@
 import { baseUrl } from "@/shared/constants/app-paths";
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { baseQueryWithReauth } from "./baseApi";
+import { baseQueryWithReauth } from "./base.api";
 
 export type MeResponse = {
   userId: number;
@@ -53,63 +53,94 @@ export type loginWithGoogleResponse = {
   email: string;
 };
 
-
 export type PostsPublic = {
-  
-  totalCount: number
-  pageSize: number
-  totalUsers: number
+  totalCount: number;
+  pageSize: number;
+  totalUsers: number;
   items: [
     {
-      id: number
-      userName: string
-      description: string
-      location: string
+      id: number;
+      userName: string;
+      description: string;
+      location: string;
       images: [
         {
-          url: string
-          width: number
-          height: number
-          fileSize: number
-          createdAt: string
-          uploadId: string
-        }
-      ],
-      createdAt: string
-      updatedAt: string
-      ownerId: 1,
-      avatarOwner: string
+          url: string;
+          width: number;
+          height: number;
+          fileSize: number;
+          createdAt: string;
+          uploadId: string;
+        },
+      ];
+      createdAt: string;
+      updatedAt: string;
+      ownerId: 1;
+      avatarOwner: string;
       owner: {
-        firstName: string
-        lastName: string
-      },
-      likesCount: number 
-      isLiked: boolean
-      avatarWhoLikes: boolean
-    }
-  ]
-
-}
-
+        firstName: string;
+        lastName: string;
+      };
+      likesCount: number;
+      isLiked: boolean;
+      avatarWhoLikes: boolean;
+    },
+  ];
+};
 
 export type NotificationsType = {
-  pageSize: number
-  totalCount: number
-  notReadCount: number
+  pageSize: number;
+  totalCount: number;
+  notReadCount: number;
   items: [
     {
-      id: number
-      message: string
-      isRead: boolean
-      createdAt: string
-    }
-  ]
-}
+      id: number;
+      message: string;
+      isRead: boolean;
+      createdAt: string;
+    },
+  ];
+};
+
+export type PostImage = {
+  url: string;
+  width: number;
+  height: number;
+  fileSize: number;
+  createdAt: string;
+  uploadId: string;
+};
+
+export type PostDetailsResponse = {
+  id: number;
+  userName: string;
+  description: string;
+  location: string;
+  images: PostImage[];
+  createdAt: string;
+  updatedAt: string;
+  ownerId: number;
+  avatarOwner: string;
+  owner: {
+    firstName: string;
+    lastName: string;
+  };
+  likesCount: number;
+  isLiked: boolean;
+  avatarWhoLikes: boolean;
+};
+
+export type PostsUserResponse = {
+  totalCount: number;
+  pageSize: number;
+  items: PostDetailsResponse[];
+  nextCursor: number | null;
+};
 
 export const authApi = createApi({
-  reducerPath: "inctagramApi",
+  reducerPath: "authApi",
   baseQuery: baseQueryWithReauth,
-  tagTypes: ["Me"],
+  tagTypes: ["Me", "Posts"],
   endpoints: (builder) => ({
     me: builder.query<MeResponse, void>({
       providesTags: ["Me"],
@@ -159,7 +190,8 @@ export const authApi = createApi({
     logout: builder.mutation<void, void>({
       query: () => ({
         method: "POST",
-        url: "auth/logout",       }),
+        url: "auth/logout",
+      }),
       invalidatesTags: ["Me"], // Чтобы обновить состояние после логаута
     }),
     confirmEmail: builder.mutation<void, ConfirmEmailArgs>({
@@ -189,18 +221,32 @@ export const authApi = createApi({
       },
     }),
     getPostsPublic: builder.query<PostsPublic, void>({
-      query: ()=> 'public-posts/all?pageSize=4'
-    }), 
-    getPostsUser: builder.query<any, {id: number, endCursorPostId: number | null}>({
-       query: ({id, endCursorPostId})=> {
-        return `public-posts/user/${id}/${endCursorPostId}?pageSize=8`
-       }
+      query: () => "public-posts/all?pageSize=4",
     }),
-     getNotification: builder.query<NotificationsType, void>({
-        query: ()=> 'notifications'
-     })
+    getPostsUser: builder.query<
+      PostsUserResponse,
+      { id: number; endCursorPostId?: number | null }
+    >({
+      query: ({ id, endCursorPostId }) =>
+        `public-posts/user/${id}/${endCursorPostId || ""}?pageSize=8`,
+      serializeQueryArgs: ({ endpointName, queryArgs }) =>
+        `${endpointName}-${queryArgs.id}`,
+      merge: (currentCache, newItems) => ({
+        ...newItems,
+        items: [...currentCache.items, ...newItems.items],
+      }),
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg?.endCursorPostId !== previousArg?.endCursorPostId;
+      },
+    }),
+    getPostById: builder.query<PostDetailsResponse, number>({
+      query: (postId) => `posts/id/${postId}`,
+      providesTags: (result, error, postId) => [{ type: "Posts", id: postId }],
+    }),
+    getNotification: builder.query<NotificationsType, void>({
+      query: () => "notifications",
+    }),
   }),
-
 });
 export const {
   useMeQuery,
@@ -215,7 +261,7 @@ export const {
   useResendConfirmationMutation,
   useLoginWithGoogleMutation,
   useGetPostsPublicQuery,
+  useGetNotificationQuery,
   useGetPostsUserQuery,
-  useGetNotificationQuery
-
+  useGetPostByIdQuery,
 } = authApi;
