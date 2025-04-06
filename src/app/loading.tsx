@@ -5,28 +5,22 @@ import { useEffect, useRef, useState } from 'react';
 
 export default function Loading() {
 
-  const [topOffset, setTopOffset] = useState(0); 
+  // const [topOffset, setTopOffset] = useState(0); 
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    const header = document.getElementById('header');
-    if (header) {    
-      setTopOffset(header.offsetHeight);
-    }
+  //   const header = document.getElementById('header');
+  //   if (header) {    
+  //     setTopOffset(header.offsetHeight);
+  //   }
     
-  }, []);
+  // }, []);
 
   return (
-    <div style={{
-      width: '100vw',
-      position: 'fixed',
-      top: `${topOffset}px`,
+      <Box sx={{ width: '100%',position: 'absolute',  top: 0,
       left: 0,
-      zIndex: 0
-    }}>
-      <Box sx={{ width: '100%' }}>
+      zIndex: 1002  }}>
         <LinearProgress />
       </Box>
-    </div>
   );
 }
