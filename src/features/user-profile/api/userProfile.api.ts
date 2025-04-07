@@ -10,7 +10,7 @@ export const userProfileApi = createApi({
     getPublicUserProfile: builder.query<GetPublicUserProfileResponse, number>({
       query: (profileId) => ({
         method: "GET",
-        url: `v1/public-user/profile/${profileId}`,
+        url: `/public-user/profile/${profileId}`,
       }),
     }),
   }),

@@ -15,3 +15,87 @@ export type GetPublicUserProfileResponse = {
   };
   userName: string;
 };
+
+export type PostsPublic = {
+  totalCount: number;
+  pageSize: number;
+  totalUsers: number;
+  items: [
+    {
+      id: number;
+      userName: string;
+      description: string;
+      location: string;
+      images: [
+        {
+          url: string;
+          width: number;
+          height: number;
+          fileSize: number;
+          createdAt: string;
+          uploadId: string;
+        },
+      ];
+      createdAt: string;
+      updatedAt: string;
+      ownerId: 1;
+      avatarOwner: string;
+      owner: {
+        firstName: string;
+        lastName: string;
+      };
+      likesCount: number;
+      isLiked: boolean;
+      avatarWhoLikes: boolean;
+    },
+  ];
+};
+
+export type NotificationsType = {
+  pageSize: number;
+  totalCount: number;
+  notReadCount: number;
+  items: [
+    {
+      id: number;
+      message: string;
+      isRead: boolean;
+      createdAt: string;
+    },
+  ];
+};
+
+export type PostImage = {
+  url: string;
+  width: number;
+  height: number;
+  fileSize: number;
+  createdAt: string;
+  uploadId: string;
+};
+
+export type PostDetailsResponse = {
+  id: number;
+  userName: string;
+  description: string;
+  location: string;
+  images: PostImage[];
+  createdAt: string;
+  updatedAt: string;
+  ownerId: number;
+  avatarOwner: string;
+  owner: {
+    firstName: string;
+    lastName: string;
+  };
+  likesCount: number;
+  isLiked: boolean;
+  avatarWhoLikes: boolean;
+};
+
+export type PostsUserResponse = {
+  totalCount: number;
+  pageSize: number;
+  items: PostDetailsResponse[];
+  nextCursor: number | null;
+};

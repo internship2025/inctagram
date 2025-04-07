@@ -2,32 +2,20 @@
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import Image from "next/image";
-import { PostsUserResponse, useGetPostsUserQuery } from "@/features/auth/api/auth.api";
-import s from './userProfile.module.css';
+import {
+  PostsUserResponse,
+  useGetPostsUserQuery,
+} from "@/features/auth/api/auth.api";
+import s from "./userProfile.module.css";
 import { PostsUser } from "../post-users/PostsUsers";
 import { Loader } from "@/shared/ui/loader/Loader";
 import { useAppSelector } from "@/services/store";
 import { Button } from "@/shared/ui/button/button";
 import Link from "next/link";
+import { GetPublicUserProfileResponse } from "@/features/user-profile/api/types";
 
 interface UserProfileProps {
-  data: {
-    id: number;
-    userName: string;
-    aboutMe: string;
-    avatars: Array<{
-      url: string;
-      width: number;
-      height: number;
-      fileSize: number;
-      createdAt: string;
-    }>;
-    userMetadata: {
-      following: number;
-      followers: number;
-      publications: number;
-    };
-  };
+  data: GetPublicUserProfileResponse;
   initialPosts: PostsUserResponse;
 }
 
@@ -35,9 +23,13 @@ export const UserProfile = ({ data, initialPosts }: UserProfileProps) => {
   const [posts, setPosts] = useState(initialPosts.items);
   const [nextCursor, setNextCursor] = useState(initialPosts.nextCursor);
   const { ref, inView } = useInView({ threshold: 0.1 });
-  const { data: newPosts, isFetching, error } = useGetPostsUserQuery(
+  const {
+    data: newPosts,
+    isFetching,
+    error,
+  } = useGetPostsUserQuery(
     { id: data.id, endCursorPostId: nextCursor },
-    { skip: !nextCursor }
+    { skip: !nextCursor },
   );
 
   const currentUserId = useAppSelector((state) => state.auth.userId);
@@ -78,34 +70,30 @@ export const UserProfile = ({ data, initialPosts }: UserProfileProps) => {
         </div>
 
         <div className={s.profileInfo}>
-        <div className={s.nameBox}>
-          <h1 className={s.username}>{data.userName}</h1>
-          {isOwner && (
-            <Button
-              variant={'secondary'}
-              as={Link}
-              href="/settings/profile"
-              className={s.settingsButton}
-            >
-              Profile Settings
-            </Button>
-          )}
-        </div>
+          <div className={s.nameBox}>
+            <h1 className={s.username}>{data.userName}</h1>
+            {isOwner && (
+              <Button
+                variant={"secondary"}
+                as={Link}
+                href="/settings/profile"
+                className={s.settingsButton}
+              >
+                Profile Settings
+              </Button>
+            )}
+          </div>
 
           <div className={s.stats}>
-          <div className={s.statItem}>
-              <span className={s.statValue}>
-                {data.userMetadata.following}
-              </span>
+            <div className={s.statItem}>
+              <span className={s.statValue}>{data.userMetadata.following}</span>
               <span className={s.statLabel}>Following</span>
             </div>
             <div className={s.statItem}>
-              <span className={s.statValue}>
-                {data.userMetadata.followers}
-              </span>
+              <span className={s.statValue}>{data.userMetadata.followers}</span>
               <span className={s.statLabel}>Followers</span>
             </div>
-            
+
             <div className={s.statItem}>
               <span className={s.statValue}>
                 {data.userMetadata.publications}
@@ -123,17 +111,16 @@ export const UserProfile = ({ data, initialPosts }: UserProfileProps) => {
 
       {/* Infinite Scroll Trigger */}
       <div ref={ref} className={s.loaderContainer}>
-  {isFetching ? (
-    <Loader size="medium" />
-  ) : nextCursor ? (
-    <span className={s.scrollPrompt}>Scroll to load more</span>
-  ) : (
-    <>
-      <p className={s.endMessage}>No more posts to show.</p>
-      
-    </>
-  )}
-</div>
+        {isFetching ? (
+          <Loader size="medium" />
+        ) : nextCursor ? (
+          <span className={s.scrollPrompt}>Scroll to load more</span>
+        ) : (
+          <>
+            <p className={s.endMessage}>No more posts to show.</p>
+          </>
+        )}
+      </div>
     </div>
   );
 };

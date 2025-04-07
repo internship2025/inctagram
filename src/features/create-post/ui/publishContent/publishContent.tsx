@@ -56,13 +56,14 @@ export const PublishContent = ({
       skip: authData?.userId === undefined,
     });
 
-  let profileAvatarUrl = undefined;
+  let profileAvatarUrl;
 
   if (profileData?.avatars && profileData?.avatars.length > 0) {
     if (profileData?.avatars[0].url) {
       profileAvatarUrl = profileData?.avatars[0].url;
     }
   }
+  console.log(profileAvatarUrl);
 
   const {
     control,

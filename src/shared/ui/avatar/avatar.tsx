@@ -55,7 +55,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
             alt={alt}
             height={height || 48}
             width={width || 48}
-          ></Image>
+          />
         ) : (
           <SvgImageOutline className={styles.svgImageOutline} />
         )}
