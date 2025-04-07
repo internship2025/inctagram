@@ -10,7 +10,7 @@ const GuestHomePage = async () => {
     return <PostsHome key={it.id} {...it} />;
   });
 
-  return (
+  return ( 
     <div>
       <RegisteredUsers />
       <div className={s.wrapper}>{posts}</div>
