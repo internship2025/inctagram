@@ -4,7 +4,7 @@ import { ReactNode } from "react";
 import { Header } from "@/shared/ui/header/header";
 import { StoreProvider } from "@/services/store-provider";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import { SidebarWrapper } from "@/app/components/sidebar/SidebarWrapper";
+import { SidebarWrapper } from "@/shared/ui/sidebar/SidebarWrapper";
 import s from "./appProvider.module.css";
 
 type Props = {

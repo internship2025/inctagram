@@ -1,5 +1,5 @@
 import Image from "next/image";
-import photo from './../../../../public/images/photo.png'
+import photo from "../../../../../../../../../../public/images/photo.png";
 type Props = {
   setIsmodal: (isModal: boolean) => void;
   postImg: string | undefined;

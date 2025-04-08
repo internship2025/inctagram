@@ -97,32 +97,6 @@ export const authApi = createApi({
         };
       },
     }),
-    getPostsPublic: builder.query<PostsPublic, void>({
-      query: () => "public-posts/all?pageSize=4",
-    }),
-    getPostsUser: builder.query<
-      PostsUserResponse,
-      { id: number; endCursorPostId?: number | null }
-    >({
-      query: ({ id, endCursorPostId }) =>
-        `public-posts/user/${id}/${endCursorPostId || ""}?pageSize=8`,
-      serializeQueryArgs: ({ endpointName, queryArgs }) =>
-        `${endpointName}-${queryArgs.id}`,
-      merge: (currentCache, newItems) => ({
-        ...newItems,
-        items: [...currentCache.items, ...newItems.items],
-      }),
-      forceRefetch({ currentArg, previousArg }) {
-        return currentArg?.endCursorPostId !== previousArg?.endCursorPostId;
-      },
-    }),
-    getPostById: builder.query<PostDetailsResponse, number>({
-      query: (postId) => `posts/id/${postId}`,
-      providesTags: (result, error, postId) => [{ type: "Posts", id: postId }],
-    }),
-    getNotification: builder.query<NotificationsType, void>({
-      query: () => "notifications",
-    }),
   }),
 });
 export const {
@@ -137,8 +111,4 @@ export const {
   useConfirmEmailMutation,
   useResendConfirmationMutation,
   useLoginWithGoogleMutation,
-  useGetPostsPublicQuery,
-  useGetNotificationQuery,
-  useGetPostsUserQuery,
-  useGetPostByIdQuery,
 } = authApi;

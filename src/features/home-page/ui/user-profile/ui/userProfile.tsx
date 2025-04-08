@@ -2,17 +2,17 @@
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import Image from "next/image";
-import {
-  PostsUserResponse,
-  useGetPostsUserQuery,
-} from "@/features/auth/api/auth.api";
 import s from "./userProfile.module.css";
-import { PostsUser } from "../post-users/PostsUsers";
+import { PostsUser } from "@/features/home-page/ui/user-profile/ui/post-users/ui/postsUser/PostsUser";
 import { Loader } from "@/shared/ui/loader/Loader";
 import { useAppSelector } from "@/services/store";
 import { Button } from "@/shared/ui/button/button";
 import Link from "next/link";
-import { GetPublicUserProfileResponse } from "@/features/user-profile/api/types";
+import {
+  GetPublicUserProfileResponse,
+  PostsUserResponse,
+} from "@/features/home-page/ui/user-profile/api/types";
+import { useGetPostsUserQuery } from "@/features/create-post/api/post.api";
 
 interface UserProfileProps {
   data: GetPublicUserProfileResponse;

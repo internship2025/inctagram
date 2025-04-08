@@ -15,7 +15,7 @@ import {
 import { TextLink } from "@/shared/ui/textLink/textLink";
 import { useMeQuery } from "@/features/auth/api/auth.api";
 import { Avatar } from "@/shared/ui/avatar/avatar";
-import { useGetPublicUserProfileQuery } from "@/features/user-profile/api/userProfile.api";
+import { useGetPublicUserProfileQuery } from "@/features/home-page/ui/user-profile/api/userProfile.api";
 import Loading from "@/app/loading";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";

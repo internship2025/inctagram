@@ -1,10 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseQueryWithReauth } from "@/features/auth/api/base.api";
-import {
-  PostItem,
-  ResponceAllPosts,
-  UploadFileResponse,
-} from "@/features/create-post/api/types";
+import { PostItem, UploadFileResponse } from "@/features/create-post/api/types";
+import { PostsUserResponse } from "@/features/home-page/ui/user-profile/api/types";
 
 export const postApi = createApi({
   reducerPath: "postApi",
@@ -34,32 +31,15 @@ export const postApi = createApi({
       query: () => "/posts",
       providesTags: ["Post"],
     }),
-    getPostsByUserId: builder.query<
-      ResponceAllPosts,
-      { pageSize: number; endCursorPostId: number | null; userId: number }
-    >({
-      forceRefetch({ currentArg, previousArg }) {
-        return currentArg?.endCursorPostId !== previousArg?.endCursorPostId;
-      },
-      merge: (currentCache, newPosts) => {
-        const existingItemsIds = new Set(
-          currentCache.items.map((item) => item.id),
-        );
-        const uniquePosts = newPosts.items.filter(
-          (post) => !existingItemsIds.has(post.id),
-        );
-        currentCache.items.push(...uniquePosts);
-      },
-      providesTags: ["Post"],
-      query: ({ pageSize, endCursorPostId, userId }) => {
+    uploadImageForPost: builder.mutation<UploadFileResponse, { file: File }>({
+      query: ({ file }) => {
+        const formData = new FormData();
+        formData.append("file", file);
         return {
-          method: "GET",
-          params: { pageSize, endCursorPostId, userId },
-          url: `/public-posts/user/${userId}/${endCursorPostId || ""}`,
+          body: formData,
+          method: "POST",
+          url: "/posts/image",
         };
-      },
-      serializeQueryArgs: ({ endpointName }) => {
-        return endpointName;
       },
     }),
     editPost: builder.mutation<PostItem, { id: number; description: string }>({
@@ -70,7 +50,6 @@ export const postApi = createApi({
       }),
       invalidatesTags: [],
     }),
-
     deletePost: builder.mutation<void, number>({
       query: (postId) => ({
         url: `/posts/${postId}`,
@@ -78,20 +57,56 @@ export const postApi = createApi({
       }),
       //invalidatesTags: ["Post"],
     }),
-    uploadImageForPost: builder.mutation<UploadFileResponse, { file: File }>({
-      query: ({ file }) => {
-        const formData = new FormData();
-
-        formData.append("file", file);
-
-        return {
-          body: formData,
-          method: "POST",
-          url: "/posts/image",
-        };
+    getPostsUser: builder.query<
+      PostsUserResponse,
+      { id: number; endCursorPostId?: number | null }
+    >({
+      query: ({ id, endCursorPostId }) =>
+        `public-posts/user/${id}/${endCursorPostId || ""}?pageSize=8`,
+      serializeQueryArgs: ({ endpointName, queryArgs }) =>
+        `${endpointName}-${queryArgs.id}`,
+      merge: (currentCache, newItems) => ({
+        ...newItems,
+        items: [...currentCache.items, ...newItems.items],
+      }),
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg?.endCursorPostId !== previousArg?.endCursorPostId;
       },
     }),
+
+    // getPostsByUserId: builder.query<
+    //   ResponceAllPosts,
+    //   { pageSize: number; endCursorPostId: number | null; userId: number }
+    // >({
+    //   forceRefetch({ currentArg, previousArg }) {
+    //     return currentArg?.endCursorPostId !== previousArg?.endCursorPostId;
+    //   },
+    //   merge: (currentCache, newPosts) => {
+    //     const existingItemsIds = new Set(
+    //       currentCache.items.map((item) => item.id),
+    //     );
+    //     const uniquePosts = newPosts.items.filter(
+    //       (post) => !existingItemsIds.has(post.id),
+    //     );
+    //     currentCache.items.push(...uniquePosts);
+    //   },
+    //   providesTags: ["Post"],
+    //   query: ({ pageSize, endCursorPostId, userId }) => {
+    //     return {
+    //       method: "GET",
+    //       params: { pageSize, endCursorPostId, userId },
+    //       url: `/public-posts/user/${userId}/${endCursorPostId || ""}`,
+    //     };
+    //   },
+    //   serializeQueryArgs: ({ endpointName }) => {
+    //     return endpointName;
+    //   },
+    // }),
   }),
 });
 
-export const { useCreatePostMutation, useUploadImageForPostMutation } = postApi;
+export const {
+  useCreatePostMutation,
+  useUploadImageForPostMutation,
+  useGetPostsUserQuery,
+} = postApi;

@@ -3,7 +3,7 @@
 import s from "./post.module.css";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import PhotoSlider from "../photosSlider/photosSlider";
+import PhotoSlider from "@/shared/ui/photosSlider/photosSlider";
 import { calculatingDate } from "@/features/auth/utils/dateUtils";
 
 type Post = {

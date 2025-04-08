@@ -4,7 +4,8 @@ import { authApi } from "@/features/auth/api/auth.api";
 import { authSlice } from "@/features/auth/api/authSlice";
 import { createPostSlice } from "@/features/create-post/utils/createPostSlice";
 import { postApi } from "@/features/create-post/api/post.api";
-import { userProfileApi } from "@/features/user-profile/api/userProfile.api";
+import { userProfileApi } from "@/features/home-page/ui/user-profile/api/userProfile.api";
+import { notificationsApi } from "@/features/notifications/api/notifications.api";
 
 export const makeStore = () => {
   return configureStore({
@@ -13,6 +14,7 @@ export const makeStore = () => {
         authApi.middleware,
         postApi.middleware,
         userProfileApi.middleware,
+        notificationsApi.middleware,
       ),
     reducer: combineSlices(
       authApi,
@@ -20,6 +22,7 @@ export const makeStore = () => {
       userProfileApi,
       authSlice,
       createPostSlice,
+      notificationsApi,
     ),
   });
 };

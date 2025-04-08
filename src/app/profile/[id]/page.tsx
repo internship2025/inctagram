@@ -1,5 +1,9 @@
-import { UserProfile } from "@/app/components/userProfile/userProfile";
-import { getPostsUser, getPostUser, getPublicUser } from "@/services/userApi";
+import { UserProfile } from "@/features/home-page/ui/user-profile/ui/userProfile";
+import {
+  getPostsUser,
+  getPostUser,
+  getPublicUser,
+} from "@/features/home-page/api/userApi";
 
 const Profile = async (props: {
   params: Promise<{ id: string }>;

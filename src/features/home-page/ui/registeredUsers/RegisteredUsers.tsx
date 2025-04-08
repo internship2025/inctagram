@@ -1,6 +1,5 @@
-import { getRegistratedUser } from "@/services/userApi";
+import { getRegistratedUser } from "@/features/home-page/api/userApi";
 import s from "./RegisteredUsers.module.css";
-
 
 const RegisteredUsers = async () => {
   const data = await getRegistratedUser();
@@ -23,10 +22,9 @@ const RegisteredUsers = async () => {
   let m = [];
   if (count) {
     for (let i = 0; i < count?.length; i++) {
-      m.push(<span className={s.number}>{count[i]}</span>)
+      m.push(<span className={s.number}>{count[i]}</span>);
     }
   }
-
 
   return (
     <div className={s.wrapper}>
