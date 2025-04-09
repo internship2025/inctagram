@@ -5,12 +5,8 @@ import styles from "./header.module.css";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Button } from "@/shared/ui/button/button";
-import Logout from "@/features/auth/ui/logout/Logout";
 import Link from "next/link";
-import { PATH } from "@/shared/constants/app-paths";
 import { Typography } from "@/shared/ui/typography/typography";
-import { SignUpModal } from "@/features/auth/ui/signUpModal/SignUpModal";
-import { SignInModal } from "@/features/auth/ui/signInModal/SignInModal";
 import { useAppDispatch } from "@/services/store";
 import { useMeQuery } from "@/features/auth/api/auth.api";
 import { setAuthenticated } from "@/features/auth/api/authSlice";
@@ -36,13 +32,10 @@ const ChevronDownIcon = () => (
 
 interface HeaderProps {
   onLangChange?: (lang: string) => void;
-  showAuth?: boolean;
 }
 
-export const Header = ({ onLangChange, showAuth = false }: HeaderProps) => {
+export const Header = ({ onLangChange }: HeaderProps) => {
   const [currentLang, setCurrentLang] = useState("English");
-  const [isSignUp, setIsSignUp] = useState(false);
-  const [isSignIn, setIsSignIn] = useState(false);
 
   const { data: userData, isFetching } = useMeQuery();
 
@@ -51,6 +44,7 @@ export const Header = ({ onLangChange, showAuth = false }: HeaderProps) => {
   useEffect(() => {
     if (userData && !isFetching) {
       dispatch(setAuthenticated({ userId: userData.userId }));
+      localStorage.setItem("userName", userData.userName);
     }
   }, [userData]);
 
@@ -60,7 +54,7 @@ export const Header = ({ onLangChange, showAuth = false }: HeaderProps) => {
   };
 
   return (
-    <header id = 'header' className={styles.header}>
+    <header id="header" className={styles.header}>
       <div className={styles.container}>
         <Link href={"/public"}>
           <Typography variant={"h1"}>Inctagram</Typography>
@@ -142,35 +136,18 @@ export const Header = ({ onLangChange, showAuth = false }: HeaderProps) => {
               </Select.Portal>
             </Select.Root>
 
-            {!userData && (
-              <div className={styles.authButtons}>
+            <div className={styles.authButtons}>
+              {!userData && (
                 <>
-                  <Button
-                    className={styles.signInButton}
-                    variant="text"
-                    onClick={() => setIsSignIn(true)}
-                    href={PATH.SIGN_IN}
-                  >
-                    Log in
-                  </Button>
-                  <Button
-                    variant="primary"
-                    onClick={() => setIsSignUp(true)}
-                    href={PATH.SIGN_UP}
-                  >
-                    Sign up
-                  </Button>
-                  <Logout />
+                  <Link href="/auth/sign-in" className={styles.signInButton}>
+                    <Button variant="text">Log in</Button>
+                  </Link>
+                  <Link href="/auth/sign-up">
+                    <Button variant="primary">Sign up</Button>
+                  </Link>
                 </>
-
-                {isSignUp && !isSignIn && (
-                  <SignUpModal open={true} onClose={() => setIsSignUp(false)} />
-                )}
-                {isSignIn && !isSignUp && (
-                  <SignInModal open={true} onClose={() => setIsSignIn(false)} />
-                )}
-              </div>
-            )}
+              )}
+            </div>
           </div>
         )}
       </div>
