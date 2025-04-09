@@ -63,7 +63,6 @@ export const PublishContent = ({
       profileAvatarUrl = profileData?.avatars[0].url;
     }
   }
-  console.log(profileAvatarUrl);
 
   const {
     control,
@@ -145,7 +144,9 @@ export const PublishContent = ({
                   size={9}
                   src={profileAvatarUrl}
                 />
-                {profileData?.userName}
+                <div className={styles.profileUserName}>
+                  {profileData?.userName}
+                </div>
               </TextLink>
             </div>
           ) : (

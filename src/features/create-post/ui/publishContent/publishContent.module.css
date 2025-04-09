@@ -36,6 +36,7 @@
 
 .avatar {
     margin-right: 0.75rem;
+    margin-left: 101px;
 }
 
 .textArea {
@@ -46,4 +47,8 @@
 
 .form {
     display: flex;
+}
+
+.profileUserName{
+    margin-left: 12px;
 }

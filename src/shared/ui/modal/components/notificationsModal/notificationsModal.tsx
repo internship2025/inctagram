@@ -5,12 +5,14 @@ import styles from "./../../modal.module.css";
 type Type = {
   open: boolean;
   onClose: () => void;
-  items: Array<{
-    id: number;
-    message: string;
-    isRead: boolean;
-    createdAt: string;
-  }>;
+  items:
+    | Array<{
+        id: number;
+        message: string;
+        isRead: boolean;
+        createdAt: string;
+      }>
+    | undefined;
   portalContainer?: HTMLDivElement | null;
 };
 

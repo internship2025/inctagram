@@ -8,7 +8,7 @@ import { SvgImageOutline } from "@/assets/icons/components/ImageOutline";
 
 type AvatarOwnProps = {
   onClick?: () => void;
-  size: 6 | 9 | 12 | 48;
+  size?: 6 | 9 | 12 | 48;
   src?: string;
 };
 
@@ -17,31 +17,9 @@ type AvatarProps = AvatarOwnProps &
 
 export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
   (
-    {
-      alt = "Profile avatar",
-      className,
-      height,
-      onClick,
-      size,
-      src,
-      width,
-      ...props
-    },
+    { alt = "Profile avatar", className, height, onClick, size, src, width },
     ref,
   ) => {
-    const iconSizeMap: Record<AvatarOwnProps["size"], string> = {
-      6: "w-6 h-6",
-      9: "w-6 h-6",
-      12: "w-9 h-9",
-      48: "w-12 h-12",
-    };
-
-    const containerSizeMap: Record<AvatarOwnProps["size"], string> = {
-      6: "h-6 w-6",
-      9: "h-9 w-9",
-      12: "h-12 w-12",
-      48: "h-48 w-48",
-    };
     return (
       <RadixAvatar.Root
         className={styles.rootAvatar}

@@ -51,20 +51,6 @@ export type PostsPublic = {
   ];
 };
 
-export type NotificationsType = {
-  pageSize: number;
-  totalCount: number;
-  notReadCount: number;
-  items: [
-    {
-      id: number;
-      message: string;
-      isRead: boolean;
-      createdAt: string;
-    },
-  ];
-};
-
 export type PostImage = {
   url: string;
   width: number;
@@ -98,4 +84,16 @@ export type PostsUserResponse = {
   pageSize: number;
   items: PostDetailsResponse[];
   nextCursor: number | null;
+};
+
+export type UploadProfileAvatarResponse = {
+  avatars: Avatar[];
+};
+
+export type Avatar = {
+  createdAt: string;
+  fileSize: number;
+  height: number;
+  url: string;
+  width: number;
 };
