@@ -1,21 +1,34 @@
+// app/profile/[id]/page.tsx
 import { UserProfile } from "@/app/components/userProfile/userProfile";
-import { getPostsUser, getPostUser, getPublicUser } from "@/services/userApi";
+import { getPostsUser, getPublicUser, getPostUser } from "@/services/userApi";
 
+type Props = {
+  params: { id: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
 
-const Profile = async (
-  props: { params: Promise<{ id: string }>,   searchParams: Promise<{ [key: string]: string | string[] | undefined }>; }
-) => {
-  const searchParams = await props.searchParams;
-  const params = await props.params;
-  const data = await getPublicUser(Number(params.id));
-  const posts = await getPostsUser(Number(params.id));
-  const post = searchParams.postId ? await getPostUser(searchParams.postId) : null
+const Profile = async ({ params, searchParams }: Props) => {
+  const userId = Number(params.id);
 
-  return (
-    <>
-      <UserProfile data={data} initialPosts = {posts}/>
-    </>
-  );
+  if (isNaN(userId)) {
+    throw new Error("Invalid user ID");
+  }
+
+  const [data, initialPosts] = await Promise.all([
+    getPublicUser(userId),
+    getPostsUser(userId),
+  ]);
+
+ 
+  let selectedPost = null;
+  const postIdParam = searchParams.postId;
+  const postId = typeof postIdParam === "string" ? Number(postIdParam) : NaN;
+
+  if (!isNaN(postId)) {
+    selectedPost = await getPostUser(postId);
+  }
+
+  return <UserProfile data={data} initialPosts={initialPosts} selectedPost={selectedPost} />;
 };
 
 export default Profile;

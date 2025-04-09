@@ -223,29 +223,38 @@ export const authApi = createApi({
     getPostsPublic: builder.query<PostsPublic, void>({
       query: () => "public-posts/all?pageSize=4",
     }),
-    getPostsUser: builder.query<
-      PostsUserResponse,
-      { id: number; endCursorPostId?: number | null }
-    >({
-      query: ({ id, endCursorPostId }) =>
-        `public-posts/user/${id}/${endCursorPostId || ""}?pageSize=8`,
-      serializeQueryArgs: ({ endpointName, queryArgs }) =>
-        `${endpointName}-${queryArgs.id}`,
-      merge: (currentCache, newItems) => ({
-        ...newItems,
-        items: [...currentCache.items, ...newItems.items],
-      }),
+    getPostsUser: builder.query<PostsUserResponse, { 
+      id: number; 
+      endCursorPostId?: number | null 
+    }>({
+      query: ({ id, endCursorPostId }) => {
+        const path = endCursorPostId 
+          ? `public-posts/user/${id}/${endCursorPostId}`
+          : `public-posts/user/${id}`;
+        
+        return {
+          url: path,
+          params: {
+            pageSize: 8,
+            sortDirection: 'desc'
+          }
+        };
+      },
+      serializeQueryArgs: ({ endpointName, queryArgs }) => `${endpointName}-${queryArgs.id}`,
+      merge: (currentCache, newItems) => {
+        const existingIds = new Set(currentCache.items.map(post => post.id));
+        const newPosts = newItems.items.filter(post => !existingIds.has(post.id));
+        
+        currentCache.items.push(...newPosts);
+        currentCache.totalCount = newItems.totalCount;
+      },
       forceRefetch({ currentArg, previousArg }) {
         return currentArg?.endCursorPostId !== previousArg?.endCursorPostId;
       },
-    }),
-    getPostById: builder.query<PostDetailsResponse, number>({
-      query: (postId) => `posts/id/${postId}`,
-      providesTags: (result, error, postId) => [{ type: "Posts", id: postId }],
-    }),
-    getNotification: builder.query<NotificationsType, void>({
+    }),    getNotification: builder.query<NotificationsType, void>({
       query: () => "notifications",
     }),
+    
   }),
 });
 export const {
@@ -256,6 +265,7 @@ export const {
   useCreateNewPasswordMutation,
   useForgotPasswordConfirmationMutation,
   useLoginMutation,
+  useLazyGetPostsUserQuery,
   useLogoutMutation,
   useConfirmEmailMutation,
   useResendConfirmationMutation,
@@ -263,5 +273,5 @@ export const {
   useGetPostsPublicQuery,
   useGetNotificationQuery,
   useGetPostsUserQuery,
-  useGetPostByIdQuery,
+  
 } = authApi;
