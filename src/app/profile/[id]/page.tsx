@@ -1,6 +1,5 @@
-// app/profile/[id]/page.tsx
-import { UserProfile } from "@/app/components/userProfile/userProfile";
 import { getPostsUser, getPublicUser, getPostUser } from "@/services/userApi";
+import { UserProfile } from "@/features/home-page/ui/user-profile/ui/userProfile";
 
 type Props = {
   params: { id: string };
@@ -19,7 +18,6 @@ const Profile = async ({ params, searchParams }: Props) => {
     getPostsUser(userId),
   ]);
 
- 
   let selectedPost = null;
   const postIdParam = searchParams.postId;
   const postId = typeof postIdParam === "string" ? Number(postIdParam) : NaN;
@@ -28,7 +26,13 @@ const Profile = async ({ params, searchParams }: Props) => {
     selectedPost = await getPostUser(postId);
   }
 
-  return <UserProfile data={data} initialPosts={initialPosts} selectedPost={selectedPost} />;
+  return (
+    <UserProfile
+      data={data}
+      initialPosts={initialPosts}
+      selectedPost={selectedPost}
+    />
+  );
 };
 
 export default Profile;

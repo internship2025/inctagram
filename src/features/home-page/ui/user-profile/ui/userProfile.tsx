@@ -3,9 +3,7 @@ import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import Image from "next/image";
 import { useLazyGetPostsUserQuery } from "@/features/auth/api/auth.api";
-import { PostsUserResponse } from "@/features/auth/api/auth.api";
-import { PostsUser } from "../post-users/PostsUsers";
-import { PostsUser } from "@/features/home-page/ui/user-profile/ui/post-users/ui/postsUser/PostsUser";
+
 import { Loader } from "@/shared/ui/loader/Loader";
 import { useAppSelector } from "@/services/store";
 import { Button } from "@/shared/ui/button/button";
@@ -16,6 +14,7 @@ import {
   PostsUserResponse,
 } from "@/features/home-page/ui/user-profile/api/types";
 import { useGetPostsUserQuery } from "@/features/create-post/api/post.api";
+import { PostsUser } from "@/features/home-page/ui/user-profile/ui/post-users/ui/postsUser/PostsUser";
 
 interface UserProfileProps {
   data: GetPublicUserProfileResponse;
@@ -25,32 +24,31 @@ interface UserProfileProps {
 export const UserProfile = ({ data, initialPosts }: UserProfileProps) => {
   const [posts, setPosts] = useState(initialPosts.items);
   const [lastPostId, setLastPostId] = useState<number | null>(
-    initialPosts.items[initialPosts.items.length - 1]?.id || null
+    initialPosts.items[initialPosts.items.length - 1]?.id || null,
   );
   const { ref, inView } = useInView({ threshold: 0.5 });
   const totalPosts = initialPosts.totalCount;
 
-  const [fetchPosts, { data: newPosts, isFetching, error }] = useLazyGetPostsUserQuery();
-
+  const [fetchPosts, { data: newPosts, isFetching, error }] =
+    useLazyGetPostsUserQuery();
 
   const currentUserId = useAppSelector((state) => state.auth.userId);
   const isOwner = currentUserId === data.id;
-
 
   useEffect(() => {
     if (inView && !isFetching && posts.length < totalPosts) {
       fetchPosts({
         id: data.id,
-        endCursorPostId: lastPostId
+        endCursorPostId: lastPostId,
       });
     }
   }, [inView, isFetching, data.id, lastPostId, totalPosts, posts.length]);
 
   useEffect(() => {
     if (newPosts?.items) {
-      setPosts(prev => {
+      setPosts((prev) => {
         const newItems = newPosts.items.filter(
-          newPost => !prev.some(post => post.id === newPost.id)
+          (newPost) => !prev.some((post) => post.id === newPost.id),
         );
         return [...prev, ...newItems];
       });
@@ -102,7 +100,9 @@ export const UserProfile = ({ data, initialPosts }: UserProfileProps) => {
               <span className={s.statLabel}>Followers</span>
             </div>
             <div className={s.statItem}>
-              <span className={s.statValue}>{data.userMetadata.publications}</span>
+              <span className={s.statValue}>
+                {data.userMetadata.publications}
+              </span>
               <span className={s.statLabel}>Publications</span>
             </div>
           </div>
@@ -122,7 +122,6 @@ export const UserProfile = ({ data, initialPosts }: UserProfileProps) => {
           <p className={s.endMessage}>All posts loaded ({totalPosts} total)</p>
         )}
       </div>
-
-       </div>
+    </div>
   );
 };
