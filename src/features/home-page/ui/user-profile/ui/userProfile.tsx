@@ -1,9 +1,8 @@
 "use client";
+
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import Image from "next/image";
-import { useLazyGetPostsUserQuery } from "@/features/auth/api/auth.api";
-
 import { Loader } from "@/shared/ui/loader/Loader";
 import { useAppSelector } from "@/services/store";
 import { Button } from "@/shared/ui/button/button";
@@ -13,7 +12,7 @@ import {
   GetPublicUserProfileResponse,
   PostsUserResponse,
 } from "@/features/home-page/ui/user-profile/api/types";
-import { useGetPostsUserQuery } from "@/features/create-post/api/post.api";
+import { useLazyGetPostsUserQuery } from "@/features/create-post/api/post.api";
 import { PostsUser } from "@/features/home-page/ui/user-profile/ui/post-users/ui/postsUser/PostsUser";
 
 interface UserProfileProps {

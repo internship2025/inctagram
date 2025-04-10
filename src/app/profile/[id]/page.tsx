@@ -1,5 +1,9 @@
-import { getPostsUser, getPublicUser, getPostUser } from "@/services/userApi";
 import { UserProfile } from "@/features/home-page/ui/user-profile/ui/userProfile";
+import {
+  getPostsUser,
+  getPostUser,
+  getPublicUser,
+} from "@/features/home-page/api/userApi";
 
 type Props = {
   params: { id: string };

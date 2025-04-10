@@ -8,7 +8,7 @@ type Props = {};
 export const AddAvatarSection = ({}: Props) => {
   return (
     <div className={styles.avatarContainer}>
-      <Avatar alt={"User avatar"} src={} />
+      {/*<Avatar alt={"User avatar"} src={} />*/}
     </div>
   );
 };
