@@ -31,7 +31,7 @@ export async function getPostUser(id: any) {
 }
 
 export async function getRegistratedUser() {
-  const response = await fetch("https://inctagram.work/api/v1/3public-user", {
+  const response = await fetch("https://inctagram.work/api/v1/public-user", {
     next: { revalidate: 60 },
   });
 
