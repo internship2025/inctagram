@@ -2,11 +2,10 @@
 
 import * as React from "react";
 import { useEffect } from "react";
-
-import { cn } from "@/shared/utils/cn";
 import useEmblaCarousel, {
   type UseEmblaCarouselType,
 } from "embla-carousel-react";
+import styles from "./carousel.module.css";
 
 type CarouselApi = UseEmblaCarouselType[1];
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>;
@@ -156,7 +155,7 @@ const Carousel = React.forwardRef<
       >
         <div
           aria-roledescription={"carousel"}
-          className={cn("relative", className)}
+          className={styles.carouselContainer}
           onKeyDownCapture={handleKeyDown}
           ref={ref}
           role={"region"}

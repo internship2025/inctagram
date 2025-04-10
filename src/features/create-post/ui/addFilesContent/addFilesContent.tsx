@@ -44,15 +44,20 @@ export const AddFilesContent = ({
               </div>
             )}
             <div className={styles.imageOutline}>
-              <SvgImageOutline height={36} width={36} />
+              <SvgImageOutline height={46} width={46} />
             </div>
           </div>
         </ImageUploader>
         <div className={styles.butttonContainers}>
-          <Button onClick={handleFileSelect} variant={"primary"}>
+          <Button
+            className={styles.selectButton}
+            onClick={handleFileSelect}
+            variant={"primary"}
+          >
             Select from computer
           </Button>
           <Button
+            className={styles.openDraftButton}
             disabled={draftImages.length === 0}
             onClick={handleOpenDraft}
             variant={"outline"}

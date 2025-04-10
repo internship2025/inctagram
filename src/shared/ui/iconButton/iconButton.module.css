@@ -3,24 +3,11 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    outline: none; /* Убираем стандартное выделение */
-    transition: background-color 0.2s ease;
     cursor: pointer;
+    background-color: inherit;
+    border: none;
 }
 
 .iconButtonFocus {
     outline: 2px solid #ff5e00; /* Пример фокуса */
-}
-
-.iconButtonHover {
-    background-color: rgba(0, 0, 0, 0.1); /* Ховер эффект */
-}
-
-.iconButtonActive {
-    background-color: rgba(0, 0, 0, 0.2); /* Эффект активной кнопки */
-}
-
-.iconButtonDisabled {
-    background-color: transparent;
-    cursor: not-allowed;
 }

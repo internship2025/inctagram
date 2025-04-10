@@ -1,25 +1,31 @@
 .iconButton {
     position: absolute;
+    background-color: var(--color-dark-300);
     height: 3rem;
     width: 3rem;
+    right: 0;
+    opacity: 0.5;
     border-radius: 0;
-}
-
-.iconButtonHorizontal {
-    right: 0.75rem;
     top: 50%;
     transform: translateY(-50%);
+    border: none;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    margin-right: 13px;
 }
 
-.iconButtonVertical {
-    bottom: 0.75rem;
-    left: 50%;
-    transform: translateX(-50%) rotate(90deg);
+.iconButton svg {
+    display: block;
+    margin: 0 auto;
+    transform: scale(2);
+    transform-origin: center center;
+}
+
+.iconButton:hover {
+    opacity: 0.8;
 }
 
 .iconSize {
-    height: 3rem;
-    width: 3rem;
+
 }
 
 .srOnly {

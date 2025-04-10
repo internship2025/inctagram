@@ -11,7 +11,7 @@ export const PATH = {
   SIGN_UP: "/auth/sign-up", // register new user
   TERMS_OF_SERVICE: "/terms-of-service",
   PUBLIC_HOME: "/public/posts",
-  PRIVATE_HOME: "/private/profile",
+  PRIVATE_HOME: "http://localhost:3000",
 } as const;
 
 export const baseUrl =

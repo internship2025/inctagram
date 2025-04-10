@@ -3,23 +3,16 @@ import SvgArrowIosBackOutline from "@/assets/icons/components/ArrowIosBackOutlin
 import { IconButton } from "@/shared/ui/iconButton/iconButton";
 import * as React from "react";
 import { useCarousel } from "@/shared/ui/carousel/carousel";
-import { cn } from "@/shared/utils/cn";
 
 export const CarouselPrevious = React.forwardRef<
   HTMLButtonElement,
   React.ComponentProps<typeof IconButton>
 >(({ className, ...props }, ref) => {
-  const { canScrollPrev, orientation, scrollPrev } = useCarousel();
+  const { canScrollPrev, scrollPrev } = useCarousel();
 
   return (
     <IconButton
-      className={cn(
-        styles.iconButton,
-        orientation === "horizontal"
-          ? styles.iconButtonHorisontal
-          : styles.iconButtonVertical,
-        className,
-      )}
+      className={styles.iconButton}
       disabled={!canScrollPrev}
       onClick={scrollPrev}
       ref={ref}

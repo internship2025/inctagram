@@ -98,14 +98,19 @@
 
 .deleteImage {
     position: absolute;
-    top: 0.25rem;
-    right: 0.25rem;
-    border-radius: 0;
+    top: 0.005rem;
+    right: 0.005rem;
     background-color: var(--color-dark-500);
-
-}
-
-.svgCloseOutline {
     cursor: pointer;
-
+    transform: scale(0.6);
+    padding: 0;
 }
+
+.deleteImage svg {
+    transform: scale(1);
+}
+
+.circleButton svg {
+    transform: scale(1.5);
+}
+

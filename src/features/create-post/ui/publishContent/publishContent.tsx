@@ -15,7 +15,7 @@ import {
 import { TextLink } from "@/shared/ui/textLink/textLink";
 import { useMeQuery } from "@/features/auth/api/auth.api";
 import { Avatar } from "@/shared/ui/avatar/avatar";
-import { useGetPublicUserProfileQuery } from "@/features/user-profile/api/userProfile.api";
+import { useGetPublicUserProfileQuery } from "@/features/home-page/ui/user-profile/api/userProfile.api";
 import Loading from "@/app/loading";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -43,6 +43,7 @@ export const PublishContent = ({
 }: CroppingDialogContentProps) => {
   const [createPost, { isLoading: isLoadingCreatePost }] =
     useCreatePostMutation();
+
   const [uploadPhoto, { isLoading: isLoadingUploadPhoto }] =
     useUploadImageForPostMutation();
 
@@ -55,7 +56,7 @@ export const PublishContent = ({
       skip: authData?.userId === undefined,
     });
 
-  let profileAvatarUrl = undefined;
+  let profileAvatarUrl;
 
   if (profileData?.avatars && profileData?.avatars.length > 0) {
     if (profileData?.avatars[0].url) {
@@ -102,7 +103,7 @@ export const PublishContent = ({
 
     createPost({
       description,
-      uploadId: uploadIds,
+      uploadIds,
     })
       .unwrap()
       .then(() => {
@@ -127,39 +128,43 @@ export const PublishContent = ({
         <div className={styles.imageContainer}>
           <ImageContent itemImages={images} />
         </div>
-        {!profileIsLoading ? (
-          <div>
-            <TextLink
-              className={styles.textLinkContainer}
-              href={`/profile/${JSON.stringify(authData?.userId)}`}
-              size={"large"}
-              target={"_blank"}
-              underline={false}
-            >
-              <Avatar
-                alt={"avatar"}
-                className={styles.avatar}
-                size={9}
-                src={profileAvatarUrl}
-              />
-              {profileData?.userName}
-            </TextLink>
-          </div>
-        ) : (
-          <Loading />
-        )}
-        <form
-          id={"publish-form"}
-          className={styles.form}
-          onSubmit={handleSubmit(onSubmitHandler)}
-        >
-          <ControlledTextArea
-            control={control}
-            error={!!errors.description}
-            helperText={errors.description?.message}
-            name={"description"}
-          />
-        </form>
+        <div className={styles.descriptionContainer}>
+          {!profileIsLoading ? (
+            <div>
+              <TextLink
+                className={styles.textLinkContainer}
+                href={`/profile/${JSON.stringify(authData?.userId)}`}
+                size={"large"}
+                target={"_blank"}
+                underline={false}
+              >
+                <Avatar
+                  alt={"avatar"}
+                  className={styles.avatar}
+                  size={9}
+                  src={profileAvatarUrl}
+                />
+                <div className={styles.profileUserName}>
+                  {profileData?.userName}
+                </div>
+              </TextLink>
+            </div>
+          ) : (
+            <Loading />
+          )}
+          <form
+            id={"publish-form"}
+            className={styles.form}
+            onSubmit={handleSubmit(onSubmitHandler)}
+          >
+            <ControlledTextArea
+              control={control}
+              error={!!errors.description}
+              helperText={errors.description?.message}
+              name={"description"}
+            />
+          </form>
+        </div>
       </div>
     </div>
   );
