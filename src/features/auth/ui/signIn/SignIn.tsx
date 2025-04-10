@@ -1,17 +1,17 @@
 "use client";
 
+import React from 'react';
 import { Input } from "../../../../shared/ui/input/input";
 import styles from "./signIn.module.css";
 import Link from "next/link";
 import { Button } from "../../../../shared/ui/button/button";
-import Image from "next/image";
 import { PATH } from "@/shared/constants/app-paths";
 import { useSignIn } from "@/features/auth/ui/hooks/useSignIn";
 
 type Props = {
   icons?:
     | Array<{
-        src: string;
+        icon: React.ComponentType<{ width: number; height: number }>;
         width: number;
         height: number;
         onClick?: () => void;
@@ -34,7 +34,7 @@ export const SignIn = ({
         key={ind}
         onClick={it.onClick}
       >
-        <Image src={it.src} width={it.width} height={it.height} alt="" />
+        {it.icon && React.createElement(it.icon, { width: it.width, height: it.height })}
       </Button>
     );
   });

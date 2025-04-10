@@ -1,7 +1,10 @@
-import { SignUpModal } from "@/features/auth/ui/signUpModal/SignUpModal";
+import { Suspense } from "react"
+import { SignUpClient } from "./components"
 
-const SignUpPage = () => {
-  return <SignUpModal open={false} />;
-};
-
-export default SignUpPage;
+export default function SignUpPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SignUpClient />
+    </Suspense>
+  )
+}

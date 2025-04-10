@@ -2,12 +2,15 @@
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import Image from "next/image";
-import s from "./userProfile.module.css";
+import { useLazyGetPostsUserQuery } from "@/features/auth/api/auth.api";
+import { PostsUserResponse } from "@/features/auth/api/auth.api";
+import { PostsUser } from "../post-users/PostsUsers";
 import { PostsUser } from "@/features/home-page/ui/user-profile/ui/post-users/ui/postsUser/PostsUser";
 import { Loader } from "@/shared/ui/loader/Loader";
 import { useAppSelector } from "@/services/store";
 import { Button } from "@/shared/ui/button/button";
 import Link from "next/link";
+import s from "./userProfile.module.css";
 import {
   GetPublicUserProfileResponse,
   PostsUserResponse,
@@ -21,44 +24,47 @@ interface UserProfileProps {
 
 export const UserProfile = ({ data, initialPosts }: UserProfileProps) => {
   const [posts, setPosts] = useState(initialPosts.items);
-  const [nextCursor, setNextCursor] = useState(initialPosts.nextCursor);
-  const { ref, inView } = useInView({ threshold: 0.1 });
-  const {
-    data: newPosts,
-    isFetching,
-    error,
-  } = useGetPostsUserQuery(
-    { id: data.id, endCursorPostId: nextCursor },
-    { skip: !nextCursor },
+  const [lastPostId, setLastPostId] = useState<number | null>(
+    initialPosts.items[initialPosts.items.length - 1]?.id || null
   );
+  const { ref, inView } = useInView({ threshold: 0.5 });
+  const totalPosts = initialPosts.totalCount;
+
+  const [fetchPosts, { data: newPosts, isFetching, error }] = useLazyGetPostsUserQuery();
+
 
   const currentUserId = useAppSelector((state) => state.auth.userId);
   const isOwner = currentUserId === data.id;
 
-  useEffect(() => {
-    if (inView && nextCursor && !isFetching) {
-      setNextCursor(newPosts?.nextCursor || null);
-    }
-  }, [inView, isFetching]);
 
   useEffect(() => {
-    if (newPosts) {
-      setPosts((prev) => [...prev, ...newPosts.items]);
+    if (inView && !isFetching && posts.length < totalPosts) {
+      fetchPosts({
+        id: data.id,
+        endCursorPostId: lastPostId
+      });
+    }
+  }, [inView, isFetching, data.id, lastPostId, totalPosts, posts.length]);
+
+  useEffect(() => {
+    if (newPosts?.items) {
+      setPosts(prev => {
+        const newItems = newPosts.items.filter(
+          newPost => !prev.some(post => post.id === newPost.id)
+        );
+        return [...prev, ...newItems];
+      });
+
+      const newLastId = newPosts.items[newPosts.items.length - 1]?.id;
+      if (newLastId) setLastPostId(newLastId);
     }
   }, [newPosts]);
 
-  if (error) {
-    return (
-      <div className={s.errorContainer}>
-        Failed to load posts. Please try again later.
-      </div>
-    );
-  }
-
   return (
     <div className={s.container}>
-      {/* Profile Header */}
+      {/* Секция профиля */}
       <div className={s.profileHeader}>
+        {/* Аватар */}
         <div className={s.avatarWrapper}>
           <Image
             src={data.avatars[0]?.url || "/default-avatar.png"}
@@ -69,12 +75,13 @@ export const UserProfile = ({ data, initialPosts }: UserProfileProps) => {
           />
         </div>
 
+        {/* Информация профиля */}
         <div className={s.profileInfo}>
           <div className={s.nameBox}>
             <h1 className={s.username}>{data.userName}</h1>
             {isOwner && (
               <Button
-                variant={"secondary"}
+                variant="secondary"
                 as={Link}
                 href="/settings/profile"
                 className={s.settingsButton}
@@ -84,6 +91,7 @@ export const UserProfile = ({ data, initialPosts }: UserProfileProps) => {
             )}
           </div>
 
+          {/* Статистика */}
           <div className={s.stats}>
             <div className={s.statItem}>
               <span className={s.statValue}>{data.userMetadata.following}</span>
@@ -93,34 +101,28 @@ export const UserProfile = ({ data, initialPosts }: UserProfileProps) => {
               <span className={s.statValue}>{data.userMetadata.followers}</span>
               <span className={s.statLabel}>Followers</span>
             </div>
-
             <div className={s.statItem}>
-              <span className={s.statValue}>
-                {data.userMetadata.publications}
-              </span>
+              <span className={s.statValue}>{data.userMetadata.publications}</span>
               <span className={s.statLabel}>Publications</span>
             </div>
           </div>
 
+          {/* Биография */}
           <p className={s.bio}>{data.aboutMe || "No description provided"}</p>
         </div>
       </div>
 
-      {/* Posts Grid */}
+      {/* Список постов */}
       <PostsUser posts={posts} />
 
-      {/* Infinite Scroll Trigger */}
+      {/* Индикатор загрузки */}
       <div ref={ref} className={s.loaderContainer}>
-        {isFetching ? (
-          <Loader size="medium" />
-        ) : nextCursor ? (
-          <span className={s.scrollPrompt}>Scroll to load more</span>
-        ) : (
-          <>
-            <p className={s.endMessage}>No more posts to show.</p>
-          </>
+        {isFetching && <Loader size="medium" />}
+        {posts.length >= totalPosts && (
+          <p className={s.endMessage}>All posts loaded ({totalPosts} total)</p>
         )}
       </div>
-    </div>
+
+       </div>
   );
 };

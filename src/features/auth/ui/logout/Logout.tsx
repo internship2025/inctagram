@@ -18,7 +18,7 @@ const Logout = () => {
 
   return (
     <>
-      <Button onClick={confirmLogout}>Log out</Button>
+      <Button variant="text" onClick={confirmLogout}>Log out</Button>
       <Modal
         open={showConfirmation}
         onClose={cancelLogout}

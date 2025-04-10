@@ -20,7 +20,7 @@ export const userProfileApi = createApi({
       UploadProfileAvatarResponse,
       { file: File }
     >({
-      query: { file },
+      query: ({ file }) => {},
     }),
   }),
 });
