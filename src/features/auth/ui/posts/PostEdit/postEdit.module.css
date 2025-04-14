@@ -1,0 +1,64 @@
+.container {
+    display: flex;
+    height: 504px;
+}
+
+.imageContainer {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 492px;
+    height: 504px;
+}
+
+.formBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 492px;
+    height: 100%;
+    padding: 25px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.textarea {
+    flex: 1;
+    margin-bottom: 16px;
+}
+
+.textareaInput {
+    min-height: 150px;
+    width: 100%;
+}
+
+.avatarContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    align-items: center;
+}
+
+.avatar {
+    width: 36px;
+    height: 36px;
+}
+
+.numLettersText {
+    display: block;
+    text-align: right;
+    margin-top: 8px;
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: auto;
+}

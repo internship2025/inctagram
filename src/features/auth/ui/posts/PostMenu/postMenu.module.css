@@ -1,0 +1,55 @@
+.container {
+    position: relative;
+    display: inline-block;
+}
+
+.menuTrigger {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    left: 0;
+    top: 0;
+    background: rgb(79, 82, 87);
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    color: white;
+}
+
+.menuTrigger:hover {
+    background: rgb(40, 110, 230);
+}
+
+.menuDropdown {
+    right: 0;
+    width: 137px;
+    height: 85px;
+    left: 1055px;
+    top: 138px;
+    box-sizing: border-box;
+    border: 1px solid rgb(76, 76, 76);
+    border-radius: 2px;
+    background: rgb(23, 23, 23);
+    z-index: 1000;
+}
+
+.menuButton {
+    width: 100%;
+    justify-content: flex-start;
+    padding: 8px 12px;
+    color: white;
+    text-align: left;
+}
+
+.menuButton:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.modalPostEdit {
+    width: auto;
+    max-width: none;
+}
