@@ -18,6 +18,7 @@ import { PostsUser } from "@/features/home-page/ui/user-profile/ui/post-users/ui
 interface UserProfileProps {
   data: GetPublicUserProfileResponse;
   initialPosts: PostsUserResponse;
+  selectedPost?: any;
 }
 
 export const UserProfile = ({ data, initialPosts }: UserProfileProps) => {

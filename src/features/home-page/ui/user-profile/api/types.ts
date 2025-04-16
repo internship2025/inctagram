@@ -97,3 +97,17 @@ export type Avatar = {
   url: string;
   width: number;
 };
+
+export type GetUserProfileResponse = {
+  aboutMe: string;
+  avatars: Avatar[];
+  city: string;
+  country: string;
+  createdAt: string;
+  dateOfBirth: string;
+  firstName: string;
+  id: number;
+  lastName: string;
+  region: string;
+  userName: string;
+};
