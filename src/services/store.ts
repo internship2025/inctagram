@@ -6,16 +6,20 @@ import { createPostSlice } from "@/features/create-post/utils/createPostSlice";
 import { postApi } from "@/features/create-post/api/post.api";
 import { userProfileApi } from "@/features/home-page/ui/user-profile/api/userProfile.api";
 import { notificationsApi } from "@/features/notifications/api/notifications.api";
+import { rtkQueryErrorLogger } from "./errorMiddleware";
+
 
 export const makeStore = () => {
   return configureStore({
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(
-        authApi.middleware,
-        postApi.middleware,
-        userProfileApi.middleware,
-        notificationsApi.middleware,
-      ),
+      getDefaultMiddleware()
+        .concat(
+          authApi.middleware,
+          postApi.middleware,
+          userProfileApi.middleware,
+          notificationsApi.middleware,
+          rtkQueryErrorLogger
+        ),
     reducer: combineSlices(
       authApi,
       postApi,

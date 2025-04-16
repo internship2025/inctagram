@@ -14,6 +14,7 @@ import {
 } from "@/features/home-page/ui/user-profile/api/types";
 import { useLazyGetPostsUserQuery } from "@/features/create-post/api/post.api";
 import { PostsUser } from "@/features/home-page/ui/user-profile/ui/post-users/ui/postsUser/PostsUser";
+import { toast } from "sonner";
 
 interface UserProfileProps {
   data: GetPublicUserProfileResponse;
@@ -27,21 +28,29 @@ export const UserProfile = ({ data, initialPosts }: UserProfileProps) => {
   );
   const { ref, inView } = useInView({ threshold: 0.5 });
   const totalPosts = initialPosts.totalCount;
+  const [hasError, setHasError] = useState(false);
 
-  const [fetchPosts, { data: newPosts, isFetching, error }] =
-    useLazyGetPostsUserQuery();
+  const [fetchPosts, { data: newPosts, isFetching, error }] = useLazyGetPostsUserQuery();
 
   const currentUserId = useAppSelector((state) => state.auth.userId);
   const isOwner = currentUserId === data.id;
 
+  // Ловим ошибку загрузки постов
   useEffect(() => {
-    if (inView && !isFetching && posts.length < totalPosts) {
+    if (error) {
+      toast.error("Failed to load posts. Check your internet connection.");
+      setHasError(true);
+    }
+  }, [error]);
+
+  useEffect(() => {
+    if (inView && !isFetching && !hasError && posts.length < totalPosts) {
       fetchPosts({
         id: data.id,
         endCursorPostId: lastPostId,
       });
     }
-  }, [inView, isFetching, data.id, lastPostId, totalPosts, posts.length]);
+  }, [inView, isFetching, hasError, data.id, lastPostId, totalPosts, posts.length]);
 
   useEffect(() => {
     if (newPosts?.items) {
@@ -55,9 +64,7 @@ export const UserProfile = ({ data, initialPosts }: UserProfileProps) => {
       const newLastId = newPosts.items[newPosts.items.length - 1]?.id;
       if (newLastId) setLastPostId(newLastId);
     }
-  }, [newPosts]);
-
-  return (
+  }, [newPosts]);  return (
     <div className={s.container}>
       {/* Секция профиля */}
       <div className={s.profileHeader}>
