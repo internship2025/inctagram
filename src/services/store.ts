@@ -7,6 +7,14 @@ import { postApi } from "@/features/create-post/api/post.api";
 import { userProfileApi } from "@/features/user-profile/api/userProfile.api";
 
 export const makeStore = () => {
+  const rootReducer = combineSlices(
+    authApi,
+    postApi,
+    userProfileApi,
+    authSlice,
+    createPostSlice,
+  );
+  
   return configureStore({
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(
@@ -14,13 +22,7 @@ export const makeStore = () => {
         postApi.middleware,
         userProfileApi.middleware,
       ),
-    reducer: combineSlices(
-      authApi,
-      postApi,
-      userProfileApi,
-      authSlice,
-      createPostSlice,
-    ),
+    reducer: rootReducer,
   });
 };
 

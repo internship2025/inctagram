@@ -1,16 +1,18 @@
 "use client";
-import * as React from "react";
 import * as Select from "@radix-ui/react-select";
 import styles from "./select.module.css";
 import image2 from "../../../../public/cornerDown.svg";
 import image1 from "../../../../public/cornerTop.svg";
 import Image from "next/image";
+import { useState } from "react";
 
 type SelectDemo = {
   disabled?: boolean;
   onValueChange?: (value: string) => void;
   variant?: "var1" | "var2";
   className?: string;
+  value: string
+  placeholder: string
 };
 
 export const SelectDemo = ({
@@ -18,20 +20,36 @@ export const SelectDemo = ({
   disabled = false,
   onValueChange,
   variant = "var1",
+  value,
+  placeholder
 }: SelectDemo) => {
-  const [open, isOpen] = React.useState(false);
+  const [open, isOpen] = useState(false);
+  
+  const [inputValue, setInputValue] = useState('qq')
+  const [isInputOpen, setIsInputOpen] = useState('')
+
+
+
+  function handler(e: any){
+    
+    console.log(e.target.value)
+    setInputValue(e.target.value)
+  }
+
 
   return (
     <Select.Root
       onOpenChange={(open) => isOpen(open)}
       onValueChange={onValueChange}
+      value={value}
     >
+
       <Select.Trigger
-        style={{ marginLeft: "20px" }}
         className={`${styles.Trigger} ${open ? styles.open : ""}  ${styles[variant]} ${disabled ? styles.disabled : ""} ${className}`}
         disabled={disabled}
       >
-        <Select.Value placeholder="Текст1" />
+        
+        <Select.Value placeholder={placeholder} />
         <Select.Icon className={styles.Icon}>
           <Image
             src={open ? image2.src : image1.src}

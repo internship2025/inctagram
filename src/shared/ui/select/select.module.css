@@ -1,5 +1,5 @@
 .Trigger {
-  min-width: 210px;
+  width: 100%;
   display: inline-flex;
   align-items: center;
   justify-content: space-between;
@@ -7,10 +7,7 @@
   padding: 6px 12px;
   font-size: 16px;
   line-height: 24px;
-
-  background-color: #0D0D0D;
-
-
+  background-color: #0d0d0d;
   border: 1px solid #4c4c4c;
   outline: none;
   &:focus {
@@ -18,34 +15,34 @@
   }
 }
 
-
 .open {
   border: 1px solid white;
   background-color: #171717;
 }
 
-.var1{
-	color: white;
+.var1 {
+  color: white;
 }
 
-.var2{
-	color: #8D9094;
+.var2 {
+  color: #8d9094;
 }
 
-.disabled{
-	color: #4C4C4C
+.disabled {
+  color: #4c4c4c;
 }
-
 
 .Icon {
   color: Var(--violet-11);
+  display: flex;
 }
 
 .Content {
   position: relative;
-  z-index: 3000;
+  z-index: 100;
   background-color: #171717;
-  min-width:210px ;
+  width: var(--radix-select-trigger-width); 
+  min-width: var(--radix-select-trigger-width);
   border: 1px solid white;
 }
 
@@ -60,6 +57,7 @@
   /* padding-top: 6px;
   padding-bottom: 6px;
   padding-left: 12px; */
+
 }
 
 .Item {
@@ -73,17 +71,15 @@
 }
 
 .Item[data-highlighted] {
-	/* Стили для SuperSelect.Item при наведении */
-	background-color: #333333;
-    outline: none;
-	color: #397DF6;
-  }
+  /* Стили для SuperSelect.Item при наведении */
+  background-color: #333333;
+  outline: none;
+  color: #397df6;
+}
 
-  .ItemText{
-
-	padding-left: 12px;
-  }
-
+.ItemText {
+  padding-left: 12px;
+}
 
 .Label {
   padding: 0 25px;
@@ -119,5 +115,7 @@
   color: var(--violet-11);
   cursor: default;
 }
+
+
 
 

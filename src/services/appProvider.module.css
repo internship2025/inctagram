@@ -1,14 +1,13 @@
 .container {
-  max-width: 972px;
+  width: 972px;
+  max-width: 100%;
   margin: 0 auto;
   margin-top: 95px;
 }
 
 .wrapper {
-
   display: flex;
 }
-
 
 @media (max-width: 1470px) {
   .container {

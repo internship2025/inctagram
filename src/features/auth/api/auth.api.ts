@@ -137,10 +137,67 @@ export type PostsUserResponse = {
   nextCursor: number | null;
 };
 
+type UsersProfile = {
+  id: number;
+  userName: string;
+  firstName: string;
+  lastName: string;
+  city: string;
+  country: string;
+  region: string;
+  dateOfBirth: string;
+  aboutMe: string;
+  avatars: [
+    {
+      url: string;
+      width: number;
+      height: number;
+      fileSize: number;
+      createdAt: string;
+    },
+  ];
+  createdAt: string;
+};
+
+type ErrorResponse = {
+  statusCode: number;
+  messages: Array<{
+    message: string;
+    field: string;
+  }>;
+  error: string;
+};
+
+type UserProfile = {
+  userName: string;
+  firstName: string;
+  lastName: string;
+  city: string;
+  country: string;
+  region?: string;
+  dateOfBirth?: string;
+  aboutMe?: string;
+};
+
+
+type Avatar = {
+  url: string;
+  width: number;
+  height: number;
+  fileSize: number;
+  createdAt: string; // или Date, если парсится
+};
+
+type ExtendedUserProfile = UserProfile & {
+  id: number;
+  avatars: Avatar[];
+  createdAt: string; 
+}
+
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: baseQueryWithReauth,
-  tagTypes: ["Me", "Posts"],
+  tagTypes: ["Me", "Posts", "Info"],
   endpoints: (builder) => ({
     me: builder.query<MeResponse, void>({
       providesTags: ["Me"],
@@ -246,6 +303,22 @@ export const authApi = createApi({
     getNotification: builder.query<NotificationsType, void>({
       query: () => "notifications",
     }),
+    updateCurrentProfile: builder.mutation<void, UserProfile>({
+      query: (body) => ({
+        url: "users/profile",
+        method: "PUT",
+        body,
+      }),
+      // invalidatesTags: ["Info"],
+      transformErrorResponse: (response: {
+        status: number;
+        data: ErrorResponse;
+      }) => response.data,
+    }),
+    getCurrentProfile: builder.query<ExtendedUserProfile, void>({
+       query: ()=> 'users/profile',
+      //  providesTags: ["Info"]
+    }),
   }),
 });
 export const {
@@ -264,4 +337,6 @@ export const {
   useGetNotificationQuery,
   useGetPostsUserQuery,
   useGetPostByIdQuery,
+  useGetCurrentProfileQuery,
+  useUpdateCurrentProfileMutation
 } = authApi;
