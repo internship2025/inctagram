@@ -4,13 +4,13 @@ import {
   forwardRef,
   ReactNode,
 } from "react";
-import styles from "@/shared/ui/textArea/textArea.module.css";
+import styles from './textArea.module.css'
 
 type TextareaOwnProps = {
   autoResize?: boolean;
   className?: string;
   disabled?: boolean;
-  error?: boolean;
+  error?: string;
   helperText?: string;
   hideRequiredIndicator?: true;
   id?: string;
@@ -56,7 +56,6 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextareaProps>(
             {...props}
           />
         </div>
-        <div>{error && <p className={styles.errorText}>{error}</p>}</div>
       </div>
     );
   },

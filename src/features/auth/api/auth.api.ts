@@ -21,9 +21,7 @@ export const authApi = createApi({
   endpoints: (builder) => ({
     me: builder.query<MeResponse, void>({
       providesTags: ["Me"],
-      query: () => ({
-        url: "auth/me",
-      }),
+      query: () => "auth/me"
     }),
     signup: builder.mutation<void, SignUpArgs>({
       query: (args) => ({
