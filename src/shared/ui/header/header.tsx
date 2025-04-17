@@ -37,7 +37,9 @@ interface HeaderProps {
 export const Header = ({ onLangChange }: HeaderProps) => {
   const [currentLang, setCurrentLang] = useState("English");
 
-  const { data: userData, isFetching } = useMeQuery();
+  const { data: userData, isFetching} = useMeQuery();
+
+  console.log(userData)
 
   const dispatch = useAppDispatch();
 

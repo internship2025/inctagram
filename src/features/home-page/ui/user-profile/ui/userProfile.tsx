@@ -77,14 +77,14 @@ export const UserProfile = ({ data, initialPosts }: UserProfileProps) => {
           <div className={s.nameBox}>
             <h1 className={s.username}>{data.userName}</h1>
             {isOwner && (
-              <Button
-                variant="secondary"
-                as={Link}
-                href="/settings/profile"
-                className={s.settingsButton}
-              >
-                Profile Settings
-              </Button>
+                 <Button
+                 variant={"secondary"}
+                 as={Link}
+                 href= {`/profile/${data.id}/edit-profile`}
+                 className={s.settingsButton}
+               >
+                 Profile Settings
+               </Button>
             )}
           </div>
 

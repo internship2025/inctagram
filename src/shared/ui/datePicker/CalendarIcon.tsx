@@ -2,7 +2,7 @@ export const CalendarIcon = ({
   error,
 }: {
   className: string;
-  error: string;
+  error?: string | React.ReactNode;
 }) => (
   <svg
     style={{ cursor: "pointer", position: "relative", zIndex: "1000" }}

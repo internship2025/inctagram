@@ -5,18 +5,16 @@
 }
 
 .label {
-    font-size: var(--font-size-m);
+    font-size: var(--font-size-s);
     color: var(--color-light-900);
     font-weight: var(--font-weight-regular);
     line-height: var(--line-height-m);
-
 }
 
 .textarea {
     width: 100%;
-    min-height: 120px;
     padding: 12px;
-    border: 1px solid var(--color-dark-100);
+    border: 1px solid var(--color-light-900);
     font-size: 16px;
     background-color: var(--color-dark-700);
 }
@@ -32,6 +30,9 @@
     border-left: 1px solid var(--color-danger-500);
     border-right: 1px solid var(--color-danger-500);
     border-top: 2px solid var(--color-danger-500);
+}
+.error{
+    border: 1px solid red;
 }
 
 .errorText {
