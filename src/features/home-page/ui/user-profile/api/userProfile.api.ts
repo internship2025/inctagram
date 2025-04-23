@@ -20,7 +20,7 @@ export const userProfileApi = createApi({
     getProfile: builder.query<GetUserProfileResponse, void>({
       query: () => ({
         method: "GET",
-        url: "v1/users/profile",
+        url: "/users/profile",
       }),
     }),
     uploadProfileAvatar: builder.mutation<

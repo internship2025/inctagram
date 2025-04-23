@@ -1,5 +1,10 @@
 import { baseQueryWithReauth } from "@/features/auth/api/base.api";
 import { createApi } from "@reduxjs/toolkit/query/react";
+import {
+  ErrorResponse,
+  ExtendedUserProfile,
+  UserProfile,
+} from "@/features/profile-settings/api/types";
 
 export const profileSettingsApi = createApi({
   reducerPath: "profileSettingsApi",
@@ -8,6 +13,7 @@ export const profileSettingsApi = createApi({
     getCurrentProfile: builder.query<ExtendedUserProfile, void>({
       query: () => "users/profile",
     }),
+
     updateCurrentProfile: builder.mutation<void, UserProfile>({
       query: (body) => ({
         url: "users/profile",
