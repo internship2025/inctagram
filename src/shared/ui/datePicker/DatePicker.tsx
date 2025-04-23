@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import {
   format,
   addMonths,
@@ -16,29 +16,38 @@ import {
 import s from "./datePicker.module.css";
 import { CalendarIcon } from "./CalendarIcon";
 
+
 type Page = {
   selectedDate: Date | [Date, Date] | null;
-  onDateChange: (val: Date | [Date, Date]) => void;
+  onDateChange: (val: Date | [Date, Date] | string | [string, string]) => void;
   isRange?: boolean;
   disabled?: boolean;
+  fullWidth?: boolean;
+  label?: string;
+  error?: string
 };
 
-export const CustomDatePicker = ({
+export const DatePicker = ({
   selectedDate,
   onDateChange,
+  label,
+  fullWidth = false,
   isRange = false,
   disabled = false,
+  error
 }: Page) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [isOpen, setIsOpen] = useState(false);
   const [rangeStart, setRangeStart] = useState<Date | null>(null);
   const [rangeEnd, setRangeEnd] = useState<Date | null>(null);
   const [isFocused, setIsFocused] = useState(false);
-  const [error, isError] = useState("");
+  const [errorMessage, seterrorMessage] = useState<React.ReactNode>(""); 
   const [hoveredDate, setHoveredDate] = useState<Date | null>(null);
+  const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
+  const [isHoldingButton, setIsHoldingButton] = useState(false);
+  const holdTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const inputRef = useRef<HTMLInputElement>(null);
-
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -55,26 +64,65 @@ export const CustomDatePicker = ({
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
+      stopContinuousNavigation();
+      stopHoldNavigation();
     };
   }, []);
+
+  const prevMonth = useCallback(() => {
+    setCurrentMonth((prev) => subMonths(prev, 1));
+  }, []);
+
+  const nextMonth = useCallback(() => {
+    setCurrentMonth((prev) => addMonths(prev, 1));
+  }, []);
+
+  const startContinuousNavigation = useCallback(
+    (direction: "prev" | "next") => {
+      const id = setInterval(() => {
+        direction === "prev" ? prevMonth() : nextMonth();
+      }, 20);
+      setIntervalId(id);
+    },
+    [prevMonth, nextMonth]
+  );
+
+  const stopContinuousNavigation = useCallback(() => {
+    if (intervalId) {
+      clearInterval(intervalId);
+      setIntervalId(null);
+    }
+  }, [intervalId]);
+
+  const startHoldNavigation = useCallback(
+    (direction: "prev" | "next") => {
+      direction === "prev" ? prevMonth() : nextMonth();
+      holdTimerRef.current = setTimeout(() => {
+        setIsHoldingButton(true);
+        startContinuousNavigation(direction);
+      }, 300);
+    },
+    [prevMonth, nextMonth, startContinuousNavigation]
+  );
+
+  const stopHoldNavigation = useCallback(() => {
+    if (holdTimerRef.current) {
+      clearTimeout(holdTimerRef.current);
+      holdTimerRef.current = null;
+    }
+    setIsHoldingButton(false);
+    stopContinuousNavigation();
+  }, [stopContinuousNavigation]);
 
   const getDate = (date: Date | [Date, Date] | null) => {
     if (!date) return "";
     if (Array.isArray(date)) {
       return `${format(date[0], "dd/MM/yyyy")} - ${format(
         date[1],
-        "dd/MM/yyyy",
+        "dd/MM/yyyy"
       )}`;
     }
     return format(date, "dd/MM/yyyy");
-  };
-
-  const nextMonth = () => {
-    setCurrentMonth(addMonths(currentMonth, 1));
-  };
-
-  const prevMonth = () => {
-    setCurrentMonth(subMonths(currentMonth, 1));
   };
 
   const renderHeader = () => {
@@ -82,8 +130,26 @@ export const CustomDatePicker = ({
       <div className={s.header}>
         <span className={s.month}>{format(currentMonth, "MMMM yyyy")}</span>
         <div className={s.navigation}>
-          <button className={s.circleButton} onClick={prevMonth}></button>
-          <button className={s.circleButton} onClick={nextMonth}></button>
+          <button
+            type="button"
+            className={s.circleButton}
+            onMouseDown={() => startHoldNavigation("prev")}
+            onMouseUp={stopHoldNavigation}
+            onMouseLeave={stopHoldNavigation}
+            onTouchStart={() => startHoldNavigation("prev")}
+            onTouchEnd={stopHoldNavigation}
+            aria-label="Previous month"
+          ></button>
+          <button
+            type="button"
+            className={s.circleButton}
+            onMouseDown={() => startHoldNavigation("next")}
+            onMouseUp={stopHoldNavigation}
+            onMouseLeave={stopHoldNavigation}
+            onTouchStart={() => startHoldNavigation("next")}
+            onTouchEnd={stopHoldNavigation}
+            aria-label="Next month"
+          ></button>
         </div>
       </div>
     );
@@ -98,7 +164,7 @@ export const CustomDatePicker = ({
       days.push(
         <div className={s.dayName} key={i}>
           {format(addDays(startDate, i), dateFormat)}
-        </div>,
+        </div>
       );
     }
 
@@ -138,7 +204,7 @@ export const CustomDatePicker = ({
         let end = false;
 
         if (rangeStart) {
-          if (!error) {
+          if (!errorMessage) {
             str =
               rangeStart.getMonth() === day.getMonth() &&
               rangeStart.getDate() === day.getDate();
@@ -201,43 +267,28 @@ export const CustomDatePicker = ({
                             ? s.weekend
                             : isWeekend
                               ? s.weekend
-                              : isToday(day) && isSelected
-                                ? s.oneSel
-                                : isToday(day)
-                                  ? s.today
-                                  : isSelected && isRange
-                                    ? s.selectedRange
-                                    : isSelected
-                                      ? s.selected
-                                      : ""
-            }  ${date && isSelected ? s.mix : ""} ${str ? s.one : ""} ${
-              end ? s.two : ""
-            } ${isInHoverRange || isInFixedRange ? s.inRange : ""} ${
-              isHovered ? s.hovered : ""
-            } ${
-              !isSameMonth(day, monthStart) && isSelected && isRange
-                ? s.selectedRange
-                : ""
-            } 
-            ${
-              !isSameMonth(day, monthStart) && isSelected && isRange && end
-                ? ""
-                : ""
-            }
-            `}
+                              : isSelected && isRange
+                                ? s.selectedRange
+                                : isSelected
+                                  ? s.selected
+                                  : ""
+            } ${str ? s.one : ""} ${end ? s.two : ""} ${
+              isInHoverRange || isInFixedRange ? s.inRange : ""
+            } ${isHovered ? s.hovered : ""}`}
             key={day.getTime()}
             onClick={() => handleDateClick(cloneDay)}
             onMouseEnter={() => setHoveredDate(cloneDay)}
           >
             {format(day, dateFormat)}
-          </div>,
+          </div>
         );
+
         day = addDays(day, 1);
       }
       rows.push(
         <div className={s.row} key={day.getTime()}>
           {days}
-        </div>,
+        </div>
       );
       days = [];
     }
@@ -246,88 +297,109 @@ export const CustomDatePicker = ({
   };
 
   const handleDateClick = (date: Date) => {
-    let isPastMonth = false;
-    if (date.getMonth() === new Date().getMonth()) {
-      if (date.getDate() >= new Date().getDate()) {
-        isPastMonth = true;
-      }
-    } else if (date.getMonth() > new Date().getMonth()) {
-      isPastMonth = true;
-    }
+    const utcDate = new Date(
+      Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
+    );
 
-    if (!isPastMonth) {
-      isError("Error!");
-      setIsOpen(false);
-      setRangeStart(null);
-      setRangeEnd(null);
-    } else {
-      isError("");
-    }
+    seterrorMessage("");
 
     if (isRange) {
       if (!rangeStart || (rangeStart && rangeEnd)) {
-        // Если диапазон не начат или завершен, начинаем новый диапазон
         setRangeStart(date);
         setRangeEnd(null);
       } else if (rangeStart && !rangeEnd) {
-        // Если выбрана вторая дата, завершаем диапазон
+        const utcRangeStart = new Date(
+          Date.UTC(
+            rangeStart.getFullYear(),
+            rangeStart.getMonth(),
+            rangeStart.getDate()
+          )
+        );
+
         if (date > rangeStart) {
           setRangeEnd(date);
-          onDateChange([rangeStart, date]);
+          onDateChange([utcRangeStart.toISOString(), utcDate.toISOString()]);
         } else {
-          // Если вторая дата меньше первой, меняем их местами
           setRangeEnd(rangeStart);
           setRangeStart(date);
-          onDateChange([date, rangeStart]);
+          onDateChange([utcDate.toISOString(), utcRangeStart.toISOString()]);
         }
       }
     } else {
-      // Если не диапазон, просто выбираем дату
-      onDateChange(date);
+      let nowDate = new Date().getFullYear(),
+        changeDate = utcDate.getFullYear();
+
+      // if (nowDate - changeDate < 13) {
+      //   seterrorMessage(
+      //     <>{`A user under 13 cannot create a profile `}
+      //       <Link style={{ textDecoration: 'underline' }} href="/privacy-policy">
+      //         Privacy Policy
+      //       </Link>
+      //     </>
+      //   );
+      // } else {
+      //   onDateChange(utcDate.toISOString());
+      // }
+      onDateChange(utcDate.toISOString());
     }
+
+    setIsOpen(false);
   };
 
   return (
-    <div className={s.inp} ref={containerRef}>
-      <input
-        ref={inputRef}
-        className={`${s.input} ${isOpen ? s.active : ""} ${error ? s.error : ""} ${
-          disabled ? s.disabled : ""
-        } ${isRange ? s.range : ""}`}
-        onChange={() => {}}
-        value={getDate(selectedDate)}
-        type="text"
-        disabled={disabled}
-        onClick={(e) => {
-          e.preventDefault();
-          setIsOpen(!isOpen);
-          if (isFocused && !isOpen) {
-            inputRef.current?.blur();
-          }
-        }}
-        onFocus={() => {
-          setIsFocused(true);
-          if (!isOpen) {
-            inputRef.current?.blur();
-          }
-        }}
-        onBlur={() => {
-          if (isOpen) {
-            setIsFocused(true);
-          }
-        }}
-      />
-      <span
-        onClick={() => {
-          if (!disabled) {
+    <div
+      className={`${s.inp} ${fullWidth ? s.fullWidth : ""}`}
+      ref={containerRef}
+    >
+      {label && (
+        <label className={s.label} htmlFor="inputDate">
+          {label}
+        </label>
+      )}
+      <div className={s.inputWrapper}>
+        <input       
+          id={"inputDate"}
+          ref={inputRef}
+          placeholder="00.00.0000"
+          className={`${s.input} ${isOpen ? s.active : ""} ${
+            disabled ? s.disabled : ""
+          } ${isRange ? s.range : ""} ${errorMessage  && s.errorMessage}  ${error && s.errorMessage}`}
+          onChange={() => {}}
+          value={getDate(selectedDate)}
+          type="text"
+          disabled={disabled}
+          onClick={(e) => {
+            e.preventDefault();
             setIsOpen(!isOpen);
-          }
-        }}
-        className={s.wrapperIcon}
-      >
-        <CalendarIcon error={error} className={s.icon} />
-      </span>
-      {error && !isOpen ? <div className={s.errorText}>{error}</div> : ""}
+            if (isFocused && !isOpen) {
+              inputRef.current?.blur();
+            }
+          }}
+          onFocus={() => {
+            setIsFocused(true);
+            if (!isOpen) {
+              inputRef.current?.blur();
+            }
+          }}
+          onBlur={() => {
+            if (isOpen) {
+              setIsFocused(true);
+            }
+          }}
+        />
+        <span
+          onClick={() => {
+            if (!disabled) {
+              setIsOpen(!isOpen);
+            }
+          }}
+          className={s.wrapperIcon}
+        >
+          <CalendarIcon error={error} className={s.icon} />
+        </span>
+      </div>
+
+      {/* {errorMessage && !isOpen ? <div className={s.errorMessageText}>{errorMessage}</div> : ""} */}
       {isOpen && (
         <div className={s.datePicker} onMouseLeave={() => setHoveredDate(null)}>
           {renderHeader()}

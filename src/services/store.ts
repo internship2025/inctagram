@@ -8,25 +8,23 @@ import { userProfileApi } from "@/features/home-page/ui/user-profile/api/userPro
 import { notificationsApi } from "@/features/notifications/api/notifications.api";
 import { rtkQueryErrorLogger } from "./errorMiddleware";
 
-
 export const makeStore = () => {
   return configureStore({
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware()
-        .concat(
-          authApi.middleware,
-          postApi.middleware,
-          userProfileApi.middleware,
-          notificationsApi.middleware,
-          rtkQueryErrorLogger
-        ),
+      getDefaultMiddleware().concat(
+        authApi.middleware,
+        postApi.middleware,
+        userProfileApi.middleware,
+        notificationsApi.middleware,
+        rtkQueryErrorLogger
+      ),
     reducer: combineSlices(
       authApi,
       postApi,
       userProfileApi,
       authSlice,
       createPostSlice,
-      notificationsApi,
+      notificationsApi
     ),
   });
 };
