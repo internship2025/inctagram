@@ -3,7 +3,8 @@ import { baseQueryWithReauth } from "@/features/auth/api/base.api";
 import {
   GetPublicUserProfileResponse,
   UploadProfileAvatarResponse,
-} from "@/features/home-page/ui/user-profile/api/types";
+  PostsUserResponse,
+} from "./types";
 
 export const userProfileApi = createApi({
   reducerPath: "userProfileApi",
@@ -16,13 +17,32 @@ export const userProfileApi = createApi({
         url: `/public-user/profile/${profileId}`,
       }),
     }),
-    uploadProfileAvatar: builder.mutation<
-      UploadProfileAvatarResponse,
-      { file: File }
-    >({
-      query: ({ file }) => {},
+    getPostsUser: builder.query<PostsUserResponse, { id: number; endCursorPostId: number | null }>({
+      query: ({ id, endCursorPostId }) => ({
+        method: "GET",
+        url: `/public-user/posts/${id}`,
+        params: endCursorPostId ? { cursor: endCursorPostId } : undefined,
+      }),
+      providesTags: ["Posts"],
+    }),
+    uploadProfileAvatar: builder.mutation<UploadProfileAvatarResponse, { file: File }>({
+      query: ({ file }) => {
+        const formData = new FormData();
+        formData.append("file", file);
+
+        return {
+          url: "/profile/avatar",
+          method: "POST",
+          body: formData,
+        };
+      },
+      invalidatesTags: ["Me"],
     }),
   }),
 });
 
-export const { useGetPublicUserProfileQuery } = userProfileApi;
+export const {
+  useGetPublicUserProfileQuery,
+  useLazyGetPostsUserQuery,
+  useUploadProfileAvatarMutation,
+} = userProfileApi;
