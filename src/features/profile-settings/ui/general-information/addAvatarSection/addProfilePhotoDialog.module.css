@@ -1,11 +1,60 @@
 .mainContainer {
     width: 100%;
+
 }
 
 .uploaderContainer {
-    display: flex;              
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 3.5rem;
 }
+
+.previewContainer {
+  position: relative;
+  width: 332px;
+  height: 340px;
+  margin-top: 1.75rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.previewImage {
+  width: 332px;
+  height: 340px;
+  object-fit: cover;
+  opacity: 0.5;
+}
+
+.previewRoundedImage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 332px;
+  height: 340px;
+  object-fit: cover;
+  border-radius: 9999px;
+  z-index: 10;
+}
+
+.dialogContent {
+  width: 492px;
+  height: 564px;
+}
+
+.photoText {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+
+}
+
+.addPhoto {
+    padding: 0.75rem 1.5rem;
+    border-bottom: 1px solid var(--color-dark-100);
+    cursor: default;
+    margin-bottom: 72px;
+}
+
+

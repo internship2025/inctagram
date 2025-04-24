@@ -1,6 +1,7 @@
 import styles from "./avatarUploader.module.css";
 import { ChangeEvent, RefObject, useState } from "react";
 import { Typography } from "@/shared/ui/typography/typography";
+import { SvgImageOutline } from "@/assets/icons/components/ImageOutline";
 
 type ImageUploaderProps = {
   fileInputRef: RefObject<HTMLInputElement>;
@@ -39,7 +40,7 @@ export const AvatarUploader = ({
     <div className={styles.avatarUploaderContainer}>
       <input
         accept={".jpg, .jpeg, .png"}
-        className={"hidden"}
+        className={styles.hidden}
         onChange={onFileSelected}
         ref={fileInputRef}
         type={"file"}
@@ -49,7 +50,9 @@ export const AvatarUploader = ({
           <Typography>{error}</Typography>
         </div>
       )}
-      {/*<div className={}></div>*/}
+      <div className={styles.imageOutline}>
+        <SvgImageOutline height={46} width={46} />
+      </div>
     </div>
   );
 };

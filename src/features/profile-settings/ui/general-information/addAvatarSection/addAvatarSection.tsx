@@ -12,7 +12,11 @@ import { AddProfilePhotoDialog } from "@/features/profile-settings/ui/general-in
 export const AddAvatarSection = () => {
   const { data: profileData } = useGetProfileQuery();
   const [avatarSrc, setAvatarSrc] = useState<string | undefined>(undefined);
+  const [photoToUpload, setPhotoToUpload] = useState<File | null>(null);
   const [open, setOpen] = useState<boolean>(false);
+  const handlePhotoUploaded = (file: File) => {
+    setPhotoToUpload(file);
+  };
 
   useEffect(() => {
     if (profileData?.avatars?.[0]?.url) {
@@ -43,8 +47,17 @@ export const AddAvatarSection = () => {
           </div>
         )}
       </div>
-      <AddProfilePhotoDialog />
-      <Button className={styles.avatarButton} variant={"outline"}>
+      <AddProfilePhotoDialog
+        open={open}
+        onPhotoUploaded={handlePhotoUploaded}
+        onOpenChange={setOpen}
+        // onSendPhoto={handleSendPhoto}
+      />
+      <Button
+        className={styles.avatarButton}
+        variant={"outline"}
+        onClick={() => setOpen(true)}
+      >
         {!avatarSrc ? "Add a Profile Photo" : "Update a Profile Photo"}
       </Button>
     </div>
