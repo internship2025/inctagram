@@ -41,7 +41,7 @@ const Profile = async ({ params, searchParams }: Props) => {
     <UserProfile
       data={data}
       initialPosts={initialPosts}
-      // selectedPost={selectedPost}
+      selectedPost={selectedPost}
     />
   );
 };
