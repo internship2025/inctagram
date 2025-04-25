@@ -48,7 +48,10 @@ export const PostEdit = ({
 
   const onSubmit = async (data: { description: string }) => {
     try {
-      await editPost({ id: postId, description: data.description }).unwrap();
+      await editPost({
+        postId: postId,
+        description: data.description,
+      }).unwrap();
       onSuccess();
     } catch (error) {
       console.error("Failed to edit post:", error);
@@ -64,10 +67,9 @@ export const PostEdit = ({
       <div className={s.form}>
         <form onSubmit={handleSubmit(onSubmit)} className={s.form}>
           <ControlledTextArea
-            className={s.textareaInput}
             control={control}
             name="description"
-            label={"post.editDescription"}
+            label={"Add publication descriptions"}
             rules={{
               maxLength: {
                 value: maxLength,
@@ -82,7 +84,6 @@ export const PostEdit = ({
           >
             {characterCount}/{maxLength}
           </Typography>
-
           <div className={s.actions}>
             <Button
               type="button"
