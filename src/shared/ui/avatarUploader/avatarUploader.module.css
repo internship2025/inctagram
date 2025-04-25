@@ -21,7 +21,10 @@
     background-color: var(--color-dark-700);
     width: 222px;
     height: 228px;
+    overflow: hidden;
+    border-radius: 50%;
 }
+
 
 .hidden {
     display: none;

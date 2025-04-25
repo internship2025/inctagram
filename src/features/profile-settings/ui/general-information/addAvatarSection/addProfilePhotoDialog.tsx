@@ -10,12 +10,14 @@ type Props = {
   open?: boolean;
   onPhotoUploaded: (file: File) => void;
   onOpenChange: (open: boolean) => void;
+  onSendPhoto: () => void;
 };
 
 export const AddProfilePhotoDialog = ({
   open,
   onPhotoUploaded,
   onOpenChange,
+  onSendPhoto,
 }: Props) => {
   const [photoToUpload, setPhotoToUpload] = useState<File | null>(null);
   const [previewSrc, setPreviewSrc] = useState<null | string>(null);
@@ -73,6 +75,11 @@ export const AddProfilePhotoDialog = ({
               width={332}
             />
           </div>
+        )}
+        {photoToUpload && (
+          <Button className={styles.sendButton} onClick={onSendPhoto}>
+            Send
+          </Button>
         )}
       </Dialog>
     </div>

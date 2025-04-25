@@ -22,6 +22,7 @@ export const userProfileApi = createApi({
         method: "GET",
         url: "/users/profile",
       }),
+      providesTags: ["Me"],
     }),
     uploadProfileAvatar: builder.mutation<
       UploadProfileAvatarResponse,
@@ -38,12 +39,14 @@ export const userProfileApi = createApi({
           url: "/users/profile/avatar",
         };
       },
+      invalidatesTags: ["Me"],
     }),
     deleteProfileAvatar: builder.mutation<void, void>({
       query: () => ({
         method: "DELETE",
         url: "/users/profile/avatar",
       }),
+      invalidatesTags: ["Me"],
     }),
   }),
 });
