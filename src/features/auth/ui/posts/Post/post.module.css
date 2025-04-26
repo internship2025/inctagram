@@ -1,0 +1,132 @@
+
+.root {
+    display: flex;
+    width: 100%;
+    max-width: 1000px;
+    background-color: var(--color-dark-300);
+    position: relative;
+}
+
+.imgWrapper {
+    width: 100%;
+    max-width: 480px;
+    height: 100%;
+
+    img {
+        position: relative !important;
+    }
+}
+
+.content {
+    display: flex;
+    gap: 10px;
+}
+
+.postInfoWrapper {
+    width: 520px;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-dark-300);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 24px;
+    border-bottom: 1px solid var(--color-dark-100);
+}
+
+.contentWrapper {
+    scrollbar-width: none;
+    width: 100%;
+    max-height: 300px;
+    padding: 24px 24px 8px;
+    border-bottom: 1px solid var(--color-dark-100);
+}
+
+.userInfo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+
+.comment {
+    width: 100%;
+    text-align: start;
+}
+
+.contentInner {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.grey {
+    color: var(--color-light-900);
+}
+
+.bottomBlock {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 12px 24px 55px;
+    gap: 10px;
+}
+
+.icons {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.icons div {
+    display: flex;
+    gap: 5px;
+}
+
+.avatars {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+}
+
+.input {
+    position: absolute;
+    right: 0;
+    bottom: -25px;
+    left: 0;
+    border-top: 1px solid var(--color-dark-100);
+}
+
+.publish {
+    position: absolute;
+    right: 2px;
+    bottom: 2px;
+    color: var(--color-info-700);
+}
+
+.avatar_container {
+    display: flex;
+}
+
+.avatar {
+    width: 24px;
+    height: 24px;
+    margin-left: -15px;
+    border-radius: 50%;
+}
+
+.border {
+    border: 1px solid var(--color-dark-100);
+}
+
+.avatar:first-child {
+    margin-left: 0;
+}
+
