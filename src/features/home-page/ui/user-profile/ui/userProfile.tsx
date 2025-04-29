@@ -14,20 +14,30 @@ import {
 } from "@/features/home-page/ui/user-profile/api/types";
 import { useLazyGetPostsUserQuery } from "@/features/create-post/api/post.api";
 import { PostsUser } from "@/features/home-page/ui/user-profile/ui/post-users/ui/postsUser/PostsUser";
+import { toast } from "sonner";
+import { PostItem } from "@/features/create-post/api/types";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Post } from "@/features/auth/ui/posts/Post/post";
+import { Modal } from "@/shared/ui/modal/modal";
 
 interface UserProfileProps {
   data: GetPublicUserProfileResponse;
   initialPosts: PostsUserResponse;
-  selectedPost?: any;
+  selectedPost: PostItem | null;
 }
 
 export const UserProfile = ({ data, initialPosts }: UserProfileProps) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const postId = searchParams.get("postId");
+
   const [posts, setPosts] = useState(initialPosts.items);
   const [lastPostId, setLastPostId] = useState<number | null>(
     initialPosts.items[initialPosts.items.length - 1]?.id || null,
   );
   const { ref, inView } = useInView({ threshold: 0.5 });
   const totalPosts = initialPosts.totalCount;
+  const [hasError, setHasError] = useState(false);
 
   const [fetchPosts, { data: newPosts, isFetching, error }] =
     useLazyGetPostsUserQuery();
@@ -35,14 +45,30 @@ export const UserProfile = ({ data, initialPosts }: UserProfileProps) => {
   const currentUserId = useAppSelector((state) => state.auth.userId);
   const isOwner = currentUserId === data.id;
 
+  // Ловим ошибку загрузки постов
   useEffect(() => {
-    if (inView && !isFetching && posts.length < totalPosts) {
+    if (error) {
+      toast.error("Failed to load posts. Check your internet connection.");
+      setHasError(true);
+    }
+  }, [error]);
+
+  useEffect(() => {
+    if (inView && !isFetching && !hasError && posts.length < totalPosts) {
       fetchPosts({
         id: data.id,
         endCursorPostId: lastPostId,
       });
     }
-  }, [inView, isFetching, data.id, lastPostId, totalPosts, posts.length]);
+  }, [
+    inView,
+    isFetching,
+    hasError,
+    data.id,
+    lastPostId,
+    totalPosts,
+    posts.length,
+  ]);
 
   useEffect(() => {
     if (newPosts?.items) {
@@ -57,6 +83,18 @@ export const UserProfile = ({ data, initialPosts }: UserProfileProps) => {
       if (newLastId) setLastPostId(newLastId);
     }
   }, [newPosts]);
+
+  const handlePostClick = (postId: number) => {
+    router.push(`/profile/${data.id}?postId=${postId}`, { scroll: false });
+  };
+
+  const handleCloseModal = () => {
+    router.push(`/profile/${data.id}`, { scroll: false });
+  };
+
+  const selectedPost = postId
+    ? posts.find((post) => post.id === Number(postId))
+    : null;
 
   return (
     <div className={s.container}>
@@ -78,14 +116,14 @@ export const UserProfile = ({ data, initialPosts }: UserProfileProps) => {
           <div className={s.nameBox}>
             <h1 className={s.username}>{data.userName}</h1>
             {isOwner && (
-                 <Button
-                 variant={"secondary"}
-                 as={Link}
-                 href= {`/profile/${data.id}/edit-profile`}
-                 className={s.settingsButton}
-               >
-                 Profile Settings
-               </Button>
+              <Button
+                variant={"secondary"}
+                as={Link}
+                href={`/profile/${data.id}/edit-profile`}
+                className={s.settingsButton}
+              >
+                Profile Settings
+              </Button>
             )}
           </div>
 
@@ -113,7 +151,7 @@ export const UserProfile = ({ data, initialPosts }: UserProfileProps) => {
       </div>
 
       {/* Список постов */}
-      <PostsUser posts={posts} />
+      <PostsUser posts={posts} onPostClick={handlePostClick} />
 
       {/* Индикатор загрузки */}
       <div ref={ref} className={s.loaderContainer}>
@@ -122,6 +160,21 @@ export const UserProfile = ({ data, initialPosts }: UserProfileProps) => {
           <p className={s.endMessage}>All posts loaded ({totalPosts} total)</p>
         )}
       </div>
+      {selectedPost && (
+        <Modal open={true} onClose={handleCloseModal} isClose={true}>
+          <Post
+            post={selectedPost}
+            avatar={data.avatars[0]?.url || "/default-avatar.png"}
+            username={data.userName}
+            isOwner={isOwner}
+            onPostDeleted={(deletedPostId) => {
+              setPosts(posts.filter((post) => post.id !== deletedPostId));
+              handleCloseModal();
+            }}
+            userId={currentUserId || 0}
+          />
+        </Modal>
+      )}
     </div>
   );
 };
