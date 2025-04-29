@@ -48,7 +48,7 @@ export const Header = ({ onLangChange }: HeaderProps) => {
       dispatch(setAuthenticated({ userId: userData.userId }));
       localStorage.setItem("userName", userData.userName);
     }
-  }, [userData]);
+  }, [userData, isFetching, dispatch]);
 
   const handleLangChange = (value: string) => {
     setCurrentLang(value);

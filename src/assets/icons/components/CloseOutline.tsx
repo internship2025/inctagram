@@ -40,4 +40,6 @@ export const SvgCloseOutline = forwardRef<
   </svg>
 ));
 
+SvgCloseOutline.displayName = 'SvgCloseOutline';
+
 export default memo(SvgCloseOutline);

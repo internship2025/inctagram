@@ -33,7 +33,7 @@ const PhotosSlider = ({
   const [currentIndex, setCurrentIndex] = useState(0);
   const [activeCurcle, setActiveCurcle] = useState(0);
 
-  let maxIndex = images.length - 1;
+  const maxIndex = images.length - 1;
 
   const nextSlide = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -63,11 +63,11 @@ const PhotosSlider = ({
   };
 
   const length = images.length;
-  let src = length !== 0 ? images[currentIndex].url : photo;
+  const src = length !== 0 ? images[currentIndex].url : photo;
 
   const setSize = useCallback(
     (size: string) => {
-      let obj = {
+      const obj = {
         width: 972,
         height: 564,
       };
@@ -77,7 +77,7 @@ const PhotosSlider = ({
       }
       return obj;
     },
-    [size],
+    [],
   );
 
   return (

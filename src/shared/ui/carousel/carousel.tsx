@@ -155,7 +155,7 @@ const Carousel = React.forwardRef<
       >
         <div
           aria-roledescription={"carousel"}
-          className={styles.carouselContainer}
+          className={`${styles.carouselContainer} ${className || ""}`}
           onKeyDownCapture={handleKeyDown}
           ref={ref}
           role={"region"}

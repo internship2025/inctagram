@@ -3,6 +3,7 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { SelectArrowIcon } from "./SelectArrowIcon";
 import { useRef } from "react";
+import Image from "next/image";
 
 export type BaseOption = {
   name: string;
@@ -97,12 +98,12 @@ export default function CustomAutocomplete<T extends BaseOption>({
             {...optionProps}
           >
             {option?.code && (
-              <img
-                loading="lazy"
-                width="20"
-                srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
+              <Image
+                width={20}
+                height={20}
                 src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
                 alt=""
+                style={{ marginRight: 8, flexShrink: 0 }}
               />
             )}
 

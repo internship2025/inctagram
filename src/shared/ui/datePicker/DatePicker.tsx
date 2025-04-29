@@ -16,7 +16,6 @@ import {
 import s from "./datePicker.module.css";
 import { CalendarIcon } from "./CalendarIcon";
 
-
 type Page = {
   selectedDate: Date | [Date, Date] | null;
   onDateChange: (val: Date | [Date, Date] | string | [string, string]) => void;
@@ -24,7 +23,7 @@ type Page = {
   disabled?: boolean;
   fullWidth?: boolean;
   label?: string;
-  error?: string
+  error?: string;
 };
 
 export const DatePicker = ({
@@ -34,14 +33,14 @@ export const DatePicker = ({
   fullWidth = false,
   isRange = false,
   disabled = false,
-  error
+  error,
 }: Page) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [isOpen, setIsOpen] = useState(false);
   const [rangeStart, setRangeStart] = useState<Date | null>(null);
   const [rangeEnd, setRangeEnd] = useState<Date | null>(null);
   const [isFocused, setIsFocused] = useState(false);
-  const [errorMessage, seterrorMessage] = useState<React.ReactNode>(""); 
+  const [errorMessage, seterrorMessage] = useState<React.ReactNode>("");
   const [hoveredDate, setHoveredDate] = useState<Date | null>(null);
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
   const [isHoldingButton, setIsHoldingButton] = useState(false);
@@ -84,7 +83,7 @@ export const DatePicker = ({
       }, 20);
       setIntervalId(id);
     },
-    [prevMonth, nextMonth]
+    [prevMonth, nextMonth],
   );
 
   const stopContinuousNavigation = useCallback(() => {
@@ -102,7 +101,7 @@ export const DatePicker = ({
         startContinuousNavigation(direction);
       }, 300);
     },
-    [prevMonth, nextMonth, startContinuousNavigation]
+    [prevMonth, nextMonth, startContinuousNavigation],
   );
 
   const stopHoldNavigation = useCallback(() => {
@@ -119,7 +118,7 @@ export const DatePicker = ({
     if (Array.isArray(date)) {
       return `${format(date[0], "dd/MM/yyyy")} - ${format(
         date[1],
-        "dd/MM/yyyy"
+        "dd/MM/yyyy",
       )}`;
     }
     return format(date, "dd/MM/yyyy");
@@ -132,7 +131,7 @@ export const DatePicker = ({
         <div className={s.navigation}>
           <button
             type="button"
-            className={s.circleButton}
+            className={`${s.circleButton} ${isHoldingButton ? s.holding : ""}`}
             onMouseDown={() => startHoldNavigation("prev")}
             onMouseUp={stopHoldNavigation}
             onMouseLeave={stopHoldNavigation}
@@ -142,7 +141,7 @@ export const DatePicker = ({
           ></button>
           <button
             type="button"
-            className={s.circleButton}
+            className={`${s.circleButton} ${isHoldingButton ? s.holding : ""}`}
             onMouseDown={() => startHoldNavigation("next")}
             onMouseUp={stopHoldNavigation}
             onMouseLeave={stopHoldNavigation}
@@ -164,7 +163,7 @@ export const DatePicker = ({
       days.push(
         <div className={s.dayName} key={i}>
           {format(addDays(startDate, i), dateFormat)}
-        </div>
+        </div>,
       );
     }
 
@@ -197,8 +196,6 @@ export const DatePicker = ({
         const isWeekend =
           isCurrentMonth &&
           (cloneDay.getDay() === 0 || cloneDay.getDay() === 6);
-
-        const date = day.getMonth() >= new Date().getMonth();
 
         let str = false;
         let end = false;
@@ -278,9 +275,10 @@ export const DatePicker = ({
             key={day.getTime()}
             onClick={() => handleDateClick(cloneDay)}
             onMouseEnter={() => setHoveredDate(cloneDay)}
+            onMouseLeave={() => setHoveredDate(null)}
           >
             {format(day, dateFormat)}
-          </div>
+          </div>,
         );
 
         day = addDays(day, 1);
@@ -288,7 +286,7 @@ export const DatePicker = ({
       rows.push(
         <div className={s.row} key={day.getTime()}>
           {days}
-        </div>
+        </div>,
       );
       days = [];
     }
@@ -298,7 +296,7 @@ export const DatePicker = ({
 
   const handleDateClick = (date: Date) => {
     const utcDate = new Date(
-      Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
+      Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()),
     );
 
     seterrorMessage("");
@@ -312,8 +310,8 @@ export const DatePicker = ({
           Date.UTC(
             rangeStart.getFullYear(),
             rangeStart.getMonth(),
-            rangeStart.getDate()
-          )
+            rangeStart.getDate(),
+          ),
         );
 
         if (date > rangeStart) {
@@ -326,20 +324,6 @@ export const DatePicker = ({
         }
       }
     } else {
-      let nowDate = new Date().getFullYear(),
-        changeDate = utcDate.getFullYear();
-
-      // if (nowDate - changeDate < 13) {
-      //   seterrorMessage(
-      //     <>{`A user under 13 cannot create a profile `}
-      //       <Link style={{ textDecoration: 'underline' }} href="/privacy-policy">
-      //         Privacy Policy
-      //       </Link>
-      //     </>
-      //   );
-      // } else {
-      //   onDateChange(utcDate.toISOString());
-      // }
       onDateChange(utcDate.toISOString());
     }
 
@@ -357,13 +341,13 @@ export const DatePicker = ({
         </label>
       )}
       <div className={s.inputWrapper}>
-        <input       
+        <input
           id={"inputDate"}
           ref={inputRef}
           placeholder="00.00.0000"
           className={`${s.input} ${isOpen ? s.active : ""} ${
             disabled ? s.disabled : ""
-          } ${isRange ? s.range : ""} ${errorMessage  && s.errorMessage}  ${error && s.errorMessage}`}
+          } ${isRange ? s.range : ""} ${errorMessage && s.errorMessage}  ${error && s.errorMessage}`}
           onChange={() => {}}
           value={getDate(selectedDate)}
           type="text"

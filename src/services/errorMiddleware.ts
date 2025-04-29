@@ -1,9 +1,18 @@
-import { isRejectedWithValue } from "@reduxjs/toolkit";
+import { isRejectedWithValue, Middleware } from "@reduxjs/toolkit";
 import { toast } from "sonner";
 
-export const rtkQueryErrorLogger = () => (next: any) => (action: any) => {
+type ErrorResponse = {
+  status: string | number;
+  data: {
+    message?: string;
+    error?: string;
+    statusCode?: number;
+  };
+};
+
+export const rtkQueryErrorLogger: Middleware = () => (next) => (action) => {
   if (isRejectedWithValue(action)) {
-    const error = action.payload as { status: string | number; data: any };
+    const error = action.payload as ErrorResponse;
 
     if (error.status === "FETCH_ERROR") {
       toast.error("Нет соединения с сервером. Проверьте интернет.");

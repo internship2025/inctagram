@@ -1,7 +1,7 @@
 export function calculatingDate(dateString: string) {
-    let dateLast = new Date(dateString);
-    let dateNow = new Date();
-    let z = new Date(dateNow.getTime() - dateLast.getTime());
+    const dateLast = new Date(dateString);
+    const dateNow = new Date();
+    const z = new Date(dateNow.getTime() - dateLast.getTime());
     let p = z.getTime() / (1000 * 60);
 
     let text = "min ago";
