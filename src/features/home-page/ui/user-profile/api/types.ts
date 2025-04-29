@@ -87,13 +87,27 @@ export type PostsUserResponse = {
 };
 
 export type UploadProfileAvatarResponse = {
-  avatars: Avatar[];
+  avatars: AvatarResponseType[];
 };
 
-export type Avatar = {
+export type AvatarResponseType = {
   createdAt: string;
   fileSize: number;
   height: number;
   url: string;
   width: number;
+};
+
+export type GetUserProfileResponse = {
+  aboutMe: string;
+  avatars: AvatarResponseType[];
+  city: string;
+  country: string;
+  createdAt: string;
+  dateOfBirth: string;
+  firstName: string;
+  id: number;
+  lastName: string;
+  region: string;
+  userName: string;
 };

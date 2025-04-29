@@ -4,27 +4,22 @@ import { AccountTabs } from "@/features/profile-settings/ui/general-information/
 import { GeneralInformation } from "@/features/profile-settings/ui/general-information/GeneralInformation";
 import { useParams, useSearchParams } from "next/navigation";
 
-
 export type ProfileTab =
   | "General-information"
   | "Devices"
-  | "Accaunt-management"
+  | "Account-management"
   | "My-payments";
 
 const EditProfile = () => {
-
   const searchParams = useSearchParams();
   const { id } = useParams() as { id: number | undefined };
-
-
   const activeTab =
     (searchParams.get("tab") as ProfileTab) || "General-information";
-
 
   return (
     <div>
       <AccountTabs userId={id} activeTab={activeTab} />
-       {activeTab === 'General-information' && <GeneralInformation/>}
+      <GeneralInformation />
     </div>
   );
 };
