@@ -11,7 +11,10 @@ export const profileSettingsApi = createApi({
   baseQuery: baseQueryWithReauth,
   endpoints: (builder) => ({
     getCurrentProfile: builder.query<ExtendedUserProfile, void>({
-      query: () => "users/profile",
+      query: () => ({
+        url: "users/profile",
+        method: "GET"
+      }),
     }),
 
     updateCurrentProfile: builder.mutation<void, UserProfile>({

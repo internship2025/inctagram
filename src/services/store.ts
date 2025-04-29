@@ -6,6 +6,7 @@ import { createPostSlice } from "@/features/create-post/utils/createPostSlice";
 import { postApi } from "@/features/create-post/api/post.api";
 import { userProfileApi } from "@/features/home-page/ui/user-profile/api/userProfile.api";
 import { notificationsApi } from "@/features/notifications/api/notifications.api";
+import { profileSettingsApi } from "@/features/profile-settings/api/profileSettings.api";
 import { rtkQueryErrorLogger } from "./errorMiddleware";
 
 export const makeStore = () => {
@@ -16,6 +17,7 @@ export const makeStore = () => {
         postApi.middleware,
         userProfileApi.middleware,
         notificationsApi.middleware,
+        profileSettingsApi.middleware,
         rtkQueryErrorLogger
       ),
     reducer: combineSlices(
@@ -24,7 +26,8 @@ export const makeStore = () => {
       userProfileApi,
       authSlice,
       createPostSlice,
-      notificationsApi
+      notificationsApi,
+      profileSettingsApi
     ),
   });
 };
