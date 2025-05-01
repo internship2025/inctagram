@@ -68,6 +68,7 @@ export const UserProfile = ({ data, initialPosts }: UserProfileProps) => {
     lastPostId,
     totalPosts,
     posts.length,
+    fetchPosts,
   ]);
 
   useEffect(() => {

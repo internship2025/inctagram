@@ -33,13 +33,13 @@ const safeBaseQuery: BaseQueryFn<
   string | FetchArgs,
   unknown,
   FetchBaseQueryError | { status: string; data: string },
-  {},
+  object,
   FetchBaseQueryMeta
 > = async (args, api, extraOptions) => {
   try {
     const result = await baseQueryWithAccessToken(args, api, extraOptions);
     return result;
-  } catch (e) {
+  } catch {
     return {
       error: {
         status: "FETCH_ERROR",
@@ -54,7 +54,7 @@ export const baseQueryWithReauth: BaseQueryFn<
   string | FetchArgs,
   unknown,
   FetchBaseQueryError | { status: string; data: string },
-  {},
+  object,
   FetchBaseQueryMeta
 > = async (args, api, extraOptions) => {
   await mutex.waitForUnlock();
@@ -66,7 +66,7 @@ export const baseQueryWithReauth: BaseQueryFn<
   if (
     result.error?.status === 401 ||
     (result.error?.status === "PARSING_ERROR" &&
-      (result as any).error?.originalStatus === 401 &&
+      (result as { error?: { originalStatus?: number } }).error?.originalStatus === 401 &&
       !url.includes("auth/logout"))
   ) {
     if (!mutex.isLocked()) {

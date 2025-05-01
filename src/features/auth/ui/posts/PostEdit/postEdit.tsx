@@ -61,7 +61,7 @@ export const PostEdit = ({
   return (
     <div className={s.container}>
       <div className={s.imageContainer}>
-        <Image src={postImg} alt="Post image" fill sizes={"100%"} />
+        <Image src={postImg} alt="Post image" fill sizes={"100%"} className={s.postImage} />
       </div>
 
       <div className={s.form}>

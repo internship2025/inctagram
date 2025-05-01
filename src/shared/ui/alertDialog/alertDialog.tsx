@@ -99,6 +99,8 @@ const AlertDialog = forwardRef<
   );
 });
 
+AlertDialog.displayName = 'AlertDialog';
+
 const CancelButton = ({ className, ...props }: ButtonComponentProps) => {
   return (
     <Button

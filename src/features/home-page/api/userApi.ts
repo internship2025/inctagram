@@ -19,7 +19,7 @@ export async function getPostsUser(id: number) {
   return await response.json();
 }
 
-export async function getPostUser(id: any) {
+export async function getPostUser(id: number) {
   const response = await fetch(
     `https://inctagram.work/api/v1/public-posts/${id}`,
     {

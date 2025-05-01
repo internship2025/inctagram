@@ -108,6 +108,7 @@ export const Post = ({
                 alt={`Post image ${index + 1}`}
                 fill
                 style={{ objectFit: "cover" }}
+                className={s.postImage}
               />
             </div>
           ))}

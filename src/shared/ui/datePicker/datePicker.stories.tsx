@@ -1,9 +1,9 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
-import { CustomDatePicker } from "./DatePicker";
+import { DatePicker } from "./DatePicker";
 
-const meta: Meta<typeof CustomDatePicker> = {
-  component: CustomDatePicker,
+const meta: Meta<typeof DatePicker> = {
+  component: DatePicker,
 };
 
 export default meta;
@@ -13,14 +13,14 @@ type Story = StoryObj<typeof meta>;
 const DatePickerComponent = () => {
   const [singleDate, setSingleDate] = useState<Date | null>(new Date());
   return (
-    <CustomDatePicker
+    <DatePicker
       selectedDate={singleDate}
       onDateChange={(date) => setSingleDate(date as Date)}
     />
   );
 };
 
-export const DatePicker: Story = {
+export const DatePickerStory: Story = {
   args: {},
   render: () => <DatePickerComponent />,
 };
@@ -28,7 +28,7 @@ export const DatePicker: Story = {
 const DatePickerDisabledComponent = ({ disabled }: { disabled?: boolean }) => {
   const [singleDate, setSingleDate] = useState<Date | null>(new Date());
   return (
-    <CustomDatePicker
+    <DatePicker
       disabled={disabled}
       selectedDate={singleDate}
       onDateChange={(date) => setSingleDate(date as Date)}
@@ -46,7 +46,7 @@ export const DatePickerDisabled: Story = {
 const DatePickerRangeComponent = ({ isRange }: { isRange?: boolean }) => {
   const [dateRange, setDateRange] = useState<[Date, Date] | null>(null);
   return (
-    <CustomDatePicker
+    <DatePicker
       isRange={isRange}
       selectedDate={dateRange}
       onDateChange={(range) => setDateRange(range as [Date, Date])}
@@ -73,7 +73,7 @@ const DatePickerRangeDisabledComponent = ({
     new Date(),
   ]);
   return (
-    <CustomDatePicker
+    <DatePicker
       disabled={disabled}
       isRange={isRange}
       selectedDate={dateRange}

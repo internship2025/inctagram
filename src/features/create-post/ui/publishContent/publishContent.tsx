@@ -159,7 +159,7 @@ export const PublishContent = ({
           >
             <ControlledTextArea
               control={control}
-              error={!!errors.description}
+              error={errors.description ? "error" : ""}
               helperText={errors.description?.message}
               name={"description"}
             />

@@ -16,10 +16,7 @@ type AvatarProps = AvatarOwnProps &
   Omit<ComponentPropsWithoutRef<typeof Image>, "src">;
 
 export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
-  (
-    { alt = "Profile avatar", className, height, onClick, size, src, width },
-    ref,
-  ) => {
+  ({ alt = "Profile avatar", height, onClick, src, width }, ref) => {
     return (
       <RadixAvatar.Root
         className={styles.rootAvatar}
@@ -41,3 +38,5 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
     );
   },
 );
+
+Avatar.displayName = "Avatar";
