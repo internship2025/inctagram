@@ -39,8 +39,6 @@ export const Header = ({ onLangChange }: HeaderProps) => {
 
   const { data: userData, isFetching} = useMeQuery();
 
-  console.log(userData)
-
   const dispatch = useAppDispatch();
 
   useEffect(() => {

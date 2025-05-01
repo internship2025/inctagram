@@ -49,25 +49,6 @@ export const DatePicker = ({
   const inputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        containerRef.current &&
-        !containerRef.current.contains(event.target as Node)
-      ) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-      stopContinuousNavigation();
-      stopHoldNavigation();
-    };
-  }, []);
-
   const prevMonth = useCallback(() => {
     setCurrentMonth((prev) => subMonths(prev, 1));
   }, []);
@@ -79,7 +60,11 @@ export const DatePicker = ({
   const startContinuousNavigation = useCallback(
     (direction: "prev" | "next") => {
       const id = setInterval(() => {
-        direction === "prev" ? prevMonth() : nextMonth();
+        if (direction === "prev") {
+          prevMonth();
+        } else {
+          nextMonth();
+        }
       }, 20);
       setIntervalId(id);
     },
@@ -95,7 +80,11 @@ export const DatePicker = ({
 
   const startHoldNavigation = useCallback(
     (direction: "prev" | "next") => {
-      direction === "prev" ? prevMonth() : nextMonth();
+      if (direction === "prev") {
+        prevMonth();
+      } else {
+        nextMonth();
+      }
       holdTimerRef.current = setTimeout(() => {
         setIsHoldingButton(true);
         startContinuousNavigation(direction);
@@ -329,6 +318,25 @@ export const DatePicker = ({
 
     setIsOpen(false);
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      stopContinuousNavigation();
+      stopHoldNavigation();
+    };
+  }, [stopContinuousNavigation, stopHoldNavigation]);
 
   return (
     <div

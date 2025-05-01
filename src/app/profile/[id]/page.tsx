@@ -6,16 +6,11 @@ import {
 } from "@/features/home-page/api/userApi";
 
 type Props = {
-  //params: { id: string };
   params: Promise<{ id: string }>;
-  //searchParams: { [key: string]: string | string[] | undefined };
-  searchParams: Promise<
-    Record<"postId" | "action", string | string[] | undefined>
-  >;
+  searchParams: Promise<{ postId?: string }>;
 };
 
 const Profile = async ({ params, searchParams }: Props) => {
-  //const userId = Number(params.id);
   const { id } = await params;
 
   if (isNaN(Number(id))) {
@@ -28,13 +23,11 @@ const Profile = async ({ params, searchParams }: Props) => {
   ]);
 
   let selectedPost = null;
-  //const postIdParam = searchParams.postId;
   const { postId } = await searchParams;
-  //const postId = typeof postIdParam === "string" ? Number(postIdParam) : NaN;
-  const postId1 = typeof postId === "string" ? Number(postId) : NaN;
+  const postIdNumber = postId ? Number(postId) : NaN;
 
-  if (!isNaN(postId1)) {
-    selectedPost = await getPostUser(postId);
+  if (!isNaN(postIdNumber)) {
+    selectedPost = await getPostUser(postIdNumber);
   }
 
   return (

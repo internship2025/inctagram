@@ -1,10 +1,10 @@
 "use client";
 
-import React from 'react';
-import { Input } from "../../../../shared/ui/input/input";
+import React from "react";
+import { Input } from "@/shared/ui/input/input";
 import styles from "./signIn.module.css";
 import Link from "next/link";
-import { Button } from "../../../../shared/ui/button/button";
+import { Button } from "@/shared/ui/button/button";
 import { PATH } from "@/shared/constants/app-paths";
 import { useSignIn } from "@/features/auth/ui/hooks/useSignIn";
 
@@ -34,7 +34,8 @@ export const SignIn = ({
         key={ind}
         onClick={it.onClick}
       >
-        {it.icon && React.createElement(it.icon, { width: it.width, height: it.height })}
+        {it.icon &&
+          React.createElement(it.icon, { width: it.width, height: it.height })}
       </Button>
     );
   });
