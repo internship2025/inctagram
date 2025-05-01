@@ -1,0 +1,33 @@
+/* Slider.module.css */
+.root {
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    width: 100px;
+    height: 20px;
+}
+
+.track {
+    position: relative;
+    flex-grow: 1;
+    height: 2px;
+    background-color: var(--color-light-100);
+    border-radius: 9999px;
+}
+
+.range {
+    position: absolute;
+    height: 100%;
+    background-color: var(--color-info-500);
+    border-radius: 9999px;
+}
+
+.thumb {
+    display: block;
+    width: 12px;
+    height: 12px;
+    background-color: var(--color-light-100);
+    border: 3px solid var(--color-info-500);
+    border-radius: 9999px;
+}

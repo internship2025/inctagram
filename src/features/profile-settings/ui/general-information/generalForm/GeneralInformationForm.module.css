@@ -1,0 +1,57 @@
+.mainContainer {
+    display: flex;
+}
+
+.wrapper {
+  max-width: 740px;
+    flex: 3;
+}
+
+.avatarWrapper {
+    margin-right: 40px;
+}
+
+.btn {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.inputWrapper {
+}
+
+.inputWrapper {
+  margin-bottom: 24px;
+}
+
+.containerSelects{
+    display: flex;
+    margin-bottom: 24px;
+    justify-content: space-between;
+}
+.wrapperSelect {
+    /* display: inline-block; */
+    display: block;
+    width: 100%;
+  /* &:not(:last-child) {
+    margin-right: 25px;
+  } */
+}
+
+.wrapperTextAria {
+ margin-bottom: 40px;
+}
+
+
+.error {
+  display: block;
+  margin-top: 4px;
+  color: var(--color-danger-500);
+  font-size: var(--font-size-s);
+  line-height: var(--line-height-m);
+  font-weight: 400;
+  text-align: left;
+
+  &:not(:last-child) {
+      margin-bottom: 24px;
+  }
+}

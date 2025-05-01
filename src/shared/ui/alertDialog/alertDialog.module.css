@@ -1,0 +1,98 @@
+.root {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    max-width: 438px;
+    background-color: var(--color-dark-300);
+    border: 1px solid var(--color-dark-100);
+    padding: 0.75rem 0;
+    border-radius: 2px;
+    z-index: 50;
+}
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background-color: var(--color-dark-900);
+    opacity: 0.6;
+    z-index: 50;
+}
+
+.header {
+    border-bottom: 1px solid var(--color-dark-100);
+    padding-bottom: 0.75rem;
+    padding-left: 1.5rem;
+    padding-right: 0.75rem;
+}
+
+.headerContent {
+    display: flex;
+    height: 2.25rem;
+    justify-content: space-between;
+}
+
+.closeButton {
+    cursor: pointer;
+}
+
+.closeButton:hover {
+    background-color: var(--color-dark-100);
+}
+
+.description {
+    display: flex;
+    padding: 1.875rem 1.5rem;
+}
+
+.descriptionText {
+    word-break: break-word;
+    white-space: pre-wrap;
+}
+
+.footer {
+    display: flex;
+    justify-content: flex-end;
+    padding-bottom: 0.75rem;
+    gap: 1.5rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+.checkboxContainer {
+    display: flex;
+    align-items: center;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+/* Position variants */
+.bottomLeft {
+    bottom: 1rem;
+    left: 1rem;
+}
+
+.bottomRight {
+    bottom: 1rem;
+    right: 1rem;
+}
+
+.center {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.topLeft {
+    top: 1rem;
+    left: 1rem;
+}
+
+.topRight {
+    top: 1rem;
+    right: 1rem;
+}
+
+.button {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}

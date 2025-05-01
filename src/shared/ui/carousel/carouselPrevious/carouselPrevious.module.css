@@ -1,0 +1,36 @@
+.iconButton {
+    position: absolute;
+    background-color: var(--color-dark-300);
+    height: 3rem;
+    width: 3rem;
+    transform: translateY(-50%);
+    opacity: 0.5;
+    border-radius: 0;
+    top: 50%;
+    border: none;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    margin-left: 13px;
+}
+
+.iconButton svg {
+    display: block;
+    margin: 0 auto;
+    transform: scale(2);
+    transform-origin: center center;
+}
+
+.iconButton:hover {
+    opacity: 0.8;
+}
+
+.srOnly {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+    overflow: hidden;
+}

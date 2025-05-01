@@ -4,7 +4,7 @@ import * as React from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import styles from "./modal.module.css";
 import Image from "next/image";
-import close from "@/shared/ui/modal/assets/close.svg";
+import close from "@/features/auth/ui/assets/close.svg";
 
 type Modal = {
   children?: React.ReactNode;
@@ -15,6 +15,7 @@ type Modal = {
   open?: boolean;
   onClose?: () => void;
   isClose?: boolean;
+  portalContainer?: HTMLDivElement | null
 };
 
 export const Modal = ({
@@ -24,12 +25,17 @@ export const Modal = ({
   open = true,
   onClose,
   isClose = false,
+  portalContainer
+  
 }: Modal) => {
+
+
+
   return (
     <Dialog.Root open={open} onOpenChange={onClose}>
-      <Dialog.Portal>
+      <Dialog.Portal container={portalContainer}>
         <Dialog.Overlay className={styles.overlay} />
-        <Dialog.Content className={`${styles.commonStyles}`}>
+        <Dialog.Content aria-describedby={undefined} className={`${styles.commonStyles} ${className}`}>
           <Dialog.Title className={`${styles.title} ${styles[className]}`}>
             {title}
           </Dialog.Title>

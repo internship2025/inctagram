@@ -1,0 +1,33 @@
+/* DialogCloseIcon.module.css */
+
+.closeButton {
+    position: absolute;
+    top: 0.75rem;
+    right: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    background-color: inherit;
+}
+
+/*.closeButtonOpen {*/
+/*    color: var(--muted-foreground);*/
+/*}*/
+
+.closePositionInside {
+    /* Default position (inside) */
+}
+
+.closePositionNone {
+    display: none;
+}
+
+.closePositionOutside {
+    transform: translateX(50px) translateY(-50px);
+}
+
+.closeButtonHover:hover {
+    background-color: var(--color-dark-100)
+}

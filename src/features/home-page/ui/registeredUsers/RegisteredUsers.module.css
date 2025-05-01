@@ -1,0 +1,39 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 2px;
+  max-width: 936px;
+  height: 72px;
+  background-color: #171717;
+  padding: 0 24px 0 24px;
+  margin-bottom: 36px;
+  margin-top: 24px;
+}
+
+.countUser {
+  width: 203px;
+  background-color: #0D0D0D;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 24px;
+  padding: 12px;
+  padding-left: 17px;
+  border: 1px solid #333333;
+}
+
+.number {
+    position: relative;
+  &:not(:last-child)::after {
+    content: ""; 
+    position: absolute; 
+    top: -3px;
+    left: 20px; 
+    width: 1px; 
+    height: 30px; 
+    background-color: #333333; 
+  }
+  &:not(:first-child){
+    margin-left: 20px;
+  }
+}

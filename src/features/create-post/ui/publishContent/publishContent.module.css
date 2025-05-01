@@ -1,0 +1,54 @@
+.mainContainer {
+    display: flex;
+    flex-direction: column;
+    width: 972px;
+    height: 564px;
+}
+
+.bodyContainer {
+    display: flex;
+    flex-grow: 1;
+}
+
+.imageContainer {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 100%;
+    padding: 1.5rem 1.5rem 2.5rem;
+}
+
+.descriptionContainer {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 100%;
+    padding: 1.5rem 1.5rem 2.5rem;
+}
+
+.textLinkContainer {
+    padding-bottom: 1.5rem;
+}
+
+.textLinkContainer:hover {
+    text-decoration: underline;
+}
+
+.avatar {
+    margin-right: 0.75rem;
+    margin-left: 101px;
+}
+
+.textArea {
+    height: 200px;
+    resize: none;
+    background-color: red;
+}
+
+.form {
+    display: flex;
+}
+
+.profileUserName{
+    margin-left: 12px;
+}

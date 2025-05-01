@@ -1,0 +1,17 @@
+
+
+.wrapper{
+	font-size: 13px;
+	line-height: 18px;
+	margin-top: 10px;
+	border-top: 1px solid var(--color-dark-300);
+	padding-top: 10px;
+}
+
+.new{
+    color: var(--color-info-700)
+}
+
+.date{
+    
+}

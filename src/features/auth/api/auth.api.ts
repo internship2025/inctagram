@@ -1,68 +1,27 @@
 import { baseUrl } from "@/shared/constants/app-paths";
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { baseQueryWithReauth } from "./baseApi";
-
-export type MeResponse = {
-  userId: number;
-  userName: string;
-  email: string;
-  isBlocked: boolean;
-};
-
-export type SignUpArgs = {
-  userName: string;
-  email: string;
-  password: string;
-};
-
-export type LoginArgs = {
-  email: string;
-  password: string;
-};
-
-export type LoginResponse = {
-  accessToken: string;
-};
-
-export type ForgotPassword = {
-  email: string;
-  recaptcha?: string;
-  baseUrl: string;
-};
-
-export type CreateNewPassword = {
-  newPassword: string;
-  recoveryCode: string;
-};
-
-export type ResendConfirmationArgs = {
-  email: string;
-};
-
-export type ConfirmEmailArgs = {
-  confirmationCode: string;
-};
-
-export type loginWithGoogleArgs = {
-  redirectUrl: string;
-  code: string;
-};
-
-export type loginWithGoogleResponse = {
-  accessToken: string;
-  email: string;
-};
+import { baseQueryWithReauth } from "./base.api";
+import {
+  ConfirmEmailArgs,
+  CreateNewPassword,
+  ForgotPassword,
+  LoginArgs,
+  LoginResponse,
+  loginWithGoogleArgs,
+  loginWithGoogleResponse,
+  MeResponse,
+  ResendConfirmationArgs,
+  SignUpArgs,
+} from "./types";
 
 export const authApi = createApi({
-  reducerPath: "inctagramApi",
+  reducerPath: "authApi",
   baseQuery: baseQueryWithReauth,
-  tagTypes: ["Me"],
+  tagTypes: ["Me", "Posts"],
   endpoints: (builder) => ({
     me: builder.query<MeResponse, void>({
       providesTags: ["Me"],
-      query: () => ({
-        url: "auth/me",
-      }),
+      query: () => "auth/me"
     }),
     signup: builder.mutation<void, SignUpArgs>({
       query: (args) => ({
@@ -106,7 +65,8 @@ export const authApi = createApi({
     logout: builder.mutation<void, void>({
       query: () => ({
         method: "POST",
-        url: "auth/logout",       }),
+        url: "auth/logout",
+      }),
       invalidatesTags: ["Me"], // Чтобы обновить состояние после логаута
     }),
     confirmEmail: builder.mutation<void, ConfirmEmailArgs>({

@@ -1,0 +1,13 @@
+.iconButton {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background-color: inherit;
+    border: none;
+}
+
+.iconButtonFocus {
+    outline: 2px solid #ff5e00; /* Пример фокуса */
+}
