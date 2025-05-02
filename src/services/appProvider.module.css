@@ -1,19 +1,10 @@
 .container {
-  max-width: 972px;
-  margin: 0 auto;
-  margin-top: 95px;
+ 
+  margin: 95px 0 auto;
 }
 
 .wrapper {
-
-  display: flex;
+  margin:  0 auto;
 }
 
 
-@media (max-width: 1470px) {
-  .container {
-    /* padding-left: 220px;  */
-    padding-right: 15px;
-    max-width: 100%;
-  }
-}
