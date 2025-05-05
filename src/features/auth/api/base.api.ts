@@ -11,7 +11,7 @@ import { Mutex } from "async-mutex";
 
 // Базовый fetchBaseQuery с установкой токена из localStorage
 export const baseQueryWithAccessToken = fetchBaseQuery({
-  baseUrl: "https://inctagram.work/api/v1",
+  baseUrl: "https://universea.ru/api/v1",
   credentials: "include",
   prepareHeaders: (headers) => {
     if (typeof window !== "undefined") {
@@ -66,7 +66,8 @@ export const baseQueryWithReauth: BaseQueryFn<
   if (
     result.error?.status === 401 ||
     (result.error?.status === "PARSING_ERROR" &&
-      (result as { error?: { originalStatus?: number } }).error?.originalStatus === 401 &&
+      (result as { error?: { originalStatus?: number } }).error
+        ?.originalStatus === 401 &&
       !url.includes("auth/logout"))
   ) {
     if (!mutex.isLocked()) {
@@ -79,7 +80,7 @@ export const baseQueryWithReauth: BaseQueryFn<
             body: {},
           },
           api,
-          extraOptions
+          extraOptions,
         );
 
         if (refreshResult.data) {
