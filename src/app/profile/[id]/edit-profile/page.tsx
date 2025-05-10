@@ -3,6 +3,7 @@
 import { AccountTabs } from "@/features/profile-settings/ui/general-information/accountTabs/AccountTabs";
 import { GeneralInformation } from "@/features/profile-settings/ui/general-information/GeneralInformation";
 import { useParams, useSearchParams } from "next/navigation";
+import { MyPayments } from "@/features/profile-settings/ui/my-payments/MyPayments";
 
 export type ProfileTab =
   | "General-information"
@@ -19,7 +20,8 @@ const EditProfile = () => {
   return (
     <div>
       <AccountTabs userId={id} activeTab={activeTab} />
-      <GeneralInformation />
+      {(activeTab === "General-information" && <GeneralInformation />) ||
+        (activeTab === "My-payments" && <MyPayments />)}
     </div>
   );
 };

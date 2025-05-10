@@ -11,6 +11,7 @@ import { useAppDispatch } from "@/services/store";
 import { useMeQuery } from "@/features/auth/api/auth.api";
 import { setAuthenticated } from "@/features/auth/api/authSlice";
 import { NotificationBell } from "../notificationBell/NotificationBell";
+import { PATH } from "@/shared/constants/app-paths";
 
 const ChevronDownIcon = () => (
   <svg
@@ -37,7 +38,7 @@ interface HeaderProps {
 export const Header = ({ onLangChange }: HeaderProps) => {
   const [currentLang, setCurrentLang] = useState("English");
 
-  const { data: userData, isFetching} = useMeQuery();
+  const { data: userData, isFetching } = useMeQuery();
 
   const dispatch = useAppDispatch();
 
@@ -56,7 +57,7 @@ export const Header = ({ onLangChange }: HeaderProps) => {
   return (
     <header id="header" className={styles.header}>
       <div className={styles.container}>
-        <Link href={"/public"}>
+        <Link href={userData ? PATH.PROFILE.replace(":id", userData.userId.toString()) : PATH.ROOT}>
           <Typography variant={"h1"}>Inctagram</Typography>
         </Link>
         {isFetching ? (

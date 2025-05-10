@@ -31,3 +31,13 @@ export type ErrorResponse = {
   }>;
   error: string;
 };
+
+export type PaymentInfo = {
+  userId: number;
+  subscriptionId: string;
+  dateOfPayment: string;
+  endDateOfSubscription: string;
+  price: number;
+  subscriptionType: string;
+  paymentType: string;
+};
