@@ -10,16 +10,16 @@ import { profileSettingsApi } from "@/features/profile-settings/api/profileSetti
 import { rtkQueryErrorLogger } from "./errorMiddleware";
 
 export const makeStore = () => {
+  const apiMiddlewares = [
+    authApi.middleware,
+    postApi.middleware,
+    userProfileApi.middleware,
+    notificationsApi.middleware,
+    profileSettingsApi.middleware,
+  ];
   return configureStore({
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(
-        authApi.middleware,
-        postApi.middleware,
-        userProfileApi.middleware,
-        notificationsApi.middleware,
-        profileSettingsApi.middleware,
-        rtkQueryErrorLogger
-      ),
+      getDefaultMiddleware().concat(...apiMiddlewares, rtkQueryErrorLogger),
     reducer: combineSlices(
       authApi,
       postApi,
