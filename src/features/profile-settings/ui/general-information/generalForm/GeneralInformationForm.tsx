@@ -86,11 +86,15 @@ export const GeneralInformationForm = () => {
                     }}
                   />
                   {errors.dateBirth && (
-                    <span className={s.error}>{errors.dateBirth.message} <Link
-                   style={{ textDecoration: 'underline' }} href="/privacy-policy"
-                  >
-                    Privacy Policy
-                  </Link></span>
+                    <span className={s.error}>
+                      {errors.dateBirth.message}{" "}
+                      <Link
+                        style={{ textDecoration: "underline" }}
+                        href="/privacy-policy"
+                      >
+                        Privacy Policy
+                      </Link>
+                    </span>
                   )}
                 </div>
               )}
@@ -135,7 +139,7 @@ export const GeneralInformationForm = () => {
             )}
           </div>
           <div className={s.btn}>
-            <Button disabled = {isLoading}>Save Changes</Button>
+            <Button disabled={isLoading}>Save Changes</Button>
           </div>
         </form>
       </div>
@@ -147,3 +151,7 @@ export const GeneralInformationForm = () => {
     </div>
   );
 };
+
+
+
+

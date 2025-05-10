@@ -1,22 +1,31 @@
 import * as RadioGroup from "@radix-ui/react-radio-group";
 import styles from './radioButton.module.css';
 import { ComponentPropsWithoutRef } from "react";
+import { AccountType } from "@/features/profile-settings/ui/account-menegment/hooks/useAccountType";
+import { SubscriptionType } from "@/features/profile-settings/ui/account-menegment/hooks/useSubscriptionType";
+
 
 type RadioButtonProps = {
-  options: { value: string; label: string }[];
+  options: { value:  AccountType | SubscriptionType; label: string }[];
   disabled?: boolean;
-} & ComponentPropsWithoutRef<'button'>;
+  defaultValue?: AccountType | SubscriptionType;
+  stylesOverride?:{
+    direction?: string
+  }
+  onValueChange?: (value: AccountType | SubscriptionType) => void; 
+} & Omit<ComponentPropsWithoutRef<typeof RadioGroup.Item>, "value">;
 
-export const RadioButton = ({ options, disabled }: RadioButtonProps) => (
+export const RadioButton = ({stylesOverride, options, disabled, defaultValue = options[1].value, onValueChange }: RadioButtonProps) => (
   <form>
     <RadioGroup.Root
-      className={styles.Root}
-      defaultValue={options[0]?.value}
+      className={`${styles.Root} ${stylesOverride?.direction}`}
+      defaultValue = {defaultValue}
+      onValueChange={onValueChange}
       aria-label="Radio Button Group"
       disabled={disabled}
     >
       {options.map(({ value, label }) => (
-        <div className={styles.RadioGroupItemWrapper} key={value}>
+        <div className={`${styles.RadioGroupItemWrapper}`} key={value}>
           <RadioGroup.Item
             className={styles.Item}
             value={value}

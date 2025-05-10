@@ -1,4 +1,28 @@
 
+
+
+type SubscriptionType = {
+  amount: number;
+  paymentType: 'STRIPE' | 'PAYPAL'
+  typeSubscription: "DAY" | "WEEKLY" | "MONTHLY"
+  baseUrl: string;
+};
+
+
+type CurrentSubscriptionType = {  
+    data: [
+      {
+        userId: number,
+        subscriptionId: string,
+        dateOfPayment: string
+        endDateOfSubscription: string
+        autoRenewal: boolean
+      }
+    ],
+    hasAutoRenewal: boolean
+  
+}
+
 type UserProfile = {
     userName: string;
     firstName: string;
@@ -33,3 +57,4 @@ type ExtendedUserProfile = UserProfile & {
     }>;
     error: string;
   };
+  
