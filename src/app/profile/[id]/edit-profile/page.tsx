@@ -13,8 +13,10 @@ export type ProfileTab =
 
 const EditProfile = () => {
   const searchParams = useSearchParams();
-  const { id } = useParams() as { id: number | undefined };
-
+  // const { id } = useParams() as { id: string | undefined };
+  const params = useParams();
+  const id = params?.id ? String(params.id) : undefined;
+  
   let activeTab =
     (searchParams.get("tab") as ProfileTab) || "General-information";
 

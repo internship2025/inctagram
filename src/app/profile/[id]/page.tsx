@@ -6,8 +6,8 @@ import {
 } from "@/features/home-page/api/userApi";
 
 type Props = {
-  params: { id: string };
-  searchParams: { [key: string]: string | string[] | undefined };
+  params: any;
+  searchParams: any;
 };
 
 const Profile = async ({ params, searchParams }: Props) => {
@@ -34,7 +34,6 @@ const Profile = async ({ params, searchParams }: Props) => {
     <UserProfile
       data={data}
       initialPosts={initialPosts}
-      selectedPost={selectedPost}
     />
   );
 };

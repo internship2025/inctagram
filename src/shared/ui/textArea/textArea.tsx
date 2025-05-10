@@ -10,7 +10,7 @@ type TextareaOwnProps = {
   autoResize?: boolean;
   className?: string;
   disabled?: boolean;
-  error?: string;
+  error?: boolean | string;
   helperText?: string;
   hideRequiredIndicator?: true;
   id?: string;

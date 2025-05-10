@@ -16,12 +16,12 @@ export const userProfileApi = createApi({
         url: `/public-user/profile/${profileId}`,
       }),
     }),
-    uploadProfileAvatar: builder.mutation<
-      UploadProfileAvatarResponse,
-      { file: File }
-    >({
-      query: ({ file }) => {},
-    }),
+    // uploadProfileAvatar: builder.mutation<
+    //   UploadProfileAvatarResponse,
+    //   { file: File }
+    // >({
+    //   query: ({ file }) => {},
+    // }),
   }),
 });
 

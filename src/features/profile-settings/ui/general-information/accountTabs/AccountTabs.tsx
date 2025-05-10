@@ -4,7 +4,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { ProfileTab } from "@/app/profile/[id]/edit-profile/page";
 
 type AccountTabsType = {
-  userId: number | undefined;
+  userId: string | undefined;
   activeTab: ProfileTab;
 };
 
