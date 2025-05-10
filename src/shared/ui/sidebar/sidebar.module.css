@@ -5,7 +5,7 @@
   left: 0;
   height: calc(100vh - 60px); 
   min-width: 220px;
-  background: var(--color-dark-700);
+  background: var(--color-dark-900);
   border-right: 1px solid var(--color-dark-300);
   padding: 24px 0;
 }

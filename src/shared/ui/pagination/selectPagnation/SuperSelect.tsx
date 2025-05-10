@@ -36,6 +36,8 @@ export const SuperSelect = ({
           src={open ? image2.src : image1.src}
           alt="Custom Icon"
           className={styles.CustomIcon}
+          width={20}
+          height={20}
         />
       </Select.Trigger>
       <Select.Portal>

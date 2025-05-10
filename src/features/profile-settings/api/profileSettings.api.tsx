@@ -3,6 +3,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import {
   ErrorResponse,
   ExtendedUserProfile,
+  PaymentInfo,
   UserProfile,
 } from "@/features/profile-settings/api/types";
 
@@ -13,10 +14,9 @@ export const profileSettingsApi = createApi({
     getCurrentProfile: builder.query<ExtendedUserProfile, void>({
       query: () => ({
         url: "users/profile",
-        method: "GET"
+        method: "GET",
       }),
     }),
-
     updateCurrentProfile: builder.mutation<void, UserProfile>({
       query: (body) => ({
         url: "users/profile",
@@ -28,7 +28,16 @@ export const profileSettingsApi = createApi({
         data: ErrorResponse;
       }) => response.data,
     }),
+    getPaymentInfo: builder.query<PaymentInfo[], void>({
+      query: () => ({
+        url: "subscriptions/my-payments",
+        method: "GET",
+      }),
+    }),
   }),
 });
-export const { useGetCurrentProfileQuery, useUpdateCurrentProfileMutation } =
-  profileSettingsApi;
+export const {
+  useGetCurrentProfileQuery,
+  useUpdateCurrentProfileMutation,
+  useGetPaymentInfoQuery,
+} = profileSettingsApi;

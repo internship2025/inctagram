@@ -36,7 +36,7 @@ export const useSignIn = () => {
         }
         // Если вход успешен, получаем данные пользователя
         const userResponse = await getUser().unwrap();
-        router.push(PATH.PRIVATE_HOME);
+        router.push(PATH.ROOT);
 
         console.log("Данные пользователя:", userResponse);
       }

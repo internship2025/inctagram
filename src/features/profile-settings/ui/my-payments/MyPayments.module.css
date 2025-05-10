@@ -1,0 +1,28 @@
+.wrapper {
+    padding: 24px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #222;
+}
+
+.th, .td {
+    padding: 12px 8px;
+    border-bottom: 1px solid #333;
+    text-align: left;
+}
+
+.th {
+    font-weight: 600;
+    background: #181818;
+}
+
+.select {
+    margin-top: 16px;
+    background: #222;
+    color: #fff;
+    border: 1px solid #333;
+    padding: 4px 8px;
+}
