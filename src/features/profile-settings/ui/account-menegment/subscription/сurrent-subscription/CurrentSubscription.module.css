@@ -1,0 +1,22 @@
+
+
+
+.column{
+    display: flex;
+    flex-direction: column;
+}
+
+.wrapper{
+    display: flex;
+}
+
+.column{
+    margin-right: 45px;
+    padding: 6px;
+}
+
+.element{
+    margin-bottom: 12px;
+    color: var(--color-dark-100);
+    font-size: 14px;
+}

@@ -1,14 +1,13 @@
 import styles from "./checkBox.module.css";
 import { Checkbox } from "radix-ui";
-import { ComponentProps } from "react";
 import CheckmarkIcon from "@/shared/ui/checkBox/components/CheckmarkIcon";
 
-type Props = Omit<ComponentProps<"input">, "value"> & {
+type Props =  {
   variant?: "default" | "disable";
   disabled?: boolean;
   txt?: string;
-  onChange: (checked: boolean) => void; // Кастомный onChange
-  checked: boolean; // checked обязателен
+  onChange: (checked: boolean) => void; 
+  checked: boolean; 
 };
 
 export const CheckBox = ({

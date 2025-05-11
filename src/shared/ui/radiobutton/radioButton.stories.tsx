@@ -1,5 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { RadioButton } from "./radioButton";
+import { AccountType } from "@/features/profile-settings/ui/account-menegment/hooks/useAccountType";
 
 const meta: Meta<typeof RadioButton> = {
   component: RadioButton,
@@ -12,9 +13,8 @@ const meta: Meta<typeof RadioButton> = {
     options: {
       control: "object",
       defaultValue: [
-        { value: "option1", label: "Option 1" },
-        { value: "option2", label: "Option 2" },
-        { value: "option3", label: "Option 3" },
+        { value: "personal" as AccountType, label: "Option 1" },
+        { value: "business" as AccountType, label: "Option 2" },
       ],
     },
   },
@@ -26,51 +26,51 @@ type Story = StoryObj<typeof RadioButton>;
 
 export const Default: Story = {
   args: {
-    options: [{ value: "default", label: "Default State" }],
+    options: [{ value: "personal" as AccountType, label: "Default State" }],
   },
 };
 
 export const Active: Story = {
   args: {
-    options: [{ value: "active", label: "Active State" }],
+    options: [{ value: "business" as AccountType, label: "Active State" }],
   },
   play: async ({ canvasElement }) => {
     const radioButton = canvasElement.querySelector(
-      'input[value="active"]',
+      'input[value="business"]',
     ) as HTMLInputElement;
     radioButton.click();
   },
   parameters: {
     pseudo: {
-      active: true, // добавлено для активного состояния
+      active: true,
     },
   },
 };
 
 export const Hover: Story = {
   args: {
-    options: [{ value: "hover", label: "Hover State" }],
+    options: [{ value: "personal" as AccountType, label: "Hover State" }],
   },
   parameters: {
     pseudo: {
-      hover: true, // добавлено для ховер-состояния
+      hover: true,
     },
   },
 };
 
 export const Focus: Story = {
   args: {
-    options: [{ value: "focus", label: "Focus State" }],
+    options: [{ value: "business" as AccountType, label: "Focus State" }],
   },
   play: async ({ canvasElement }) => {
     const radioButton = canvasElement.querySelector(
-      'input[value="focus"]',
+      'input[value="business"]',
     ) as HTMLInputElement;
     radioButton.focus();
   },
   parameters: {
     pseudo: {
-      focus: true, // добавлено для фокусного состояния
+      focus: true,
     },
   },
 };
@@ -78,6 +78,6 @@ export const Focus: Story = {
 export const Disabled: Story = {
   args: {
     disabled: true,
-    options: [{ value: "disabled", label: "Disabled State" }],
+    options: [{ value: "personal" as AccountType, label: "Disabled State" }],
   },
 };
