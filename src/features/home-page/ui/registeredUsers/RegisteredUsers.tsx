@@ -6,7 +6,7 @@ const RegisteredUsers = async () => {
 
   function requiresZeroPadding() {
     if (data) {
-      let m = String(data.totalCount);
+      const m = String(data.totalCount);
       if (m.length === 3) {
         return `000${data.totalCount}`;
       } else if (m.length === 4) {
@@ -18,11 +18,11 @@ const RegisteredUsers = async () => {
     }
   }
 
-  let count = requiresZeroPadding();
-  let m = [];
+  const count = requiresZeroPadding();
+  const m = [];
   if (count) {
     for (let i = 0; i < count?.length; i++) {
-      m.push(<span className={s.number}>{count[i]}</span>);
+      m.push(<span key={i} className={s.number}>{count[i]}</span>);
     }
   }
 

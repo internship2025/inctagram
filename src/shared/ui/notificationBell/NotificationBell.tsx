@@ -7,7 +7,7 @@ import s from "./NotificationBell.module.css";
 import { useGetNotificationQuery } from "@/features/notifications/api/notifications.api";
 
 export const NotificationBell = () => {
-  const { data, isFetching } = useGetNotificationQuery();
+  const { data } = useGetNotificationQuery();
 
   const [isNotification, setIsNotification] = useState(false);
   const portalContainerRef = useRef(null);

@@ -1,3 +1,5 @@
+"use client";
+
 import { Input } from "@/shared/ui/input/input";
 import s from "./GeneralInformationForm.module.css";
 import { TextArea } from "@/shared/ui/textArea/textArea";
@@ -9,6 +11,7 @@ import Link from "next/link";
 import { NotificationModal } from "../statusModal/StatusModal";
 import { useInformationForm } from "./hooks/useInformationForm";
 import { DatePicker } from "@/shared/ui/datePicker/DatePicker";
+import { AddAvatarSection } from "@/features/profile-settings/ui/general-information/addAvatarSection/addAvatarSection";
 
 export const GeneralInformationForm = () => {
   const {
@@ -24,7 +27,10 @@ export const GeneralInformationForm = () => {
   } = useInformationForm();
 
   return (
-    <div>
+    <div className={s.mainContainer}>
+      <div className={s.avatarWrapper}>
+        <AddAvatarSection />
+      </div>
       <div className={s.wrapper}>
         <form onSubmit={handleSubmit(signupHandler)}>
           <div className={s.inputWrapper}>

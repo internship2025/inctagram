@@ -18,3 +18,5 @@ export const DialogContent = React.forwardRef<
     </DialogPrimitive.Content>
   </DialogPrimitive.Portal>
 ));
+
+DialogContent.displayName = "DialogContent";

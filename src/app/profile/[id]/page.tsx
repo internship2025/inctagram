@@ -6,28 +6,28 @@ import {
 } from "@/features/home-page/api/userApi";
 
 type Props = {
-  params: { id: string };
-  searchParams: { [key: string]: string | string[] | undefined };
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ postId?: string }>;
 };
 
 const Profile = async ({ params, searchParams }: Props) => {
-  const userId = Number(params.id);
+  const { id } = await params;
 
-  if (isNaN(userId)) {
+  if (isNaN(Number(id))) {
     throw new Error("Invalid user ID");
   }
 
   const [data, initialPosts] = await Promise.all([
-    getPublicUser(userId),
-    getPostsUser(userId),
+    getPublicUser(Number(id)),
+    getPostsUser(Number(id)),
   ]);
 
   let selectedPost = null;
-  const postIdParam = searchParams.postId;
-  const postId = typeof postIdParam === "string" ? Number(postIdParam) : NaN;
+  const { postId } = await searchParams;
+  const postIdNumber = postId ? Number(postId) : NaN;
 
-  if (!isNaN(postId)) {
-    selectedPost = await getPostUser(postId);
+  if (!isNaN(postIdNumber)) {
+    selectedPost = await getPostUser(postIdNumber);
   }
 
   return (

@@ -8,7 +8,7 @@ import { useParams, useSearchParams } from "next/navigation";
 export type ProfileTab =
   | "General-information"
   | "Devices"
-  | "Accaunt-management"
+  | "Account-management"
   | "My-payments";
 
 const EditProfile = () => {
@@ -30,7 +30,7 @@ const EditProfile = () => {
       <AccountTabs userId={id} activeTab={activeTab} />
       {activeTab === "General-information" && <GeneralInformation />}
       {activeTab === "Accaunt-management" && <AccountMenegement success = {success}/>}
-    </div>
+
   );
 };
 

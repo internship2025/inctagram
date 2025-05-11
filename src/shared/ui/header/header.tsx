@@ -39,8 +39,6 @@ export const Header = ({ onLangChange }: HeaderProps) => {
 
   const { data: userData, isFetching} = useMeQuery();
 
-  console.log(userData)
-
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -48,7 +46,7 @@ export const Header = ({ onLangChange }: HeaderProps) => {
       dispatch(setAuthenticated({ userId: userData.userId }));
       localStorage.setItem("userName", userData.userName);
     }
-  }, [userData]);
+  }, [userData, isFetching, dispatch]);
 
   const handleLangChange = (value: string) => {
     setCurrentLang(value);

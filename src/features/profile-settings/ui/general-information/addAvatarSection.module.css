@@ -1,0 +1,55 @@
+.mainContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 3rem;
+}
+
+.closeButtonContainer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(50%, -50%);
+    background-color: var(--color-dark-500);
+    border-radius: 50%;
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.closeButtonContainer:hover {
+    background-color: var(--color-dark-400);
+}
+
+.avatarSection {
+    position: relative;
+    width: 200px;
+    height: 200px;
+}
+
+.hidden {
+    display: none;
+}
+
+.uploadButton {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: var(--color-info-500);
+    color: white;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.uploadButton:hover {
+    background-color: var(--color-info-600);
+}
+
+.spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 200px;
+}

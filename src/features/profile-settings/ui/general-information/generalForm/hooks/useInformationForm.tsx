@@ -1,4 +1,3 @@
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 
@@ -9,8 +8,6 @@ import { useGetCurrentProfileQuery, useUpdateCurrentProfileMutation } from "@/fe
 export const useInformationForm = () => {
   const [signup, { isLoading }] = useUpdateCurrentProfileMutation();
   const { data } = useGetCurrentProfileQuery();
-
-  console.log(data)
 
   const [notification, setNotification] = useState<{
     isOpen: boolean;

@@ -40,4 +40,6 @@ export const SvgArrowIosBackOutline = forwardRef<
   </svg>
 ));
 
+SvgArrowIosBackOutline.displayName = 'SvgArrowIosBackOutline';
+
 export default memo(SvgArrowIosBackOutline);

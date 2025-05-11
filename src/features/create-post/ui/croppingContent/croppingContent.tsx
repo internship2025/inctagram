@@ -21,6 +21,7 @@ import Image from "@/assets/icons/components/Image";
 import SvgImageOutline from "@/assets/icons/components/ImageOutline";
 import SvgPlusCircleOutline from "@/assets/icons/components/PlusCircleOutline";
 import { ImageUploader } from "@/shared/ui/imageUploader/imageUploader";
+import NextImage from "next/image";
 
 type Props = {
   setStage: (stage: CreatePostStages) => void;
@@ -121,7 +122,7 @@ export const CroppingContent = ({
             onClick={() => setShowImages(!showImages)}
           >
             {showImages ? (
-              <Image className={styles.svgImage} />
+              <Image className={styles.svgImage} aria-label="Show images icon" />
             ) : (
               <SvgImageOutline />
             )}
@@ -131,10 +132,13 @@ export const CroppingContent = ({
             <div className={styles.showImagesContainer}>
               {imagesState.map((image, index) => (
                 <div className={styles.relative} key={index}>
-                  <img
-                    alt={`image ${index + 1}`}
+                  <NextImage
+                    alt="Post image"
                     className={styles.img}
                     src={image}
+                    width={100}
+                    height={100}
+                    style={{ objectFit: "cover" }}
                   />
                   <IconButton
                     className={styles.deleteImage}
@@ -149,8 +153,8 @@ export const CroppingContent = ({
               <div className={styles.relative}>
                 <ImageUploader
                   fileInputRef={fileInputRef}
-                  setError={setError}
                   setPhotoUpload={setPhotoToUpload}
+                  setError={setError}
                 >
                   <IconButton className={styles.circleButton}>
                     <SvgPlusCircleOutline
@@ -160,6 +164,7 @@ export const CroppingContent = ({
                     />
                   </IconButton>
                 </ImageUploader>
+                {error && <div className={styles.error}>{error}</div>}
               </div>
             </div>
           )}

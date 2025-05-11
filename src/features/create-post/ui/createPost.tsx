@@ -9,6 +9,7 @@ import { Dialog } from "@/shared/ui/dialogs/dialog/dialog";
 import { AddFilesContent } from "@/features/create-post/ui/addFilesContent/addFilesContent";
 import { CroppingContent } from "@/features/create-post/ui/croppingContent/croppingContent";
 import { PublishContent } from "@/features/create-post/ui/publishContent/publishContent";
+import { AlertDialog } from "@/shared/ui/alertDialog/alertDialog";
 
 type Props = {
   onPostPublished: () => void;
@@ -101,6 +102,27 @@ export const CreatePost = ({
           />
         )}
       </Dialog>
+
+      <AlertDialog
+        open={openAlertModal}
+        onOpenChange={setOpenAlertModal}
+        title="Discard changes?"
+        description="Are you sure you want to discard your changes? This action cannot be undone."
+        confirmButton={
+          <button
+            onClick={() => {
+              setOpenAlertModal(false);
+              onOpenChange?.(false);
+              dispatch(createPostSliceActions.moveImagesToDraft());
+            }}
+          >
+            Discard
+          </button>
+        }
+        cancelButton={
+          <button onClick={() => setOpenAlertModal(false)}>Cancel</button>
+        }
+      />
     </>
   );
 };

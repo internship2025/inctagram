@@ -1,5 +1,13 @@
-
-
+export type UserProfile = {
+  userName: string;
+  firstName: string;
+  lastName: string;
+  city: string;
+  country: string;
+  region?: string;
+  dateOfBirth?: string;
+  aboutMe?: string;
+};
 
 type SubscriptionType = {
   amount: number;
@@ -42,12 +50,11 @@ type UserProfile = {
     createdAt: string; 
   };
   
-
-type ExtendedUserProfile = UserProfile & {
-    id: number;
-    avatars: Avatar[];
-    createdAt: string; 
-  }
+export type ExtendedUserProfile = UserProfile & {
+  id: number;
+  avatars: AvatarResponseType[];
+  createdAt: string;
+};
 
   type ErrorResponse = {
     statusCode: number;
@@ -58,3 +65,4 @@ type ExtendedUserProfile = UserProfile & {
     error: string;
   };
   
+

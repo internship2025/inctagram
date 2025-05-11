@@ -5,26 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import PhotoSlider from "@/shared/ui/photosSlider/photosSlider";
 import { calculatingDate } from "@/features/auth/utils/dateUtils";
-
-type Post = {
-  id: number;
-  description: string;
-  postId: number;
-  userName: string;
-  updatedAt: string;
-  avatarOwner: string;
-  ownerId: string;
-  images: [
-    {
-      url: string;
-      width: number;
-      height: number;
-      fileSize: number;
-      createdAt: string;
-      uploadId: string;
-    },
-  ];
-};
+import { Post } from "@/features/home-page/types/post.types";
 
 const PostsHome = (props: Post) => {
   const textRef = useRef<HTMLDivElement | null>(null);

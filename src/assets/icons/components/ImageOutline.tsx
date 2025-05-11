@@ -42,4 +42,6 @@ export const SvgImageOutline = forwardRef<
   </svg>
 ));
 
+SvgImageOutline.displayName = 'SvgImageOutline';
+
 export default memo(SvgImageOutline);

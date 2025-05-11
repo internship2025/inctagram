@@ -4,9 +4,6 @@ const nextConfig = {
   sassOptions: {
     includePaths: ['./src'],
   },
-  experimental: {
-    appDir: true,
-  },
   images: {
     remotePatterns: [
       {

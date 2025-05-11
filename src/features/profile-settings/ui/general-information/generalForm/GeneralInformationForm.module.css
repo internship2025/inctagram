@@ -1,5 +1,14 @@
+.mainContainer {
+    display: flex;
+}
+
 .wrapper {
   max-width: 740px;
+    flex: 3;
+}
+
+.avatarWrapper {
+    margin-right: 40px;
 }
 
 .btn {
