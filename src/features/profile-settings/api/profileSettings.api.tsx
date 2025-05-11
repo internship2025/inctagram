@@ -9,6 +9,7 @@ import {
 export const profileSettingsApi = createApi({
   reducerPath: "profileSettingsApi",
   baseQuery: baseQueryWithReauth,
+  tagTypes: ["Reneva"],
   endpoints: (builder) => ({
     getCurrentProfile: builder.query<ExtendedUserProfile, void>({
       query: () => ({
@@ -28,7 +29,30 @@ export const profileSettingsApi = createApi({
         data: ErrorResponse;
       }) => response.data,
     }),
+    createPremiumSubscription: builder.mutation<{url: string},SubscriptionType>({
+      query: (body) => {
+        console.log(body)
+        return{
+          url: "subscriptions",
+        method: "POST",
+        body
+        }
+       
+      }
+    }),
+    getCurrentSubscription: builder.query<CurrentSubscriptionType, void>({
+      providesTags: ["Reneva"],
+     query: () => "subscriptions/current-payment-subscriptions"
+    }),
+    canselRenevalAuto: builder.mutation<void, void>({
+     query: ()=>({
+      url: 'subscriptions/canceled-auto-renewal',
+      method: "POST"
+     }),
+     invalidatesTags: ["Reneva"],
+    })
   }),
+
 });
-export const { useGetCurrentProfileQuery, useUpdateCurrentProfileMutation } =
+export const {useCanselRenevalAutoMutation, useGetCurrentSubscriptionQuery, useGetCurrentProfileQuery, useUpdateCurrentProfileMutation, useCreatePremiumSubscriptionMutation } =
   profileSettingsApi;

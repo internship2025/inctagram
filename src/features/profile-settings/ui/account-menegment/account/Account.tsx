@@ -1,0 +1,28 @@
+import { RadioButton } from "@/shared/ui/radiobutton/radioButton";
+import { getInputOptions } from "../getInputOptions";
+import { AccountType } from "../hooks/useAccountType";
+import { SubscriptionType } from "../hooks/useSubscriptionType";
+import { SubscriptionLayout } from "../subscription-layout/SubscriptionLayout";
+import s from "./Account.module.css";
+
+type Props = {
+  onValueChange: (type: AccountType) => void;
+};
+
+export const Account = ({ onValueChange }: Props) => {
+  return (
+      <SubscriptionLayout title="Account type">
+        {() => {
+          return (
+            <RadioButton
+              onValueChange={
+                onValueChange as (value: SubscriptionType | AccountType) => void
+              }
+              options={getInputOptions().optionsAccount}
+              stylesOverride={{ direction: s.direction }}
+            />
+          );
+        }}
+      </SubscriptionLayout>
+  );
+};
