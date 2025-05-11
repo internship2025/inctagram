@@ -6,6 +6,7 @@ import { PaymentMethod } from "../hooks/usePaymentHandlers";
 import { SubscriptionType } from "../hooks/useSubscriptionType";
 import { useHandleSubscription } from "../hooks/useHandleSubscription";
 import { DataType } from "../hooks/useSetSubscription";
+import Image from "next/image";
 
 type Props = {
   isModalOpen: boolean;
@@ -14,9 +15,8 @@ type Props = {
   subscriptionType: SubscriptionType;
   amount: number;
   url: string;
-  handler: (data: DataType)=> void
+  handler: (data: DataType) => void;
 };
-
 
 export const PaymentConfirmationModal = ({
   isModalOpen,
@@ -25,36 +25,47 @@ export const PaymentConfirmationModal = ({
   selectedPayment,
   subscriptionType,
   url,
-  handler
+  handler,
 }: Props) => {
-
-
-  let params = {
+  const params: DataType = {
     amount,
     paymentType: selectedPayment!,
     typeSubscription: subscriptionType,
     baseUrl: url,
   };
 
-  const {isCheck, setIschek, disabled, handlerSubscription} = useHandleSubscription(params, handler);
+  const { isCheck, setIsCheck, disabled, handlerSubscription } =
+    useHandleSubscription(params, handler);
 
   return (
     <Modal open={isModalOpen}>
       <CommonNotificationModal
-         
-        title= {<h2>Create payment</h2>}
+        title={<h2>Create payment</h2>}
         line={true}
-        cross = {<img onClick={()=> {setIschek(false), onClose()}} src = "/icons/close.svg"></img>}
+        cross={
+          <Image
+            onClick={() => {
+              setIsCheck(false);
+              onClose();
+            }}
+            src="/icons/close.svg"
+            alt="Close"
+            width={24}
+            height={24}
+          />
+        }
         footer={
           <>
             <CheckBox
               txt="I agree"
               checked={isCheck}
               onChange={(checked: boolean) => {
-                setIschek(checked);
+                setIsCheck(checked);
               }}
             />
-            <Button onClick={handlerSubscription} disabled={disabled}>OK</Button>
+            <Button onClick={handlerSubscription} disabled={disabled}>
+              OK
+            </Button>
           </>
         }
       >
@@ -66,5 +77,3 @@ export const PaymentConfirmationModal = ({
     </Modal>
   );
 };
-
-

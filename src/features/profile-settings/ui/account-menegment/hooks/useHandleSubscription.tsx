@@ -1,17 +1,13 @@
-import { useCreatePremiumSubscriptionMutation } from "@/features/profile-settings/api/profileSettings.api";
-import { PaymentMethod } from "./usePaymentHandlers";
-import { SubscriptionType } from "./useSubscriptionType";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { DataType } from "./useSetSubscription";
-
 
 export const useHandleSubscription = (
   data: DataType,
-  handler: (data: DataType) => void
+  handler: (data: DataType) => void,
 ) => {
-  const [isCheck, setIschek] = useState(false);
+  const [isCheck, setIsCheck] = useState(false);
   const [isDisable, setIsDisable] = useState(false);
-  let disabled = !isCheck || isDisable;
+  const disabled = !isCheck || isDisable;
 
   function handlerSubscription() {
     if (isCheck) {
@@ -20,5 +16,5 @@ export const useHandleSubscription = (
     }
   }
 
-  return {handlerSubscription, isCheck, setIschek, disabled, setIsDisable };
+  return { handlerSubscription, isCheck, setIsCheck, disabled, setIsDisable };
 };

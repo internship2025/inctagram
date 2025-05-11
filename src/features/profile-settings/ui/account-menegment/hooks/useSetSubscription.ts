@@ -2,7 +2,6 @@ import { useCreatePremiumSubscriptionMutation } from "@/features/profile-setting
 import { PaymentMethod } from "./usePaymentHandlers";
 import { SubscriptionType } from "./useSubscriptionType";
 
-
 type SubscriptionErrorType = {
   statusCode: number;
   messages: [
@@ -22,10 +21,7 @@ export type DataType = {
 };
 
 export const useSetSubscription = () => {
-  const [signup, { isLoading, isError, isSuccess }] =
-    useCreatePremiumSubscriptionMutation();
-
-
+  const [signup, { isLoading }] = useCreatePremiumSubscriptionMutation();
 
   const handleSubscription = (url: string | undefined) => {
     if (url) window.location.assign(url);

@@ -4,6 +4,7 @@ import { AccountMenegement } from "@/features/profile-settings/ui/account-menegm
 import { AccountTabs } from "@/features/profile-settings/ui/general-information/accountTabs/AccountTabs";
 import { GeneralInformation } from "@/features/profile-settings/ui/general-information/GeneralInformation";
 import { useParams, useSearchParams } from "next/navigation";
+import { MyPayments } from "@/features/profile-settings/ui/my-payments/MyPayments";
 
 export type ProfileTab =
   | "General-information"
@@ -18,19 +19,21 @@ const EditProfile = () => {
   let activeTab =
     (searchParams.get("tab") as ProfileTab) || "General-information";
 
-    let success = searchParams.get("success")
+  const success = searchParams.get("success");
 
-    if(success){
-      activeTab = "Accaunt-management"
-    }
-
+  if (success) {
+    activeTab = "Account-management";
+  }
 
   return (
     <div>
       <AccountTabs userId={id} activeTab={activeTab} />
-      {activeTab === "General-information" && <GeneralInformation />}
-      {activeTab === "Accaunt-management" && <AccountMenegement success = {success}/>}
-
+      {(activeTab === "General-information" && <GeneralInformation />) ||
+        (activeTab === "My-payments" && <MyPayments />) ||
+        (activeTab === "Account-management" && (
+          <AccountMenegement success={success} />
+        ))}
+    </div>
   );
 };
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export type AccountType = "personal" | "business";
 
@@ -8,10 +8,9 @@ export const useAccountType = () => {
   function handleAccountTypeChange(type: AccountType) {
     setAccountType(type);
   }
-  
- 
+
   return {
     accountType,
-    handleAccountTypeChange
-  }
+    handleAccountTypeChange,
+  };
 };

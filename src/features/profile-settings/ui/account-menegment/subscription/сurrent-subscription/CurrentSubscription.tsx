@@ -1,13 +1,11 @@
-import { useGetCurrentSubscriptionQuery } from "@/features/profile-settings/api/profileSettings.api";
 import { SubscriptionLayout } from "../../subscription-layout/SubscriptionLayout";
-import { useFetchAndUpdateSubscription } from "../../hooks/useFetchAndUpdateSubscription";
 import s from "./CurrentSubscription.module.css";
 import { AutoReneval } from "../reneval/AutoReneval";
 
 type Props = {
   expire: string;
   next: string;
-  autoRenewal: boolean | undefined
+  autoRenewal: boolean | undefined;
 };
 
 export const CurrentSubscription = ({ expire, next, autoRenewal }: Props) => {
@@ -29,7 +27,7 @@ export const CurrentSubscription = ({ expire, next, autoRenewal }: Props) => {
           );
         }}
       </SubscriptionLayout>
-      <AutoReneval isCheck = { autoRenewal}/>
+      <AutoReneval isCheck={autoRenewal} />
     </>
   );
 };

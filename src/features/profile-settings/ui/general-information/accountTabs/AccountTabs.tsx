@@ -2,6 +2,7 @@ import Link from "next/link";
 import s from "./AccountTabs.module.css";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { ProfileTab } from "@/app/profile/[id]/edit-profile/page";
+import { useEffect } from "react";
 
 type AccountTabsType = {
   userId: number | undefined;
@@ -9,8 +10,18 @@ type AccountTabsType = {
 };
 
 export const AccountTabs = ({ userId, activeTab }: AccountTabsType) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
 
- 
+  useEffect(() => {
+    if (!searchParams.get("tab")) {
+      const newParams = new URLSearchParams(searchParams);
+      newParams.set("tab", "General-information");
+      router.replace(`${pathname}?${newParams.toString()}`, { scroll: false });
+    }
+  }, [searchParams, pathname, router]);
+
   const TABS = [
     {
       id: "General-information",
@@ -23,9 +34,9 @@ export const AccountTabs = ({ userId, activeTab }: AccountTabsType) => {
       label: "Devices",
     },
     {
-      id: "Accaunt-management",
-      href: `/profile/${userId}/edit-profile?tab=Accaunt-management`,
-      label: "Accaunt management",
+      id: "Account-management",
+      href: `/profile/${userId}/edit-profile?tab=Account-management`,
+      label: "Account management",
     },
     {
       id: "My-payments",

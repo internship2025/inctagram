@@ -18,8 +18,8 @@ export function AccountMenegement({ success }: Props) {
   const { accountType, handleAccountTypeChange } = useAccountType();
   const { subscriptionType, handleSubscriptionTypeChange, amount } =
     useSubscriptionType();
-  let { expire, next, isVal, autoRenewal } = useFetchAndUpdateSubscription();
-  let { handler, isLoading } = useSetSubscription();
+  const { expire, next, isVal, autoRenewal } = useFetchAndUpdateSubscription();
+  const { handler, isLoading } = useSetSubscription();
 
   if (isLoading)
     return (

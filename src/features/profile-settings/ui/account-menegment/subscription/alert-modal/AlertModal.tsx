@@ -13,12 +13,12 @@ export const AlertModal = ({ text }: Props) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const success = searchParams.get("success");
-  const [isVal, useIsVal] = useState(true);
+  const [isVal, setIsVal] = useState(true);
   function handler() {
     if (success) {
-      router.replace("?tab=Accaunt-management");
+      router.replace("?tab=Account-management");
     }
-    useIsVal(false);
+    setIsVal(false);
   }
 
   return (

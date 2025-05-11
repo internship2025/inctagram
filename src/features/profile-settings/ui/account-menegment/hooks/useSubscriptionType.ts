@@ -1,18 +1,19 @@
-
-
 import { useState } from "react";
 import { getInputOptions } from "../getInputOptions";
 
 export type SubscriptionType = "DAY" | "WEEKLY" | "MONTHLY";
 
 export const useSubscriptionType = () => {
-  const [subscriptionType,  setSubscription] = useState<SubscriptionType>("DAY");
+  const [subscriptionType, setSubscription] = useState<SubscriptionType>("DAY");
 
   const getAmount = (type: SubscriptionType): number => {
-    return  getInputOptions().optionsSubscription.find(opt => opt.value === type)?.amount || 0;
+    return (
+      getInputOptions().optionsSubscription.find((opt) => opt.value === type)
+        ?.amount || 0
+    );
   };
-  let amount = getAmount(subscriptionType)
-  
+  const amount = getAmount(subscriptionType);
+
   function handleSubscriptionTypeChange(type: SubscriptionType) {
     setSubscription(type);
   }
@@ -20,6 +21,6 @@ export const useSubscriptionType = () => {
   return {
     subscriptionType,
     handleSubscriptionTypeChange,
-    amount
-  }
+    amount,
+  };
 };

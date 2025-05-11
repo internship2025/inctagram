@@ -7,7 +7,13 @@ const meta: Meta<typeof Pagination> = {
   parameters: {
     tags: ["autodocs"],
   },
-  args: { onValueChange: fn() },
+  args: { 
+    onPageChange: fn(),
+    onItemsPerPageChange: fn(),
+    currentPage: 1,
+    itemsPerPage: 10,
+    totalItems: 100
+  },
 };
 
 export default meta;
@@ -17,6 +23,6 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     currentPage: 1,
-    totalPages: 10,
+    totalItems: 10,
   },
 };
