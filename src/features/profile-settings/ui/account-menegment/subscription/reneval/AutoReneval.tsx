@@ -5,9 +5,10 @@ import Loading from "@/app/loading";
 
 type Props = {
   isCheck: boolean | undefined;
+  disableCheck: boolean
 };
 
-export const AutoReneval = ({ isCheck = false }: Props) => {
+export const AutoReneval = ({ isCheck = false,  disableCheck }: Props) => {
   const { handler, isLoading } = useToggleAutoSubscription(isCheck);
   
   return (
@@ -19,7 +20,7 @@ export const AutoReneval = ({ isCheck = false }: Props) => {
         onChange={() => {
           handler();
         }}
-        disabled={isLoading}
+        disabled={isLoading || !disableCheck}
       />
     </div>
   );

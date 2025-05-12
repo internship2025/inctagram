@@ -7,14 +7,16 @@ import s from "./Account.module.css";
 
 type Props = {
   onValueChange: (type: AccountType) => void;
+  accountType: AccountType
 };
 
-export const Account = ({ onValueChange }: Props) => {
+export const Account = ({ onValueChange, accountType }: Props) => {
   return (
       <SubscriptionLayout title="Account type">
         {() => {
           return (
             <RadioButton
+            defaultValue={accountType}
               onValueChange={
                 onValueChange as (value: SubscriptionType | AccountType) => void
               }
