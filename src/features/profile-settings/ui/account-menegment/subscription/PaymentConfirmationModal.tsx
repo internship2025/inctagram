@@ -38,22 +38,23 @@ export const PaymentConfirmationModal = ({
     useHandleSubscription(params, handler);
 
   return (
-    <Modal open={isModalOpen}>
+    <Modal open={isModalOpen} title="Create payment" isClose = {true} closeOnlyOnButton = {true} onClose = {onClose}>
       <CommonNotificationModal
-        title={<h2>Create payment</h2>}
-        line={true}
-        cross={
-          <Image
-            onClick={() => {
-              setIsCheck(false);
-              onClose();
-            }}
-            src="/icons/close.svg"
-            alt="Close"
-            width={24}
-            height={24}
-          />
-        }
+      line={true}
+        // title={<h2>Create payment</h2>}
+        // line={true}
+        // cross={
+        //   <Image
+        //     onClick={() => {
+        //       setIsCheck(false);
+        //       onClose();
+        //     }}
+        //     src="/icons/close.svg"
+        //     alt="Close"
+        //     width={24}
+        //     height={24}
+        //   />
+        // }
         footer={
           <>
             <CheckBox

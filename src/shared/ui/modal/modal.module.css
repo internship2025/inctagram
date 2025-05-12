@@ -10,6 +10,7 @@
   font-weight: var(--font-weight-bold);
   font-size: 20px;
   line-height: 36px;
+  margin: 0;
 }
 
 .commonStyles {
@@ -31,6 +32,14 @@
   text-align: left;
 }
 
+.header {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 24px 0;
+}
+
 .iconButton {
   all: unset;
   font-family: inherit;
@@ -41,10 +50,8 @@
   align-items: center;
   justify-content: center;
   color: var(--violet-11);
-  position: absolute;
   cursor: pointer;
-  right: -30px;
-  top: -30px;
+  margin-left: 16px; 
 }
 .notification {
   width: 320px;

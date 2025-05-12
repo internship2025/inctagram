@@ -1,20 +1,20 @@
 import { useGetCurrentSubscriptionQuery } from "@/features/profile-settings/api/profileSettings.api";
 
 export function useFetchAndUpdateSubscription() {
-  const { data } = useGetCurrentSubscriptionQuery();
+  const { data, isLoading } = useGetCurrentSubscriptionQuery();
 
   let isVal = false;
 
-  if (data?.data) {
-    isVal = data.data.length > 0;
+  if (data) {
+    isVal = data.hasAutoRenewal;
   }
-
+   
   function updateSubscription(data: string) {
     const value = data.match(/^(\d{4})-(\d{2})-(\d{2})/);
     if (!value) {
       return "";
     }
-    const [year, month, day] = value;
+    const [,year, month, day] = value;
     return `${day}.${month}.${year}`;
   }
 
@@ -28,5 +28,5 @@ export function useFetchAndUpdateSubscription() {
     next = updateSubscription(lastSubscription.endDateOfSubscription);
   }
 
-  return { expire, next, isVal, autoRenewal };
+  return { expire, next, isVal, autoRenewal};
 }
