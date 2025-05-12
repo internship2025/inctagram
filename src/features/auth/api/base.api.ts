@@ -11,7 +11,7 @@ import { Mutex } from "async-mutex";
 
 // Базовый fetchBaseQuery с установкой токена из localStorage
 export const baseQueryWithAccessToken = fetchBaseQuery({
-  baseUrl: "https://universea.ru/api/v1",
+  baseUrl: "https://inctagram.work/api/v1",
   credentials: "include",
   prepareHeaders: (headers) => {
     if (typeof window !== "undefined") {

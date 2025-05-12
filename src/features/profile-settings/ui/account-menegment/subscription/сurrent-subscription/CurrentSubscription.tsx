@@ -1,14 +1,16 @@
 import { SubscriptionLayout } from "../../subscription-layout/SubscriptionLayout";
 import s from "./CurrentSubscription.module.css";
 import { AutoReneval } from "../reneval/AutoReneval";
+import { useFetchAndUpdateSubscription } from "../../hooks/useFetchAndUpdateSubscription";
 
-type Props = {
-  expire: string;
-  next: string;
-  autoRenewal: boolean | undefined;
-};
+export const CurrentSubscription = () => {
+  const { expire, next, isVal, autoRenewal} =
+    useFetchAndUpdateSubscription();
 
-export const CurrentSubscription = ({ expire, next, autoRenewal }: Props) => {
+  if (!isVal) {
+    return "";
+  }
+
   return (
     <>
       <SubscriptionLayout title="Current Subscription">

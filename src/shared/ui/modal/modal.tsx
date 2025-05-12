@@ -15,7 +15,8 @@ type Modal = {
   open?: boolean;
   onClose?: () => void;
   isClose?: boolean;
-  portalContainer?: HTMLDivElement | null
+  portalContainer?: HTMLDivElement | null;
+  closeOnlyOnButton?: boolean;
 };
 
 export const Modal = ({
@@ -25,28 +26,36 @@ export const Modal = ({
   open = true,
   onClose,
   isClose = false,
-  portalContainer
-  
+  portalContainer,
+  closeOnlyOnButton = false,
 }: Modal) => {
-
-
-
   return (
     <Dialog.Root open={open} onOpenChange={onClose}>
       <Dialog.Portal container={portalContainer}>
         <Dialog.Overlay className={styles.overlay} />
-        <Dialog.Content aria-describedby={undefined} className={`${styles.commonStyles} ${className}`}>
-          <Dialog.Title className={`${styles.title} ${styles[className]}`}>
-            {title}
-          </Dialog.Title>
+        <Dialog.Content
+         onInteractOutside={(e) => {
+            if (closeOnlyOnButton) e.preventDefault();
+          }}
+          onEscapeKeyDown={(e) => {
+            if (closeOnlyOnButton) e.preventDefault(); 
+          }}
+          aria-describedby={undefined}
+          className={`${styles.commonStyles} ${className}`}
+        >
+          <div className={styles.header}>
+            <Dialog.Title className={`${styles.title} ${styles[className]}`}>
+              {title}
+            </Dialog.Title>
+            {isClose && (
+              <Dialog.Close asChild>
+                <button className={styles.iconButton} aria-label="Close">
+                  <Image src={close} alt="" />
+                </button>
+              </Dialog.Close>
+            )}
+          </div>
           {children}
-          {isClose && (
-            <Dialog.Close asChild>
-              <button className={styles.iconButton} aria-label="Close">
-                <Image src={close} alt="" />
-              </button>
-            </Dialog.Close>
-          )}
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>

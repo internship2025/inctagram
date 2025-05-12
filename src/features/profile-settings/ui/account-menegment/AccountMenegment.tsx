@@ -6,7 +6,6 @@ import { useSubscriptionType } from "./hooks/useSubscriptionType";
 import { PaymentButtons } from "./subscription/PaymentButtons";
 import { AlertModal } from "./subscription/alert-modal/AlertModal";
 import { CurrentSubscription } from "./subscription/сurrent-subscription/CurrentSubscription";
-import { useFetchAndUpdateSubscription } from "./hooks/useFetchAndUpdateSubscription";
 import { Loader } from "@/shared/ui/loader/Loader";
 import { useSetSubscription } from "./hooks/useSetSubscription";
 
@@ -18,7 +17,6 @@ export function AccountMenegement({ success }: Props) {
   const { accountType, handleAccountTypeChange } = useAccountType();
   const { subscriptionType, handleSubscriptionTypeChange, amount } =
     useSubscriptionType();
-  const { expire, next, isVal, autoRenewal } = useFetchAndUpdateSubscription();
   const { handler, isLoading } = useSetSubscription();
 
   if (isLoading)
@@ -27,14 +25,12 @@ export function AccountMenegement({ success }: Props) {
         <Loader size="large" />
       </div>
     );
+  
 
   return (
     <div className={s.wrapper}>
-      {accountType === "business" && isVal && (
+      {accountType === "business" && (
         <CurrentSubscription
-          autoRenewal={autoRenewal}
-          expire={expire}
-          next={next}
         />
       )}
       <Account onValueChange={handleAccountTypeChange} />
