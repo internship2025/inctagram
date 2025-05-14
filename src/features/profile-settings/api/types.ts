@@ -1,3 +1,25 @@
+import { AvatarResponseType } from "@/features/home-page/ui/user-profile/api/types";
+
+export type SubscriptionType = {
+  amount: number;
+  paymentType: "STRIPE" | "PAYPAL";
+  typeSubscription: "DAY" | "WEEKLY" | "MONTHLY";
+  baseUrl: string;
+};
+
+export type CurrentSubscriptionType = {
+  data: [
+    {
+      userId: number;
+      subscriptionId: string;
+      dateOfPayment: string;
+      endDateOfSubscription: string;
+      autoRenewal: boolean;
+    },
+  ];
+  hasAutoRenewal: boolean;
+};
+
 export type UserProfile = {
   userName: string;
   firstName: string;
@@ -9,7 +31,7 @@ export type UserProfile = {
   aboutMe?: string;
 };
 
-export type AvatarResponseType = {
+export type Avatar = {
   url: string;
   width: number;
   height: number;
@@ -30,4 +52,14 @@ export type ErrorResponse = {
     field: string;
   }>;
   error: string;
+};
+
+export type PaymentInfo = {
+  userId: number;
+  subscriptionId: string;
+  dateOfPayment: string;
+  endDateOfSubscription: string;
+  price: number;
+  subscriptionType: string;
+  paymentType: string;
 };

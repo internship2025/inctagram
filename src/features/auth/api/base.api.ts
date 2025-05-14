@@ -37,8 +37,7 @@ const safeBaseQuery: BaseQueryFn<
   FetchBaseQueryMeta
 > = async (args, api, extraOptions) => {
   try {
-    const result = await baseQueryWithAccessToken(args, api, extraOptions);
-    return result;
+    return await baseQueryWithAccessToken(args, api, extraOptions);
   } catch {
     return {
       error: {

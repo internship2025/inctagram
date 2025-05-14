@@ -1,0 +1,10 @@
+
+
+.box{
+  background-color: var(--color-dark-700);
+  padding: 6px 12px;
+}
+
+.direction{
+  flex-direction: column;
+}

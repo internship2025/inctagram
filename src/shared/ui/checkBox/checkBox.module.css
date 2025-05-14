@@ -12,7 +12,7 @@
     justify-content: center;
     position: relative;
 
-    &::after { /* Псевдоэлемент для круга */
+    &::after { 
         content: '';
         position: absolute;
         top: 50%;
@@ -30,17 +30,28 @@
     background-color: var(--color-light-100);
     }
 
-    &:active::after {
-    background: var(--color-dark-100);
-    opacity: 1;
+     &:not(:disabled):active::after {
+        background: var(--color-dark-100);
+        opacity: 1;
     }
-    &:hover::after {
+
+    &:not(:disabled):hover::after {
         background: var(--color-dark-300);
         opacity: 1;
     }
-    &:focus::after {
+
+    &:not(:disabled):focus::after {
         background: var(--color-dark-500);
         opacity: 1;
+    }
+
+    &:disabled {
+        border: 2px solid var(--color-light-900);
+        cursor: not-allowed;
+        
+        &::after {
+            display: none;
+        }
     }
     &disabled{
         border: 2px solid var(--color-light-900);

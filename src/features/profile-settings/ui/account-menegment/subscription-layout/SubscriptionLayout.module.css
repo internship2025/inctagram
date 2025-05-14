@@ -1,0 +1,14 @@
+.wrapper {
+  background-color: var(--color-dark-700);
+  padding: 6px 12px;
+  margin-bottom: 30px;
+}
+
+.title{
+    font-weight: 600;
+    line-height: var(--line-height-s);
+    font-size: var(--line-height-s);
+    margin-bottom: 18px;
+}
+
+

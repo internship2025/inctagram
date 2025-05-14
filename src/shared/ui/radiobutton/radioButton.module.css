@@ -11,13 +11,17 @@
   gap: 8px;
 }
 
+.mix {
+  flex-direction: column;
+}
+
 /* Radio button styling */
 .Item {
   all: unset;
   width: 20px;
   height: 20px;
   border-radius: 100%;
-  border: 2px solid var( --color-light-100);
+  border: 2px solid var(--color-light-100);
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
@@ -42,7 +46,7 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background-color:var(--color-dark-500);
+  background-color: var(--color-dark-500);
   z-index: -1;
 }
 
@@ -66,16 +70,16 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background-color: var( --color-light-100);
+  background-color: var(--color-light-100);
 }
 
 .Item:disabled .Indicator::after {
-  background-color:var(--color-dark-100);
+  background-color: var(--color-dark-100);
 }
 
 /* Label styling */
 .Label {
-  color:var( --color-light-100);
+  color: var(--color-light-100);
   font-family: Inter, sans-serif;
   font-size: 14px;
   font-weight: 400;

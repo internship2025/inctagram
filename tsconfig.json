@@ -38,7 +38,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/common/ui/input/components/EyeOff.tsx"
-  ],
+, "src/shared/ui/commonNotificationModal/CommonNotificationModal.tsx"  ],
   "exclude": [
     "node_modules"
   ]
