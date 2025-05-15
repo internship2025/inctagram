@@ -15,7 +15,7 @@ export const SubscriptionCosts = ({ onValueChange }: Props) => {
       {() => {
         return (
           <RadioButton
-            defaultValue = "DAY"
+            defaultValue="DAY"
             onValueChange={
               onValueChange as (value: SubscriptionType | AccountType) => void
             }

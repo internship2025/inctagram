@@ -12,6 +12,7 @@ export const useSubscriptionType = () => {
         ?.amount || 0
     );
   };
+
   const amount = getAmount(subscriptionType);
 
   function handleSubscriptionTypeChange(type: SubscriptionType) {

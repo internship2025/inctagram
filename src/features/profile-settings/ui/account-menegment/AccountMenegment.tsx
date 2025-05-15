@@ -30,7 +30,11 @@ export function AccountMenegement({ success }: Props) {
     <div className={s.wrapper}>
       <CurrentSubscription />
 
-      <Account accountType= {accountType} onValueChange={handleAccountTypeChange} />
+      <Account
+        accountType={accountType}
+        onValueChange={handleAccountTypeChange}
+      />
+
       {accountType === "business" && (
         <>
           <SubscriptionCosts onValueChange={handleSubscriptionTypeChange} />
