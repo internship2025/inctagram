@@ -4,13 +4,14 @@ import s from './AutoReneval.module.css'
 import Loading from "@/app/loading";
 
 type Props = {
-  isCheck: boolean | undefined;
-  disableCheck: boolean
+  isCheck: boolean;
 };
 
-export const AutoReneval = ({ isCheck = false,  disableCheck }: Props) => {
+export const AutoReneval = ({ isCheck }: Props) => {
   const { handler, isLoading } = useToggleAutoSubscription(isCheck);
   
+
+  console.log(isCheck)
   return (
     <div className={s.wrapper}>
        {isLoading && <Loading/>}
@@ -20,7 +21,7 @@ export const AutoReneval = ({ isCheck = false,  disableCheck }: Props) => {
         onChange={() => {
           handler();
         }}
-        disabled={isLoading || !disableCheck}
+        disabled={isLoading || !isCheck}
       />
     </div>
   );

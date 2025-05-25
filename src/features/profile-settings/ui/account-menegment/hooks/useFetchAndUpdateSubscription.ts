@@ -3,11 +3,7 @@ import { useGetCurrentSubscriptionQuery } from "@/features/profile-settings/api/
 export function useFetchAndUpdateSubscription() {
   const { data } = useGetCurrentSubscriptionQuery();
 
-  let isVal = false;
 
-  if (data) {
-    isVal = data.hasAutoRenewal;
-  }
 
   function updateSubscription(data: string) {
     const value = data.match(/^(\d{4})-(\d{2})-(\d{2})/);
@@ -20,13 +16,19 @@ export function useFetchAndUpdateSubscription() {
 
   let expire = "";
   let next = "";
-  const autoRenewal = data?.hasAutoRenewal;
+  let autoRenewal = false
+
 
   if (data?.data && data.data.length > 0) {
     const lastSubscription = data.data[data.data.length - 1];
+    console.log(data, lastSubscription);
     expire = updateSubscription(lastSubscription.dateOfPayment);
     next = updateSubscription(lastSubscription.endDateOfSubscription);
+    autoRenewal = lastSubscription.autoRenewal;
   }
 
-  return { expire, next, isVal, autoRenewal };
+
+  return { expire, next, autoRenewal };
+
+
 }

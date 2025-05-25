@@ -1,29 +1,35 @@
-import { calculatingDate } from '@/features/auth/utils/dateUtils'
-import s from './Notification.module.css'
-
-
-// <div className={styles.Tag} key={it.id}>
-// {it.message}
-// </div>
+import { calculatingDate } from "@/features/auth/utils/dateUtils";
+import s from "./Notification.module.css";
+import { forwardRef } from "react";
 
 type NotificationType = {
-    messages: {
-    id: number
-    message: string
-    isRead: boolean
-    createdAt: string
-  }
-}
+  messages: {
+    id: number;
+    message: string;
+    isRead: boolean;
+    createdAt: string;
+  };
+ id?: string;
+ deel: (id: number)=> void
+};
 
-export const Notification = ({messages}: NotificationType) =>{
-
-      const date = calculatingDate(messages.createdAt);
-
+export const Notification = forwardRef<HTMLDivElement, NotificationType>(
+  ({ messages, id, deel }, ref) => {
     return (
-    <div className={s.wrapper}>
-        <div>Новое уведомление!{messages.isRead && <span className={s.new}> Новое</span>}</div>
-        {messages.message}
-        <div className={s.date}>{date}</div>
-    </div>
-    )
-}
+      <div
+      onClick={()=> deel(messages.id)}
+        ref={ref}
+        id={id} // Устанавливаем ID элемента
+        className={`${s.wrapper} ${!messages.isRead ? s.unread : ""}`}
+      >
+        <div>
+          {messages.message}
+          {!messages.isRead && <span className={s.new}> Новое</span>}
+        </div>
+        <div className={s.date}>{calculatingDate(messages.createdAt)}</div>
+      </div>
+    );
+  }
+);
+
+Notification.displayName = "Notification";

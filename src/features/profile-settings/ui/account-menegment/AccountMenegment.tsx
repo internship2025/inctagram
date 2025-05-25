@@ -14,6 +14,8 @@ type Props = {
 };
 
 export function AccountMenegement({ success }: Props) {
+
+  
   const { accountType, handleAccountTypeChange } = useAccountType();
   const { subscriptionType, handleSubscriptionTypeChange, amount } =
     useSubscriptionType();
@@ -26,11 +28,16 @@ export function AccountMenegement({ success }: Props) {
       </div>
     );
 
+
+
   return (
     <div className={s.wrapper}>
       <CurrentSubscription />
 
-      <Account accountType= {accountType} onValueChange={handleAccountTypeChange} />
+      <Account
+        accountType={accountType}
+        onValueChange={handleAccountTypeChange}
+      />
       {accountType === "business" && (
         <>
           <SubscriptionCosts onValueChange={handleSubscriptionTypeChange} />

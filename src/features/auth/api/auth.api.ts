@@ -60,7 +60,7 @@ export const authApi = createApi({
         method: "POST",
         url: "auth/new-password",
       }),
-      invalidatesTags: ["Me"],
+
     }),
     logout: builder.mutation<void, void>({
       query: () => ({
