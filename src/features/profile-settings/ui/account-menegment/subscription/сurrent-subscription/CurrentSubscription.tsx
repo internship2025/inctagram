@@ -4,7 +4,7 @@ import { AutoReneval } from "../reneval/AutoReneval";
 import { useFetchAndUpdateSubscription } from "../../hooks/useFetchAndUpdateSubscription";
 
 export const CurrentSubscription = () => {
-  const { expire, next, autoRenewal, isVal} =
+  const { expire, next, autoRenewal} =
     useFetchAndUpdateSubscription();
 
   return (
@@ -25,7 +25,7 @@ export const CurrentSubscription = () => {
           );
         }}
       </SubscriptionLayout>
-      <AutoReneval disableCheck = {isVal} isCheck={autoRenewal} />
+      <AutoReneval  isCheck={autoRenewal} />
     </>
   );
 };

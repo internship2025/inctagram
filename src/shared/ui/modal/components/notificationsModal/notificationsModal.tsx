@@ -1,6 +1,7 @@
 import { Modal } from "../../modal";
 import { Notifications } from "./Notifications";
 import styles from "./../../modal.module.css";
+import { Params } from "@/features/notifications/api/types";
 
 type Type = {
   open: boolean;
@@ -14,13 +15,17 @@ type Type = {
       }>
     | undefined;
   portalContainer?: HTMLDivElement | null;
+  fetchNotifications: (params: Params)=> void
+  hasMore: boolean
 };
 
 export const NotificationsModal = ({
   open,
+  fetchNotifications,
   onClose,
   items,
   portalContainer,
+  hasMore
 }: Type) => {
   return (
     <Modal
@@ -29,7 +34,7 @@ export const NotificationsModal = ({
       open={open}
       onClose={onClose}
     >
-      <Notifications notifications={items} />
+      <Notifications hasMore = {hasMore} fetchNotifications = {fetchNotifications} notifications = {items}/>
       <div className={styles.modalTail}></div>
     </Modal>
   );

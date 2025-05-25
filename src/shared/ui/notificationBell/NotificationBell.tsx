@@ -1,17 +1,25 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { NotificationsModal } from "../modal/components/notificationsModal/notificationsModal";
 import { BellIcon } from "./BellIcon";
 import { Button } from "../button/button";
 import styles from "../button/button.module.css";
 import s from "./NotificationBell.module.css";
-import { useGetNotificationQuery } from "@/features/notifications/api/notifications.api";
+import { useLazyGetNotificationQuery } from "@/features/notifications/api/notifications.api";
 
 export const NotificationBell = () => {
-  const { data } = useGetNotificationQuery();
+  
+  const [fetchNotifications, { data, isFetching }] = useLazyGetNotificationQuery();
+
+  const hasMore = (data?.items?.length ?? 0) < (data?.totalCount ?? 0);
+
+  useEffect(() => {
+    fetchNotifications({});
+  }, []);
 
   const [isNotification, setIsNotification] = useState(false);
   const portalContainerRef = useRef(null);
 
+  console.log("NotificationBell:", data);
   return (
     <div ref={portalContainerRef} className={s.wrapper}>
       <Button
@@ -31,6 +39,8 @@ export const NotificationBell = () => {
           setIsNotification(false);
         }}
         portalContainer={portalContainerRef.current}
+        fetchNotifications={fetchNotifications}
+        hasMore={hasMore}
       />
     </div>
   );

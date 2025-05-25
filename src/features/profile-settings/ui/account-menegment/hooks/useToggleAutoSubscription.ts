@@ -5,8 +5,9 @@ export const useToggleAutoSubscription = (isCheck: boolean) => {
   
   function handler() {
     if (isCheck) {
-      signup();
+      signup()
     }
+    
   }
 
   return { handler, isLoading };

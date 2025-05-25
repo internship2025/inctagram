@@ -28,3 +28,6 @@ export const Account = ({ onValueChange, accountType }: Props) => {
       </SubscriptionLayout>
   );
 };
+
+
+
