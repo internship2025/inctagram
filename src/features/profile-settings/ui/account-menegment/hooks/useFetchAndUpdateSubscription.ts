@@ -1,7 +1,8 @@
 import { useGetCurrentSubscriptionQuery } from "@/features/profile-settings/api/profileSettings.api";
 
 export function useFetchAndUpdateSubscription() {
-  const { data, isLoading } = useGetCurrentSubscriptionQuery();
+  const { data } = useGetCurrentSubscriptionQuery();
+
 
 
   function updateSubscription(data: string) {
@@ -17,6 +18,7 @@ export function useFetchAndUpdateSubscription() {
   let next = "";
   let autoRenewal = false
 
+
   if (data?.data && data.data.length > 0) {
     const lastSubscription = data.data[data.data.length - 1];
     console.log(data, lastSubscription);
@@ -25,5 +27,8 @@ export function useFetchAndUpdateSubscription() {
     autoRenewal = lastSubscription.autoRenewal;
   }
 
+
   return { expire, next, autoRenewal };
+
+
 }

@@ -6,7 +6,6 @@ import { PaymentMethod } from "../hooks/usePaymentHandlers";
 import { SubscriptionType } from "../hooks/useSubscriptionType";
 import { useHandleSubscription } from "../hooks/useHandleSubscription";
 import { DataType } from "../hooks/useSetSubscription";
-import Image from "next/image";
 
 type Props = {
   isModalOpen: boolean;
@@ -38,9 +37,15 @@ export const PaymentConfirmationModal = ({
     useHandleSubscription(params, handler);
 
   return (
-    <Modal open={isModalOpen} title="Create payment" isClose = {true} closeOnlyOnButton = {true} onClose = {onClose}>
+    <Modal
+      open={isModalOpen}
+      title="Create payment"
+      isClose={true}
+      closeOnlyOnButton={true}
+      onClose={onClose}
+    >
       <CommonNotificationModal
-      line={true}
+        line={true}
         // title={<h2>Create payment</h2>}
         // line={true}
         // cross={
