@@ -127,10 +127,8 @@ export const Notifications = ({
     if (!viewportRef.current || !notifications) return;
     const viewport = viewportRef.current;
     const scrollTop = viewport.scrollTop;
-    const isScrollingDown = scrollTop > lastScrollTop.current;
     lastScrollTop.current = scrollTop;
 
-    if (!isScrollingDown) return;
 
     const unreadNotifications = notifications.filter((n) => !n.isRead);
     if (unreadNotifications.length === 0) return;
